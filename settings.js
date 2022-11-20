@@ -1,5 +1,5 @@
 module.exports = {
-// создать пароль node-red admin hash-pw
+// создать пароль: с консоли: node-red admin hash-pw
     flowFile: 'flows.json',
     flowFilePretty: true,
     adminAuth: {
@@ -11,8 +11,6 @@ module.exports = {
         }]
     },
     httpNodeAuth: {user:"user",pass:"$2b$08$I48A8LbtIdDs.dFKCzwb/uSLDJqS1N7ZiyEb0mgUdF5nOuyBEJcf6"},
-    //httpStaticAuth: {user:"user",pass:"$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN."},
-
     uiPort: process.env.PORT || 1880,
     //uiHost: "127.0.0.1",
     //apiMaxLength: '5mb',
@@ -35,7 +33,7 @@ module.exports = {
     //    //req.skipRawBodyParser = true;
     //    next();
     //},
-    //httpStatic: '/home/nol/node-red-static/',
+    httpStatic: '/home/pi/node-red-static/',
      // lang: "de",
 
      logging: {
