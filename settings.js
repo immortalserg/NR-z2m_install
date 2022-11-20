@@ -12,10 +12,18 @@ module.exports = {
     },
     httpNodeAuth: {user:"user",pass:"$2b$08$I48A8LbtIdDs.dFKCzwb/uSLDJqS1N7ZiyEb0mgUdF5nOuyBEJcf6"},
     uiPort: process.env.PORT || 80,
+    httpAdminRoot: '/admin',
+    ui: { path: "" },
+    httpStatic: '/home/pi/node-red-static/',
+    contextStorage: {
+	default: "memoryOnly",
+	memoryOnly: { module: 'memory' },
+	file: { module: 'localfilesystem' }
+    },
+    exportGlobalContextKeys: false,
     //uiHost: "127.0.0.1",
     //apiMaxLength: '5mb',
     //httpServerOptions: { },
-    //httpAdminRoot: '/admin',
     // httpAdminMiddleware: function(req,res,next) {
     //    // Set the X-Frame-Options header to limit where the editor
     //    // can be embedded
@@ -33,10 +41,8 @@ module.exports = {
     //    //req.skipRawBodyParser = true;
     //    next();
     //},
-    httpStatic: '/home/pi/node-red-static/',
-     // lang: "de",
-
-     logging: {
+    // lang: "de",
+    logging: {
          /** Only console logging is currently supported */
          console: {
              /** Level of logging to be recorded. Options are:
@@ -53,12 +59,6 @@ module.exports = {
              audit: false
          }
      },
-    contextStorage: {
-	default: "memoryOnly",
-	memoryOnly: { module: 'memory' },
-	file: { module: 'localfilesystem' }
-    },
-     exportGlobalContextKeys: false,
      externalModules: {
          // autoInstall: false,   /** Whether the runtime will attempt to automatically install missing modules */
          // autoInstallRetry: 30, /** Interval, in seconds, between reinstall attempts */
@@ -101,7 +101,6 @@ module.exports = {
         // os:require('os'),
     },
     //nodeMessageBufferMaxLength: 0,
-    //ui: { path: "ui" },
     //debugUseColors: true,
     debugMaxLength: 1000,
     //execMaxBufferSize: 10000000,
