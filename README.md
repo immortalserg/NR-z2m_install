@@ -4,7 +4,7 @@
 
 Конфигурационные файлы имеют следующие параметры:
 
-### Node-red
+__Node-red__
 
 порт не стандартный 1880, а 80-й,
 
@@ -15,6 +15,15 @@ dashboard в корне, а не /ui/
 имя пользователя dashboard и админки user и admin соответственно
 
 пароль: orangepipc
+
+папка для локальных файлов /home/pi/node-red-static/
+
+контекст переменных: default - в памяти, file - в файле
+
+для смены пароля отредактировать файл /home/pi/.node-red/settings.js предварительно сгенерировав пароль запустив в консоли:
+```
+node-red admin hash-pw
+```
 
 ### Установка
 
@@ -29,9 +38,10 @@ passwd pi
 usermod -aG sudo pi
 usermod -aG dialout pi
 ```
-#### зайти под юзером pi
+__зайти под юзером pi__
 
 ```
+su pi
 mkdir node-red-static
 curl -L -O https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered 
 bash update-nodejs-and-nodered --confirm-install
