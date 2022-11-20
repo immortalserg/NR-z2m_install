@@ -1,24 +1,37 @@
 # Node-Red zigbee2mqtt install
 
+Установка Node-Red и zigbee2mqtt и файлы настройки.
+
+Конфигурационные файлы имеют следующие параметры:
+
+### Node-red
+
+порт не стандартный 1880, а 80-й,
+
+dashboard в корне, а не /ui/
+
+админ панель: /admin/
+
+имя пользователя dashboard и админки user и admin соответственно
+
+пароль: orangepipc
+
+### Установка
+
+```bash
 apt install ca-certificates -y
-
 apt update
-
 apt upgrade -y
-
 apt install git c++ make mc curl openvpn mosquitto -y
-
 sudo apt-get install libcap2-bin -y
-
 useradd -m -d /home/pi pi
-
 passwd pi
-
 usermod -aG sudo pi
-
 usermod -aG dialout pi
+```
+#### зайти под юзером pi
 
-### зайти под юзером pi
+mkdir node-red-static
 
 curl -L -O https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered 
 
