@@ -11,7 +11,7 @@ module.exports = {
         }]
     },
     httpNodeAuth: {user:"user",pass:"$2b$08$I48A8LbtIdDs.dFKCzwb/uSLDJqS1N7ZiyEb0mgUdF5nOuyBEJcf6"},
-    uiPort: process.env.PORT || 1880,
+    uiPort: process.env.PORT || 80,
     //uiHost: "127.0.0.1",
     //apiMaxLength: '5mb',
     //httpServerOptions: { },
