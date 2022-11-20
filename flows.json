@@ -1,0 +1,2314 @@
+[
+    {
+        "id": "d2fe843f1408d972",
+        "type": "tab",
+        "label": "logic",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "00b963ce86642bd1",
+        "type": "tab",
+        "label": "ui_button",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9ebd4f1c6b6cc455",
+        "type": "tab",
+        "label": "ui_sensors",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "6aaa81f996b4566a",
+        "type": "tab",
+        "label": "ui_voley",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "52059dee97b6a94b",
+        "type": "tab",
+        "label": "setting",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "aefbbb6f1de059d7",
+        "type": "tab",
+        "label": "join",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8041c166b7c7bd3f",
+        "type": "tab",
+        "label": "lumi",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9b93b44814325e7b",
+        "type": "mqtt-broker",
+        "name": "localhost",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "compatmode": false,
+        "protocolVersion": 4,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "7471c7e5ac36c878",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "e205326b6e3f36ed",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "9f213c40125a5160",
+        "type": "ui_group",
+        "name": "Toilette",
+        "tab": "7471c7e5ac36c878",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c3860422bbb7d03c",
+        "type": "ui_group",
+        "name": "Cusine",
+        "tab": "612a6fd2731d802f",
+        "order": 1,
+        "disp": true,
+        "width": "4",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "612a6fd2731d802f",
+        "type": "ui_tab",
+        "name": "Voley",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "d66224eb2e38880f",
+        "type": "ui_group",
+        "name": "Cusine",
+        "tab": "7471c7e5ac36c878",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b42b6ba1f3d5cc99",
+        "type": "ui_tab",
+        "name": "Setting",
+        "icon": "settings",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "0517c125b20ddbb5",
+        "type": "ui_group",
+        "name": "Mode nuit",
+        "tab": "b42b6ba1f3d5cc99",
+        "order": 16,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "5d7d7d06793bedc4",
+        "type": "ui_group",
+        "name": "Paramètres de température",
+        "tab": "b42b6ba1f3d5cc99",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "4289f43d63cf25ed",
+        "type": "ui_group",
+        "name": "Button",
+        "tab": "5465515af2945d6f",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "5465515af2945d6f",
+        "type": "ui_tab",
+        "name": "Battery",
+        "icon": "fa-battery-full",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "5d83e98f.94bfa8",
+        "type": "mqtt-broker",
+        "name": "localhost",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "compatmode": false,
+        "protocolVersion": 4,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "e1a180a18950c296",
+        "type": "ui_group",
+        "name": "zigbee2mqtt",
+        "tab": "9e44a078aec46496",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "9e44a078aec46496",
+        "type": "ui_tab",
+        "name": "Setting",
+        "icon": "settings",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "3912e8dc2a1e64b4",
+        "type": "mqtt in",
+        "z": "d2fe843f1408d972",
+        "name": "",
+        "topic": "z2m/Button01/action",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 180,
+        "wires": [
+            [
+                "8a23e375d999422b"
+            ]
+        ]
+    },
+    {
+        "id": "fe5a411f38f98397",
+        "type": "mqtt in",
+        "z": "d2fe843f1408d972",
+        "name": "",
+        "topic": "z2m/Button02/action",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 210,
+        "wires": [
+            [
+                "13ffca12669b65b0"
+            ]
+        ]
+    },
+    {
+        "id": "5dafa4d571e5fd9e",
+        "type": "mqtt in",
+        "z": "d2fe843f1408d972",
+        "name": "",
+        "topic": "z2m/Button03/action",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 240,
+        "wires": [
+            [
+                "13ffca12669b65b0"
+            ]
+        ]
+    },
+    {
+        "id": "13ffca12669b65b0",
+        "type": "function",
+        "z": "d2fe843f1408d972",
+        "name": "Button",
+        "func": "bt = msg.payload; topic = msg.topic; lib = global.get('LIB') // подключаем функции\ntopic = lib.Clear(topic); // используем функцию Clear для очистки топика\n\nif (topic == \"Button01\" && bt == \"single_left\")     {node.send(lib.Dimmer(\"Dimmer01\", 1))}\nif (topic == \"Button01\" && bt == \"single_right\")    {node.send(lib.Dimmer(\"Dimmer01\", 2))}\nif (topic == \"Button02\" && bt == \"single_left\")     {node.send(lib.Relay(\"Dimmer02\", 1))}\nif (topic == \"Button02\" && bt == \"single_right\")    {node.send(lib.Relay(\"Dimmer02\", 2))}\nif (topic == \"Button02\" && bt == \"double_left\")     {node.send(lib.Curtain(\"Curtain01\",\"OPEN\"))}\nif (topic == \"Button02\" && bt == \"double_right\")    {node.send(lib.Curtain(\"Curtain01\",\"CLOSE\"))}\nif (topic == \"Button03\" && bt == \"single_left\")     {node.send(lib.Relay(\"Dimmer01\", 2))}\nif (topic == \"Button03\" && bt == \"single_right\")    {node.send(lib.Relay(\"Dimmer01\", 1))}\n\nreturn;\n\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 260,
+        "wires": [
+            [
+                "d97f0d77fed5bc2b"
+            ]
+        ]
+    },
+    {
+        "id": "d97f0d77fed5bc2b",
+        "type": "mqtt out",
+        "z": "d2fe843f1408d972",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9b93b44814325e7b",
+        "x": 1050,
+        "y": 270,
+        "wires": []
+    },
+    {
+        "id": "0a137da5a5485946",
+        "type": "inject",
+        "z": "d2fe843f1408d972",
+        "name": "start",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 90,
+        "y": 20,
+        "wires": [
+            [
+                "32e071e7449e9a4d",
+                "2dd30bedbb6053a9"
+            ]
+        ]
+    },
+    {
+        "id": "32e071e7449e9a4d",
+        "type": "function",
+        "z": "d2fe843f1408d972",
+        "name": "init lib",
+        "func": "lib = {}\n// функция очистки топика\n    lib.Clear = (str) => {\n        topic = str;\n        topic = topic.replace (\"z2m/\",\"\"); // удаляем корневой путь\n        topic = topic.replace (\"/action\",\"\");\n        topic = topic.replace (\"/set/state\",\"\"); // для реле/диммеров если полный путь в топике\n        topic = topic.replace (\"/set/brightness\",\"\"); // для диммеров яркость если полный путь в топике\n        topic = topic.replace (\"/contact\",\"\"); // для датчиков открытия двери/окна\n        topic = topic.replace (\"/occupancy\",\"\"); // для датчиков движения\n        return topic;\n    }\n// функция управления рольставнями\n    lib.Curtain = (F_name, pos) => { \n        nmsg={};\n        if (global.get(F_name+\"_moving\") == \"STOP\") {\n                nmsg.payload = pos; \n                global.set (F_name+\"_state_old\", pos);\n            } \n            else \n            {\n                if (pos == \"OPEN\") { if (global.get(F_name+\"_moving\") == \"UP\") {nmsg.payload = \"STOP\";} else {nmsg.payload = pos;}}\n                if (pos == \"CLOSE\") { if (global.get(F_name+\"_moving\") == \"DOWN\") {nmsg.payload = \"STOP\";} else {nmsg.payload = pos;}}        \n            }\n        nmsg.topic = \"z2m/\"+F_name+\"/set/state\"\n        return nmsg;\n    }\n    // функция управления рольставнями через Амазон Алексу (указание позиции)    \n    lib.CurtainA = (F_name, bt) => { \n        nmsg={};\n        nmsg.payload = Math.abs(bt);\n        nmsg.topic = \"z2m/\"+F_name+\"/set/position\";\n        return nmsg;\n    }\n// функция управления рольставнями одной кнопкой\n    lib.CurtainB = (F_name) => { \n        nmsg={};\n        position = global.get(F_name+\"_position\");\n        node.warn (\"OK\");\n        if (global.get(F_name+\"_moving\") == \"STOP\") \n            if (position == 0) {\n                    nmsg.payload = \"OPEN\"; \n                    global.set (F_name+\"_state_old\", \"OPEN\");\n                } else if (position > 98) {\n                    nmsg.payload = \"CLOSE\";  \n                    global.set (F_name+\"_state_old\", \"CLOSE\");\n                } else {\n                    if (global.get (F_name+\"_state_old\") == \"OPEN\") {\n                        nmsg.payload = \"CLOSE\";  \n                        global.set (F_name+\"_state_old\", \"CLOSE\");\n                    } else {\n                        nmsg.payload = \"OPEN\";  \n                        global.set (F_name+\"_state_old\", \"OPEN\");\n                    }\n                }\n            else \n            {\n                nmsg.payload = \"STOP\";\n            }\n        nmsg.topic = \"z2m/\"+F_name+\"/set/state\"\n        return nmsg;\n    }\n// функция управления диммером/реле режим \"переключения\" с ночным режимом\n    lib.Dimmer = (F_name, pos, state) => {\n        nmsg={};\n        if (!pos) { pos = \"\";} else {pos = \"_l\"+pos;}\n        if (!state) {\n            if (global.get(F_name+\"_state\"+pos)) {status = global.get(F_name+\"_state\"+pos);} else {status = global.get(F_name+\"_state\"+pos, \"file\");}  // статус вкл/выкл\n        } else {\n            if (state==\"ON\") {status = \"OFF\"} else {status = \"ON\"}\n        }\n        if (global.get(F_name+\"_brightness\"+pos))   {status_b = global.get(F_name+\"_brightness\"+pos);} else {status_b = global.get(F_name+\"_brightness\"+pos, \"file\");} // текущая яркость\n        status_a = global.get(F_name+\"_setup_night_auto\"+pos, \"file\"); // включен ли ночной режим\n        status_n = global.get(F_name+\"_setup_night_brightness\"+pos, \"file\"); // яркость в ночном режиме\n        status_d = global.get(F_name+\"_setup_day_brightness\"+pos, \"file\");  // яркость в дневном режиме\n        night = global.get(\"setup_night_mode\"); // включен ли ночной режим\n        // сохранение значений яркости в дневном режиме\n        if (night!=\"ON\" || status_a!=\"ON\") {\n            global.set(F_name+\"_setup_day_brightness\"+pos, status_b, \"file\");\n            status_d = global.get(F_name+\"_setup_day_brightness\"+pos, \"file\");\n        }\n        // включение выключение в зависимости от режима\n        if (status==\"ON\") {\n            nmsg.payload =\"OFF\";\n            nmsg.topic = \"z2m/\"+F_name+\"/set/state\"+pos;    \n        } else {\n            if (night==\"ON\" && status_a==\"ON\") {\n                nmsg.payload = status_n;\n                nmsg.topic = \"z2m/\"+F_name+\"/set/brightness\"+pos;                 \n\t        } else {\n                nmsg.payload = status_d;\n                nmsg.topic = \"z2m/\"+F_name+\"/set/brightness\"+pos;  \n            }\n        }\n        return nmsg;\n    } \n// функция управления диммером режим \"диммирование\"     \n    lib.DimmerB = (F_name, pos, brithness) => {\n        nmsg={};\n        if (!pos) { pos = \"\";} else {pos = \"_l\"+pos;}\n        if (!brithness) { brithness = 100;}       \n        nmsg.payload = brithness;\n        nmsg.topic = \"z2m/\"+F_name+\"/set/brithness\"+pos;\n        return nmsg;\n    }\n// функция управления диммером/реле/led режим \"переключения\" без ночного режима\n    lib.Relay = (F_name, pos, state) => {\n        nmsg={};\n        if (!pos) { pos = \"\";} else {pos = \"_l\"+pos;}\n            if (global.get(F_name+\"_state_l\"+pos)) {status = global.get(F_name+\"_state_l\"+pos);} else {status = global.get(F_name+\"_state_l\"+pos, \"file\");}  // статус вкл/выкл\n            nmsg.topic = \"z2m/\"+F_name+\"/set/state_l\"+pos;\n\n        if (!state) {\n            if (status==\"ON\") {status = \"OFF\"} else {status = \"ON\"}\n            nmsg.payload = status;\n        } else {\n            nmsg.payload = state;\n        }\n        return nmsg;\n    }\n// другие функции\n    lib.Temperature = (F_name, bt) => {\n        nmsg={};\n        nmsg.payload = bt;\n        nmsg.topic = \"z2m/\"+F_name+\"/setup_temp\";\n        return nmsg;\n    }\n    lib.Clapan = (F_name, bt) => {\n        nmsg={};\n        nmsg.payload = bt ;\n        nmsg.topic = \"z2m/\"+F_name+\"/set/current_heating_setpoint\";\n        return nmsg;\n    }   \n\n    \nglobal.set('LIB',lib)",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "ae0737d9501f0d6a",
+        "type": "mqtt in",
+        "z": "d2fe843f1408d972",
+        "name": "",
+        "topic": "z2m/#",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 360,
+        "y": 20,
+        "wires": [
+            [
+                "588e3e2e93cac976"
+            ]
+        ]
+    },
+    {
+        "id": "588e3e2e93cac976",
+        "type": "function",
+        "z": "d2fe843f1408d972",
+        "name": "mqtt в переменные",
+        "func": "bt = msg.payload; \ntopic = msg.topic;\nnmsg={};\nflagok=1;\n// удаляем из топика лишнее и заменяем косую черту на подчеркивание\nnp=topic.replace(\"z2m/\",\"\");\nnp=np.replace(\"/\",\"_\");\n// исключаем из переменных устаройства\nif(np.includes(\"bridge\")) {flagok=0;}\nif(!np.includes(\"_\")) {flagok=0;}\n\n// переменные которые надо хранить в файле\ncontext = \"default\";\nif (np.indexOf(\"setup\") > -1 ) {context = \"file\";}\nif (np.indexOf(\"_current_heating_setpoint\") > -1 ) {context = \"file\";}\nif (np.indexOf(\"_local_temperature\") > -1 ) {context = \"file\";}\nif (np.indexOf(\"_state\") > -1 ) {context = \"file\";}\nif (np.indexOf(\"_brightness\") > -1 ) {context = \"file\";}\nif (np.indexOf(\"battery\") > -1) {context = \"file\";}\nif (np.indexOf(\"temperature\") > -1 && np.indexOf(\"Sensor\") > -1 ) {context = \"file\";}\nif (np.indexOf(\"humidity\") > -1    && np.indexOf(\"Sensor\") > -1 ) {context = \"file\";}\n\n// записываем значение в переменную\nif(flagok) {global.set(np, bt, context);}\nif(flagok) {global.set(np, bt);}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 20,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c048011bdfb702b0",
+        "type": "mqtt in",
+        "z": "d2fe843f1408d972",
+        "name": "",
+        "topic": "z2m/Button04/action",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 270,
+        "wires": [
+            [
+                "13ffca12669b65b0"
+            ]
+        ]
+    },
+    {
+        "id": "9bcfe5cd49b53207",
+        "type": "mqtt in",
+        "z": "d2fe843f1408d972",
+        "name": "",
+        "topic": "z2m/Button05/action",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 300,
+        "wires": [
+            [
+                "13ffca12669b65b0"
+            ]
+        ]
+    },
+    {
+        "id": "2dd30bedbb6053a9",
+        "type": "function",
+        "z": "d2fe843f1408d972",
+        "name": "init setting",
+        "func": "cb =8; // количество переменных\nlet bat_cl = [];\n\nbat_cl[1] = \"z2m/setup/night_mode\";\nbat_cl[2] = \"z2m/setup/night_mode_auto\";\nbat_cl[3] = \"z2m/setup/night_mode_on_h\";\nbat_cl[4] = \"z2m/setup/night_mode_on_m\";\nbat_cl[5] = \"z2m/setup/night_mode_off_h\";\nbat_cl[6] = \"z2m/setup/night_mode_off_m\";\n\nbat_cl[7] = \"z2m/Sensor01/setup_temp\";\nbat_cl[8] = \"z2m/Sensor02/setup_temp\";\n\n\n\nfor (let i = 1; i < cb+1; i++) {\n    np=bat_cl[i].replace(\"z2m/\",\"\");\n    np=np.replace(\"/\",\"_\");\n    node.send({topic:bat_cl[i], payload:global.get(np, \"file\")});\n}\nreturn;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 230,
+        "y": 70,
+        "wires": [
+            [
+                "d97f0d77fed5bc2b"
+            ]
+        ]
+    },
+    {
+        "id": "3d2c467c202868a3",
+        "type": "function",
+        "z": "d2fe843f1408d972",
+        "name": "ON",
+        "func": "bt = msg.payload; topic = msg.topic; lib = global.get('LIB')\ntopic = lib.Clear(topic);\nmsg.payload = \"ON\";\nmsg.reset;\nif (global.get(topic+\"_setup_auto\")==\"ON\"){\nreturn msg;\n} else {\nreturn;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 380,
+        "wires": [
+            [
+                "93a98354cfe1f1fa",
+                "13ffca12669b65b0"
+            ]
+        ]
+    },
+    {
+        "id": "08ad3955a75a31e4",
+        "type": "function",
+        "z": "d2fe843f1408d972",
+        "name": "OFF",
+        "func": "bt = msg.payload; topic = msg.topic; lib = global.get('LIB')\ntopic = lib.Clear(topic);\nmsg.payload = \"OFF\";\nmsg.delay = parseInt(global.get(topic+\"_setup_sec\"))*1000;\nif (global.get(topic+\"_setup_auto\")==\"ON\"){\nreturn msg;\n} else {\nreturn;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 410,
+        "wires": [
+            [
+                "93a98354cfe1f1fa"
+            ]
+        ]
+    },
+    {
+        "id": "93a98354cfe1f1fa",
+        "type": "trigger",
+        "z": "d2fe843f1408d972",
+        "name": "delay",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "250",
+        "extend": true,
+        "overrideDelay": true,
+        "units": "ms",
+        "reset": "ON",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 470,
+        "y": 410,
+        "wires": [
+            [
+                "13ffca12669b65b0"
+            ]
+        ]
+    },
+    {
+        "id": "44dc9973926187a7",
+        "type": "switch",
+        "z": "d2fe843f1408d972",
+        "name": "door",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 200,
+        "y": 400,
+        "wires": [
+            [
+                "3d2c467c202868a3"
+            ],
+            [
+                "08ad3955a75a31e4"
+            ]
+        ]
+    },
+    {
+        "id": "ee3009680206a50b",
+        "type": "mqtt in",
+        "z": "d2fe843f1408d972",
+        "name": "Contact01",
+        "topic": "z2m/Contact01/contact",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 70,
+        "y": 400,
+        "wires": [
+            [
+                "44dc9973926187a7"
+            ]
+        ]
+    },
+    {
+        "id": "487e3af94eb645f1",
+        "type": "mqtt in",
+        "z": "d2fe843f1408d972",
+        "name": "Motion01",
+        "topic": "z2m/Motion01/occupancy",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 70,
+        "y": 460,
+        "wires": [
+            [
+                "e761f02a974fa214"
+            ]
+        ]
+    },
+    {
+        "id": "e761f02a974fa214",
+        "type": "switch",
+        "z": "d2fe843f1408d972",
+        "name": "motion",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 200,
+        "y": 460,
+        "wires": [
+            [
+                "26419fc841c835c3"
+            ],
+            [
+                "6f834ad63da5fbaa"
+            ]
+        ]
+    },
+    {
+        "id": "26419fc841c835c3",
+        "type": "function",
+        "z": "d2fe843f1408d972",
+        "name": "ON",
+        "func": "bt = msg.payload; topic = msg.topic; lib = global.get('LIB')\ntopic = lib.Clear(topic);\nmsg.payload = \"ON\";\nmsg.reset;\nif (global.get(topic+\"_setup_auto\")==\"ON\"){\nreturn msg;\n} else {\nreturn;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 440,
+        "wires": [
+            [
+                "cfe563c4c50236b7",
+                "13ffca12669b65b0"
+            ]
+        ]
+    },
+    {
+        "id": "6f834ad63da5fbaa",
+        "type": "function",
+        "z": "d2fe843f1408d972",
+        "name": "OFF",
+        "func": "bt = msg.payload; topic = msg.topic; lib = global.get('LIB')\ntopic = lib.Clear(topic);\nmsg.payload = \"OFF\";\nmsg.delay = parseInt(global.get(topic+\"_setup_sec\"))*1000;\nif (global.get(topic+\"_setup_auto\")==\"ON\"){\nreturn msg;\n} else {\nreturn;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 470,
+        "wires": [
+            [
+                "cfe563c4c50236b7"
+            ]
+        ]
+    },
+    {
+        "id": "cfe563c4c50236b7",
+        "type": "trigger",
+        "z": "d2fe843f1408d972",
+        "name": "delay",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "payl",
+        "duration": "250",
+        "extend": true,
+        "overrideDelay": true,
+        "units": "ms",
+        "reset": "ON",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 470,
+        "y": 470,
+        "wires": [
+            [
+                "13ffca12669b65b0"
+            ]
+        ]
+    },
+    {
+        "id": "8a23e375d999422b",
+        "type": "delay",
+        "z": "d2fe843f1408d972",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "13ffca12669b65b0"
+            ]
+        ]
+    },
+    {
+        "id": "97c620393f222967",
+        "type": "ui_switch",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "label": "douсhe",
+        "tooltip": "",
+        "group": "9f213c40125a5160",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "Dimmer01_1",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 340,
+        "y": 40,
+        "wires": [
+            [
+                "c4af44a4e81a0254"
+            ]
+        ]
+    },
+    {
+        "id": "5247f0b414c41919",
+        "type": "mqtt out",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9b93b44814325e7b",
+        "x": 770,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "c4af44a4e81a0254",
+        "type": "function",
+        "z": "00b963ce86642bd1",
+        "name": "function",
+        "func": "bt = msg.payload; topic = msg.topic; lib = global.get('LIB') // подключаем функции\ntopic = lib.Clear(topic); // используем функцию Clear для очистки топика\n\nif (topic == \"Dimmer01_1\")      {node.send(lib.Dimmers(\"Dimmer01\", 1, bt))}\nif (topic == \"Dimmer01_2\")      {node.send(lib.Dimmers(\"Dimmer01\", 2, bt))}\nif (topic == \"Dimmer02_1\")      {node.send(lib.DimmersOLD(\"Dimmer02\", 1, bt))}\nif (topic == \"Dimmer02_2\")      {node.send(lib.DimmersOLD(\"Dimmer02\", 2, bt))}\n\nreturn;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 80,
+        "wires": [
+            [
+                "5247f0b414c41919"
+            ]
+        ]
+    },
+    {
+        "id": "009a1d4d93a39b3d",
+        "type": "ui_switch",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "label": "toilette",
+        "tooltip": "",
+        "group": "9f213c40125a5160",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "Dimmer01_2",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 330,
+        "y": 70,
+        "wires": [
+            [
+                "c4af44a4e81a0254"
+            ]
+        ]
+    },
+    {
+        "id": "900bb323ea595250",
+        "type": "mqtt in",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "z2m/Dimmer01/state_l1",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 120,
+        "y": 40,
+        "wires": [
+            [
+                "97c620393f222967"
+            ]
+        ]
+    },
+    {
+        "id": "ac98062fc533b6ac",
+        "type": "mqtt in",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "z2m/Dimmer01/state_l2",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 120,
+        "y": 70,
+        "wires": [
+            [
+                "009a1d4d93a39b3d"
+            ]
+        ]
+    },
+    {
+        "id": "3a050733556cbece",
+        "type": "ui_slider",
+        "z": "00b963ce86642bd1",
+        "name": "douche",
+        "label": "",
+        "tooltip": "",
+        "group": "9f213c40125a5160",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "255",
+        "step": 1,
+        "className": "",
+        "x": 340,
+        "y": 290,
+        "wires": [
+            [
+                "36f1c3304a597d8f"
+            ]
+        ]
+    },
+    {
+        "id": "ff5165f50b39a170",
+        "type": "mqtt in",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "z2m/Dimmer01/brightness_l1",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 140,
+        "y": 290,
+        "wires": [
+            [
+                "3a050733556cbece"
+            ]
+        ]
+    },
+    {
+        "id": "36f1c3304a597d8f",
+        "type": "mqtt out",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "z2m/Dimmer01/set/brightness_l1",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9b93b44814325e7b",
+        "x": 620,
+        "y": 290,
+        "wires": []
+    },
+    {
+        "id": "4acf82c2961f9d71",
+        "type": "ui_slider",
+        "z": "00b963ce86642bd1",
+        "name": "toilette",
+        "label": "",
+        "tooltip": "",
+        "group": "9f213c40125a5160",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "255",
+        "step": 1,
+        "className": "",
+        "x": 330,
+        "y": 320,
+        "wires": [
+            [
+                "145adf52a05bbe8e"
+            ]
+        ]
+    },
+    {
+        "id": "5f4815cfa3091d91",
+        "type": "mqtt in",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "z2m/Dimmer01/brightness_l2",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 140,
+        "y": 320,
+        "wires": [
+            [
+                "4acf82c2961f9d71"
+            ]
+        ]
+    },
+    {
+        "id": "145adf52a05bbe8e",
+        "type": "mqtt out",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "z2m/Dimmer01/set/brightness_l2",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9b93b44814325e7b",
+        "x": 620,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "f2a7f6b8e08484af",
+        "type": "ui_switch",
+        "z": "00b963ce86642bd1",
+        "name": "centre",
+        "label": "centre",
+        "tooltip": "",
+        "group": "d66224eb2e38880f",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "Dimmer02_1",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 330,
+        "y": 100,
+        "wires": [
+            [
+                "c4af44a4e81a0254"
+            ]
+        ]
+    },
+    {
+        "id": "7504b74526387530",
+        "type": "ui_switch",
+        "z": "00b963ce86642bd1",
+        "name": "cusine",
+        "label": "cusine",
+        "tooltip": "",
+        "group": "d66224eb2e38880f",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "Dimmer02_2",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 330,
+        "y": 130,
+        "wires": [
+            [
+                "c4af44a4e81a0254"
+            ]
+        ]
+    },
+    {
+        "id": "32f3dfc2a4b986d1",
+        "type": "mqtt in",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "z2m/Dimmer02/state_l1",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 120,
+        "y": 100,
+        "wires": [
+            [
+                "f2a7f6b8e08484af"
+            ]
+        ]
+    },
+    {
+        "id": "469f86b4945ed75b",
+        "type": "mqtt in",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "z2m/Dimmer02/state_l2",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 120,
+        "y": 130,
+        "wires": [
+            [
+                "7504b74526387530"
+            ]
+        ]
+    },
+    {
+        "id": "e262a52679458a6b",
+        "type": "ui_slider",
+        "z": "00b963ce86642bd1",
+        "name": "centre",
+        "label": "",
+        "tooltip": "",
+        "group": "d66224eb2e38880f",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "255",
+        "step": 1,
+        "className": "",
+        "x": 330,
+        "y": 350,
+        "wires": [
+            [
+                "33db660c0b5059a3"
+            ]
+        ]
+    },
+    {
+        "id": "fa741fd8936ebeeb",
+        "type": "mqtt in",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "z2m/Dimmer02/brightness_l1",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 140,
+        "y": 350,
+        "wires": [
+            [
+                "e262a52679458a6b"
+            ]
+        ]
+    },
+    {
+        "id": "33db660c0b5059a3",
+        "type": "mqtt out",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "z2m/Dimmer02/set/brightness_l1",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9b93b44814325e7b",
+        "x": 620,
+        "y": 350,
+        "wires": []
+    },
+    {
+        "id": "f02dda6d5b13a7c0",
+        "type": "ui_slider",
+        "z": "00b963ce86642bd1",
+        "name": "cusine",
+        "label": "",
+        "tooltip": "",
+        "group": "d66224eb2e38880f",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "255",
+        "step": 1,
+        "className": "",
+        "x": 330,
+        "y": 380,
+        "wires": [
+            [
+                "8c1a13bed38c16d6"
+            ]
+        ]
+    },
+    {
+        "id": "f50a59a6ce736109",
+        "type": "mqtt in",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "z2m/Dimmer02/brightness_l2",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 140,
+        "y": 380,
+        "wires": [
+            [
+                "f02dda6d5b13a7c0"
+            ]
+        ]
+    },
+    {
+        "id": "8c1a13bed38c16d6",
+        "type": "mqtt out",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "z2m/Dimmer02/set/brightness_l2",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9b93b44814325e7b",
+        "x": 620,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "1185aaa8b3e1b014",
+        "type": "inject",
+        "z": "9ebd4f1c6b6cc455",
+        "name": "OnNewMinute",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "1",
+        "payload": "OnNewMinute",
+        "payloadType": "str",
+        "x": 120,
+        "y": 20,
+        "wires": [
+            [
+                "6b5388686c87fa13",
+                "044dae9ed20b9fe9",
+                "f140f639dfca341f",
+                "cf5b6c43168c5b41"
+            ]
+        ]
+    },
+    {
+        "id": "9d2a54426cd1a664",
+        "type": "mqtt out",
+        "z": "9ebd4f1c6b6cc455",
+        "name": "",
+        "topic": "",
+        "qos": "1",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9b93b44814325e7b",
+        "x": 640,
+        "y": 190,
+        "wires": []
+    },
+    {
+        "id": "6b5388686c87fa13",
+        "type": "function",
+        "z": "9ebd4f1c6b6cc455",
+        "name": "termostat",
+        "func": "cb = 1; // количество термостатов\nlet bat_cl = []; let pl = []; let bat_clt = []; let nmsg = [];\n// реле управляемые клапанами отопления или теплым полом\n// номер массива = номер сенсора\n// (NO нормально открытый, NC - нормально закрытый/ теплый пол)\nbat_cl[1] = \"z2m/Relay01/set/state_l1\"; bat_clt[1] = \"NO\";\n\nfor (let i = 1; i < cb+1; i++) {\n    if (i<10){l=\"0\"+i;} else {l=\"\"+i;}\n    temp_sensor = global.get(\"Sensor\"+l+\"_temperature\");\n    temp_set = global.get(\"Sensor\"+l+\"_setup_temp\");\n    if (temp_sensor > temp_set) {\n        if (bat_clt[i] == \"NO\") {\n            pl[i] = \"ON\";            \n        }else{\n            pl[i] = \"OFF\";            \n        }\n    } else {\n        if (bat_clt[i] == \"NO\") {\n            pl[i] = \"OFF\";            \n        }else{\n            pl[i] = \"ON\";            \n        } \n    }\n    //nmsg[i] = {payload: pl[i], topic: bat_cl[i]}\n    node.send({payload: pl[i], topic: bat_cl[i]});\n}\n\n//return [nmsg[1],nmsg[2],nmsg[3],nmsg[4],nmsg[5],nmsg[6],nmsg[7],nmsg[8],nmsg[9],nmsg[10],nmsg[11],nmsg[12]]\nreturn;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 190,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "044dae9ed20b9fe9",
+        "type": "function",
+        "z": "9ebd4f1c6b6cc455",
+        "name": "Battery_button",
+        "func": "cb = 5; // количество выключателей\nlet bat_cl = [];\nlet sym = [];\nlet col = [];\nlet nmsg = [];\n\nfor (let i = 1; i < cb+1; i++) {\n    if (i<10){l=\"0\"+i;} else {l=\"\"+i;}\n    nam_cl = \"Button\"+l+\"_battery\"\n    bat_cl[i] = global.get(nam_cl, \"file\");\n    var foo = bat_cl[i];\n    switch (true) {\n        case foo >= 90 && foo <= 100:\n            sym[i] = \"fa-battery-full\"; col[i] = \"green\";\n            break;\n        case foo >= 75 && foo < 90:\n            sym[i] = \"fa-battery-three-quarters\"; col[i] = \"green\";\n            break;\n        case foo >= 50 && foo < 75:\n            sym[i] = \"fa-battery-half\"; col[i] = \"yellow\";\n            break;\n        case foo >= 25 && foo < 50:\n            sym[i] = \"fa-battery-quarter\"; col[i] = \"orange\";\n            break;\n        case foo >= 0 && foo < 25:\n            sym[i] = \"fa-battery-empty\"; col[i] = \"red\";\n            break;\n        default:\n            sym[i] = \"fa-battery-empty\"; col[i] = \"gray\";\n            break;\n    }\nnmsg[i] = {payload: '<font color = \"'+col[i]+'\" i class=\"fa '+sym[i]+' fa-2x \"></i>'}\n}\n\nreturn [nmsg[1],nmsg[2],nmsg[3],nmsg[4],nmsg[5],nmsg[6],nmsg[7],nmsg[8],nmsg[9],nmsg[10],nmsg[11],nmsg[12],nmsg[13],nmsg[14],nmsg[15],nmsg[16],nmsg[17],nmsg[18],nmsg[19]];\n",
+        "outputs": 5,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 360,
+        "wires": [
+            [
+                "aea2b68bf472bbf8"
+            ],
+            [
+                "9a0a07ae4df99927"
+            ],
+            [
+                "0ae8ca3e167ade50"
+            ],
+            [
+                "092052f23a605f70"
+            ],
+            [
+                "79d70410ae61c7ba"
+            ]
+        ]
+    },
+    {
+        "id": "aea2b68bf472bbf8",
+        "type": "ui_text",
+        "z": "9ebd4f1c6b6cc455",
+        "group": "4289f43d63cf25ed",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "01 🔳 Douche",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 660,
+        "y": 310,
+        "wires": []
+    },
+    {
+        "id": "f140f639dfca341f",
+        "type": "function",
+        "z": "9ebd4f1c6b6cc455",
+        "name": "Battery_sensor",
+        "func": "cb = 3; // количество сеносоров\nlet bat_cl = [];\nlet sym = [];\nlet col = [];\nlet nmsg = [];\n\nfor (let i = 1; i < cb+1; i++) {\n    if (i<10){l=\"0\"+i;} else {l=\"\"+i;}\n    nam_cl = \"Sensor\"+l+\"_battery\"\n    bat_cl[i] = global.get(nam_cl, \"file\");\n    var foo = bat_cl[i];\n    switch (true) { // Постоянное значение true вместо foo\n        case foo >= 90 && foo <= 100:\n            sym[i] = \"fa-battery-full\"; col[i] = \"green\";\n            break;\n        case foo >= 75 && foo < 90:\n            sym[i] = \"fa-battery-three-quarters\"; col[i] = \"green\";\n            break;\n        case foo >= 50 && foo < 75:\n            sym[i] = \"fa-battery-half\"; col[i] = \"yellow\";\n            break;\n        case foo >= 25 && foo < 50:\n            sym[i] = \"fa-battery-quarter\"; col[i] = \"orange\";\n            break;\n        case foo >= 0 && foo < 25:\n            sym[i] = \"fa-battery-empty\"; col[i] = \"red\";\n            break;\n        default:\n            sym[i] = \"fa-battery-empty\"; col[i] = \"gray\";\n            break;\n    }\nnmsg[i] = {payload: '<font color = \"'+col[i]+'\" i class=\"fa '+sym[i]+' fa-2x \"></i>'}\n}\n\nreturn [nmsg[1],nmsg[2],nmsg[3],nmsg[4],nmsg[5],nmsg[6],nmsg[7],nmsg[8],nmsg[9],nmsg[10],nmsg[11],nmsg[12],nmsg[13],nmsg[14],nmsg[15],nmsg[16],nmsg[17],nmsg[18],nmsg[19]];\n",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 510,
+        "wires": [
+            [
+                "fc7930d98436a52c"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "fc7930d98436a52c",
+        "type": "ui_text",
+        "z": "9ebd4f1c6b6cc455",
+        "group": "4289f43d63cf25ed",
+        "order": 15,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "01🌡️Douche",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 640,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "9a0a07ae4df99927",
+        "type": "ui_text",
+        "z": "9ebd4f1c6b6cc455",
+        "group": "4289f43d63cf25ed",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "02 🔳 Cusine",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 650,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "0ae8ca3e167ade50",
+        "type": "ui_text",
+        "z": "9ebd4f1c6b6cc455",
+        "group": "4289f43d63cf25ed",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "03 🔳 ???",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 640,
+        "y": 370,
+        "wires": []
+    },
+    {
+        "id": "092052f23a605f70",
+        "type": "ui_text",
+        "z": "9ebd4f1c6b6cc455",
+        "group": "4289f43d63cf25ed",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "04 🔳 ???",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 640,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "79d70410ae61c7ba",
+        "type": "ui_text",
+        "z": "9ebd4f1c6b6cc455",
+        "group": "4289f43d63cf25ed",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "05 🔳 ???",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 640,
+        "y": 430,
+        "wires": []
+    },
+    {
+        "id": "cf5b6c43168c5b41",
+        "type": "function",
+        "z": "9ebd4f1c6b6cc455",
+        "name": "sensor1",
+        "func": "cb = 1; // количество термостатов\nlet bat_cl = []; let pl = []; let bat_clt = []; let nmsg = [];\n// реле управляемые клапанами отопления или теплым полом\n// номер массива = номер сенсора\n// (NO нормально открытый, NC - нормально закрытый/ теплый пол)\nbat_cl[1] = global.get(\"Relay01_state_l1\"); bat_clt[1] = \"NO\";\n\n\n\n\nfor (let i = 1; i < cb+1; i++) {\n    if (i<10){l=\"0\"+i;} else {l=\"\"+i;}\n    nam_cl = Math.round(global.get(\"Sensor\"+l+\"_temperature\")/2)*2;\n    nam_cl2 = Math.round(global.get(\"Sensor\"+l+\"_humidity\"));\n    nam_cc = global.get(\"Sensor\"+l+\"_setup_temp\", \"file\")\n    if (bat_clt[i]==\"NO\") {\n        if (bat_cl[i]==\"OFF\") {color = \"red\"} else {color = \"blue\"} // для нормально открытых клапанов\n    } else {\n        if (bat_cl[i]==\"OFF\") {color = \"blue\"} else {color = \"red\"} // для нормально открытых клапанов\n    }\n    nmsg[i] = {payload: '<font color=\"'+color+'\">🌡️'+nam_cl+'°C ('+nam_cc+')</font> 💦'+nam_cl2+'%'}\n}\n\nreturn [nmsg[1],nmsg[2],nmsg[3],nmsg[4],nmsg[5],nmsg[6],nmsg[7],nmsg[8],nmsg[9],nmsg[10],nmsg[11],nmsg[12]]\n",
+        "outputs": 6,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 50,
+        "wires": [
+            [
+                "29515337c42f0bfe"
+            ],
+            [],
+            [],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "29515337c42f0bfe",
+        "type": "ui_text",
+        "z": "9ebd4f1c6b6cc455",
+        "group": "9f213c40125a5160",
+        "order": 1,
+        "width": "5",
+        "height": "1",
+        "name": "temp01",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 590,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "9f77369ab36eca7b",
+        "type": "ui_button",
+        "z": "6aaa81f996b4566a",
+        "name": "1 Up",
+        "group": "c3860422bbb7d03c",
+        "order": 1,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-arrow-up fa-2x",
+        "payload": "OPEN",
+        "payloadType": "str",
+        "topic": "z2m/Curtain01/set/state",
+        "topicType": "str",
+        "x": 100,
+        "y": 50,
+        "wires": [
+            [
+                "d94e56d5a98bc3e9"
+            ]
+        ]
+    },
+    {
+        "id": "f7359eeb1c31fad4",
+        "type": "ui_button",
+        "z": "6aaa81f996b4566a",
+        "name": "1 Down",
+        "group": "c3860422bbb7d03c",
+        "order": 3,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-arrow-down fa-2x",
+        "payload": "CLOSE",
+        "payloadType": "str",
+        "topic": "z2m/Curtain01/set/state",
+        "topicType": "str",
+        "x": 110,
+        "y": 110,
+        "wires": [
+            [
+                "d94e56d5a98bc3e9"
+            ]
+        ]
+    },
+    {
+        "id": "9c10101b478aeab0",
+        "type": "ui_button",
+        "z": "6aaa81f996b4566a",
+        "name": "1 Stop",
+        "group": "c3860422bbb7d03c",
+        "order": 2,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-stop-circle fa-2x",
+        "payload": "STOP",
+        "payloadType": "str",
+        "topic": "z2m/Curtain01/set/state",
+        "topicType": "str",
+        "x": 100,
+        "y": 80,
+        "wires": [
+            [
+                "d94e56d5a98bc3e9"
+            ]
+        ]
+    },
+    {
+        "id": "d94e56d5a98bc3e9",
+        "type": "mqtt out",
+        "z": "6aaa81f996b4566a",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9b93b44814325e7b",
+        "x": 360,
+        "y": 70,
+        "wires": []
+    },
+    {
+        "id": "2af4eb72f03e7273",
+        "type": "mqtt out",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9b93b44814325e7b",
+        "x": 890,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "bba0f328b966efb7",
+        "type": "ui_switch",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "label": "Mode nuit",
+        "tooltip": "",
+        "group": "0517c125b20ddbb5",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "decouple": "true",
+        "topic": "z2m/setup/night_mode",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 400,
+        "y": 40,
+        "wires": [
+            [
+                "2af4eb72f03e7273"
+            ]
+        ]
+    },
+    {
+        "id": "33d42e9fe1728cd8",
+        "type": "ui_numeric",
+        "z": "52059dee97b6a94b",
+        "name": "включение час.",
+        "label": "ON",
+        "tooltip": "",
+        "group": "0517c125b20ddbb5",
+        "order": 2,
+        "width": "4",
+        "height": "1",
+        "wrap": true,
+        "passthru": true,
+        "topic": "z2m/setup/night_mode_on_h",
+        "topicType": "str",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "23",
+        "step": 1,
+        "className": "",
+        "x": 420,
+        "y": 100,
+        "wires": [
+            [
+                "2af4eb72f03e7273"
+            ]
+        ]
+    },
+    {
+        "id": "f9b9c1521cf22fd9",
+        "type": "ui_numeric",
+        "z": "52059dee97b6a94b",
+        "name": "включение мин.",
+        "label": "",
+        "tooltip": "",
+        "group": "0517c125b20ddbb5",
+        "order": 3,
+        "width": "2",
+        "height": "1",
+        "wrap": true,
+        "passthru": true,
+        "topic": "z2m/setup/night_mode_on_m",
+        "topicType": "str",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "59",
+        "step": 1,
+        "className": "",
+        "x": 420,
+        "y": 130,
+        "wires": [
+            [
+                "2af4eb72f03e7273"
+            ]
+        ]
+    },
+    {
+        "id": "7cc0ee8bd3a473f5",
+        "type": "mqtt in",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "topic": "z2m/setup/night_mode",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 150,
+        "y": 40,
+        "wires": [
+            [
+                "bba0f328b966efb7"
+            ]
+        ]
+    },
+    {
+        "id": "6285d48049f62c51",
+        "type": "mqtt in",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "topic": "z2m/setup/night_mode_on_h",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "33d42e9fe1728cd8"
+            ]
+        ]
+    },
+    {
+        "id": "f0e91b6258f1d934",
+        "type": "mqtt in",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "topic": "z2m/setup/night_mode_on_m",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 170,
+        "y": 130,
+        "wires": [
+            [
+                "f9b9c1521cf22fd9"
+            ]
+        ]
+    },
+    {
+        "id": "6fe983dbe3a8c2dc",
+        "type": "ui_numeric",
+        "z": "52059dee97b6a94b",
+        "name": "выключение час.",
+        "label": "OFF",
+        "tooltip": "",
+        "group": "0517c125b20ddbb5",
+        "order": 4,
+        "width": "4",
+        "height": "1",
+        "wrap": true,
+        "passthru": true,
+        "topic": "z2m/setup/night_mode_off_h",
+        "topicType": "str",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "23",
+        "step": 1,
+        "className": "",
+        "x": 430,
+        "y": 160,
+        "wires": [
+            [
+                "2af4eb72f03e7273"
+            ]
+        ]
+    },
+    {
+        "id": "0b02eccce735ee03",
+        "type": "ui_numeric",
+        "z": "52059dee97b6a94b",
+        "name": "выключение мин.",
+        "label": "",
+        "tooltip": "",
+        "group": "0517c125b20ddbb5",
+        "order": 5,
+        "width": "2",
+        "height": "1",
+        "wrap": true,
+        "passthru": true,
+        "topic": "z2m/setup/night_mode_off_m",
+        "topicType": "str",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "59",
+        "step": 1,
+        "className": "",
+        "x": 430,
+        "y": 190,
+        "wires": [
+            [
+                "2af4eb72f03e7273"
+            ]
+        ]
+    },
+    {
+        "id": "2eaaeaeaa7413ab5",
+        "type": "mqtt in",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "topic": "z2m/setup/night_mode_off_h",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 170,
+        "y": 160,
+        "wires": [
+            [
+                "6fe983dbe3a8c2dc"
+            ]
+        ]
+    },
+    {
+        "id": "2330125cbaf2c073",
+        "type": "mqtt in",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "topic": "z2m/setup/night_mode_off_m",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 170,
+        "y": 190,
+        "wires": [
+            [
+                "0b02eccce735ee03"
+            ]
+        ]
+    },
+    {
+        "id": "7341b987e6a8293b",
+        "type": "mqtt in",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "topic": "z2m/setup/night_mode_auto",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 170,
+        "y": 70,
+        "wires": [
+            [
+                "95a8a1bde7147701"
+            ]
+        ]
+    },
+    {
+        "id": "95a8a1bde7147701",
+        "type": "ui_switch",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "label": "Mode nuit auto",
+        "tooltip": "",
+        "group": "0517c125b20ddbb5",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "decouple": "true",
+        "topic": "z2m/setup/night_mode_auto",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 420,
+        "y": 70,
+        "wires": [
+            [
+                "2af4eb72f03e7273"
+            ]
+        ]
+    },
+    {
+        "id": "7e77c8791a3623fc",
+        "type": "ui_slider",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "label": "Douche🌡️°C",
+        "tooltip": "",
+        "group": "5d7d7d06793bedc4",
+        "order": 0,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "outs": "end",
+        "topic": "z2m/Sensor01/setup_temp",
+        "topicType": "str",
+        "min": "5",
+        "max": "35",
+        "step": 1,
+        "className": "",
+        "x": 410,
+        "y": 250,
+        "wires": [
+            [
+                "2af4eb72f03e7273"
+            ]
+        ]
+    },
+    {
+        "id": "e49957b1b39501d2",
+        "type": "mqtt in",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "topic": "z2m/Sensor01/setup_temp",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 160,
+        "y": 250,
+        "wires": [
+            [
+                "7e77c8791a3623fc"
+            ]
+        ]
+    },
+    {
+        "id": "a63fbb76f4898636",
+        "type": "mqtt in",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "topic": "z2m/Sensor02/setup_temp",
+        "qos": "1",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 160,
+        "y": 280,
+        "wires": [
+            [
+                "b6c0bb10121e3188"
+            ]
+        ]
+    },
+    {
+        "id": "b6c0bb10121e3188",
+        "type": "ui_slider",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "label": "Cusine🌡️°C",
+        "tooltip": "",
+        "group": "5d7d7d06793bedc4",
+        "order": 0,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "outs": "end",
+        "topic": "z2m/Sensor01/setup_temp",
+        "topicType": "str",
+        "min": "5",
+        "max": "35",
+        "step": 1,
+        "className": "",
+        "x": 410,
+        "y": 280,
+        "wires": [
+            [
+                "2af4eb72f03e7273"
+            ]
+        ]
+    },
+    {
+        "id": "4eeae5c51a363233",
+        "type": "mqtt out",
+        "z": "aefbbb6f1de059d7",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5d83e98f.94bfa8",
+        "x": 250,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "c76259443da5e5d9",
+        "type": "ui_button",
+        "z": "aefbbb6f1de059d7",
+        "name": "",
+        "group": "e1a180a18950c296",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "JOIN",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "{\"value\": true, \"time\": 50}",
+        "payloadType": "str",
+        "topic": "z2m/bridge/request/permit_join",
+        "topicType": "str",
+        "x": 90,
+        "y": 40,
+        "wires": [
+            [
+                "4eeae5c51a363233"
+            ]
+        ]
+    },
+    {
+        "id": "428ff304e7dd2ed3",
+        "type": "mqtt in",
+        "z": "8041c166b7c7bd3f",
+        "name": "",
+        "topic": "lumi/btn0/action",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 110,
+        "wires": [
+            [
+                "6ab251ed58a85e59",
+                "b3da786ae712777f"
+            ]
+        ]
+    },
+    {
+        "id": "b3da786ae712777f",
+        "type": "function",
+        "z": "8041c166b7c7bd3f",
+        "name": "",
+        "func": "bt = msg.payload; topic = msg.topic;\nkey = msg.payload;\nstate = global.get(\"led_state_t\");\nnmsg={};\nnmsg.topic = \"lumi/light/set\"\n\nif (key == \"single\") {\nnmsg.payload = '{\"state\": \"'+state+'\", \"brightness\": 255, \"color\": {\"r\": 255, \"g\": 255, \"b\": 255}}'; \nnode.send(nmsg);   \n}\nif (key ==\"double\") {\nnmsg.payload = '{\"state\": \"'+state+'\", \"brightness\": 255, \"color\": {\"r\": 255, \"g\": 0, \"b\": 0}}'; \nnode.send(nmsg);   \n}\nif (key == \"quadruple\") {\nnmsg.payload = '{\"state\": \"'+state+'\", \"brightness\": 255, \"color\": {\"r\": 0, \"g\": 0, \"b\": 255}}'; \nnode.send(nmsg);   \n}\nif (key == \"hold\") {\nnmsg.payload = '{\"state\": \"'+state+'\", \"brightness\": 255, \"color\": {\"r\": 50, \"g\": 0, \"b\": 50}}'; \nnode.send(nmsg);   \n}\n\n\n\nreturn;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 110,
+        "wires": [
+            [
+                "5873c12f485df839"
+            ]
+        ]
+    },
+    {
+        "id": "6ab251ed58a85e59",
+        "type": "function",
+        "z": "8041c166b7c7bd3f",
+        "name": "permit_join",
+        "func": "bt = msg.payload; topic = msg.topic;\nkey = msg.payload;\nnmsg={};\npermit_join = 20; // количество секунд для подключения\n\nif (key == \"triple\") {\nnmsg.payload = '{\"value\": true, \"time\": '+permit_join+'}'; \nnmsg.topic = \"z2m/bridge/request/permit_join\";\nnmsg.reset;\nnode.send(nmsg);\n\nnmsg.payload = '{\"state\": \"ON\", \"brightness\": 255, \"color\": {\"r\": 50, \"g\": 0, \"b\": 50}}'; \nnmsg.topic = \"lumi/light/set\"\nnmsg.delay = parseInt(permit_join)*1000;\nnode.send(nmsg);  \n}\nreturn;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 140,
+        "wires": [
+            [
+                "9f586d08eb2a1045",
+                "5873c12f485df839"
+            ]
+        ]
+    },
+    {
+        "id": "9f586d08eb2a1045",
+        "type": "trigger",
+        "z": "8041c166b7c7bd3f",
+        "name": "delay",
+        "op1": "",
+        "op2": "{\"state\": \"OFF\"}",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "250",
+        "extend": true,
+        "overrideDelay": true,
+        "units": "ms",
+        "reset": "toggle",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 630,
+        "y": 140,
+        "wires": [
+            [
+                "5873c12f485df839"
+            ]
+        ]
+    },
+    {
+        "id": "5873c12f485df839",
+        "type": "mqtt out",
+        "z": "8041c166b7c7bd3f",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9b93b44814325e7b",
+        "x": 840,
+        "y": 70,
+        "wires": []
+    },
+    {
+        "id": "eba945baa391ebdb",
+        "type": "mqtt in",
+        "z": "8041c166b7c7bd3f",
+        "name": "",
+        "topic": "lumi/light",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 50,
+        "wires": [
+            [
+                "cb15675a2b27a469"
+            ]
+        ]
+    },
+    {
+        "id": "cb15675a2b27a469",
+        "type": "function",
+        "z": "8041c166b7c7bd3f",
+        "name": "led state",
+        "func": "bt = JSON.parse(msg.payload);\nkey = bt.state;\nif (key == \"ON\") {key2 = \"OFF\";} else {key2 = \"ON\";}\nglobal.set(\"led_state\", key); // состояние\nglobal.set(\"led_state_t\", key2); // для переключения (противоположное состоянию)\nreturn;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 50,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5775848c40143ffc",
+        "type": "inject",
+        "z": "8041c166b7c7bd3f",
+        "name": "TOGGLE",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "lumi/light/set",
+        "payload": "'{\"state\": \"'&\t$globalContext(\"led_state_t\")\t&'\"}'\t",
+        "payloadType": "jsonata",
+        "x": 460,
+        "y": 50,
+        "wires": [
+            [
+                "5873c12f485df839"
+            ]
+        ]
+    }
+]
