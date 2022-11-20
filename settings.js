@@ -2,12 +2,7 @@ module.exports = {
 // создать пароль: с консоли: node-red admin hash-pw
     flowFile: 'flows.json',
     flowFilePretty: true,
-    adminAuth: {
-        type: "credentials",
-        users: [{
-            username: "admin",password:"$2b$08$I48A8LbtIdDs.dFKCzwb/uSLDJqS1N7ZiyEb0mgUdF5nOuyBEJcf6",permissions: "*"
-        }]
-    },
+    adminAuth: {type: "credentials", users: [{username: "admin",password:"$2b$08$I48A8LbtIdDs.dFKCzwb/uSLDJqS1N7ZiyEb0mgUdF5nOuyBEJcf6",permissions: "*"}]},
     httpNodeAuth: {user:"user",pass:"$2b$08$I48A8LbtIdDs.dFKCzwb/uSLDJqS1N7ZiyEb0mgUdF5nOuyBEJcf6"},
     uiPort: process.env.PORT || 80,
     httpAdminRoot: '/admin',
