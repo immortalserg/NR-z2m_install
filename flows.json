@@ -318,6 +318,32 @@
         "className": ""
     },
     {
+        "id": "450ac4c9b5c2acc6",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "a2490d0e.a872b",
+        "type": "ui_tab",
+        "name": "Homey Dashboard",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "c63b7d19.a7f4f",
+        "type": "ui_tab",
+        "name": "Homey Dashboard 2",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
         "id": "0ad78fbf8ae4c6ba",
         "type": "mqtt in",
         "z": "2144910b2b1a973a",
@@ -944,17 +970,15 @@
         "type": "function",
         "z": "00b963ce86642bd1",
         "name": "function",
-        "func": "bt = msg.payload; topic = msg.topic; lib = global.get('LIB') // подключаем функции\ntopic = lib.Clear(topic); // используем функцию Clear для очистки топика\n\nif (topic == \"Dimmer01_1\")      {lib.Dimmers(\"Dimmer01\", 1, bt)}\nif (topic == \"Dimmer01_2\")      {lib.Dimmers(\"Dimmer01\", 2, bt)}\nif (topic == \"Dimmer02_1\")      {lib.DimmersOLD(\"Dimmer02\", 1, bt)}\nif (topic == \"Dimmer02_2\")      {lib.DimmersOLD(\"Dimmer02\", 2, bt)}\n\nreturn;",
-        "outputs": 1,
+        "func": "bt = msg.payload; topic = msg.topic; lib = global.get('LIB') // подключаем функции\ntopic = lib.Clear(topic); // используем функцию Clear для очистки топика\n\nif (topic == \"Dimmer01_1\")      {lib.Dimmer(\"Dimmer01\", 1, bt)}\nif (topic == \"Dimmer01_2\")      {lib.Dimmer(\"Dimmer01\", 2, bt)}\nif (topic == \"Dimmer02_1\")      {lib.Dimmer(\"Dimmer02\", 1, bt)}\nif (topic == \"Dimmer02_2\")      {lib.Dimmer(\"Dimmer02\", 2, bt)}\n\nreturn;",
+        "outputs": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 580,
-        "y": 80,
-        "wires": [
-            []
-        ]
+        "x": 700,
+        "y": 90,
+        "wires": []
     },
     {
         "id": "009a1d4d93a39b3d",
@@ -1050,7 +1074,7 @@
         "step": 1,
         "className": "",
         "x": 340,
-        "y": 180,
+        "y": 280,
         "wires": [
             [
                 "36f1c3304a597d8f"
@@ -1070,7 +1094,7 @@
         "rap": false,
         "inputs": 0,
         "x": 140,
-        "y": 180,
+        "y": 280,
         "wires": [
             [
                 "3a050733556cbece"
@@ -1092,7 +1116,7 @@
         "expiry": "",
         "broker": "9b93b44814325e7b",
         "x": 620,
-        "y": 180,
+        "y": 280,
         "wires": []
     },
     {
@@ -1115,7 +1139,7 @@
         "step": 1,
         "className": "",
         "x": 330,
-        "y": 210,
+        "y": 310,
         "wires": [
             [
                 "145adf52a05bbe8e"
@@ -1135,7 +1159,7 @@
         "rap": false,
         "inputs": 0,
         "x": 140,
-        "y": 210,
+        "y": 310,
         "wires": [
             [
                 "4acf82c2961f9d71"
@@ -1157,7 +1181,7 @@
         "expiry": "",
         "broker": "9b93b44814325e7b",
         "x": 620,
-        "y": 210,
+        "y": 310,
         "wires": []
     },
     {
@@ -1195,40 +1219,6 @@
         ]
     },
     {
-        "id": "7504b74526387530",
-        "type": "ui_switch",
-        "z": "00b963ce86642bd1",
-        "name": "cusine",
-        "label": "cusine",
-        "tooltip": "",
-        "group": "d66224eb2e38880f",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "passthru": false,
-        "decouple": "true",
-        "topic": "Dimmer02_2",
-        "topicType": "str",
-        "style": "",
-        "onvalue": "ON",
-        "onvalueType": "str",
-        "onicon": "",
-        "oncolor": "",
-        "offvalue": "OFF",
-        "offvalueType": "str",
-        "officon": "",
-        "offcolor": "",
-        "animate": false,
-        "className": "",
-        "x": 330,
-        "y": 130,
-        "wires": [
-            [
-                "c4af44a4e81a0254"
-            ]
-        ]
-    },
-    {
         "id": "32f3dfc2a4b986d1",
         "type": "mqtt in",
         "z": "00b963ce86642bd1",
@@ -1245,26 +1235,6 @@
         "wires": [
             [
                 "f2a7f6b8e08484af"
-            ]
-        ]
-    },
-    {
-        "id": "469f86b4945ed75b",
-        "type": "mqtt in",
-        "z": "00b963ce86642bd1",
-        "name": "",
-        "topic": "z2m/Dimmer02/state_l2",
-        "qos": "2",
-        "datatype": "auto",
-        "broker": "9b93b44814325e7b",
-        "nl": false,
-        "rap": false,
-        "inputs": 0,
-        "x": 120,
-        "y": 130,
-        "wires": [
-            [
-                "7504b74526387530"
             ]
         ]
     },
@@ -1288,7 +1258,7 @@
         "step": 1,
         "className": "",
         "x": 330,
-        "y": 240,
+        "y": 340,
         "wires": [
             [
                 "33db660c0b5059a3"
@@ -1308,7 +1278,7 @@
         "rap": false,
         "inputs": 0,
         "x": 140,
-        "y": 240,
+        "y": 340,
         "wires": [
             [
                 "e262a52679458a6b"
@@ -1330,7 +1300,7 @@
         "expiry": "",
         "broker": "9b93b44814325e7b",
         "x": 620,
-        "y": 240,
+        "y": 340,
         "wires": []
     },
     {
@@ -1353,7 +1323,7 @@
         "step": 1,
         "className": "",
         "x": 330,
-        "y": 270,
+        "y": 370,
         "wires": [
             [
                 "8c1a13bed38c16d6"
@@ -1373,7 +1343,7 @@
         "rap": false,
         "inputs": 0,
         "x": 140,
-        "y": 270,
+        "y": 370,
         "wires": [
             [
                 "f02dda6d5b13a7c0"
@@ -1395,7 +1365,7 @@
         "expiry": "",
         "broker": "9b93b44814325e7b",
         "x": 620,
-        "y": 270,
+        "y": 370,
         "wires": []
     },
     {
@@ -1419,7 +1389,7 @@
         "topic": "z2m/Curtain01/set/state",
         "topicType": "str",
         "x": 330,
-        "y": 330,
+        "y": 430,
         "wires": [
             [
                 "d94e56d5a98bc3e9"
@@ -1447,7 +1417,7 @@
         "topic": "z2m/Curtain01/set/state",
         "topicType": "str",
         "x": 340,
-        "y": 390,
+        "y": 490,
         "wires": [
             [
                 "d94e56d5a98bc3e9"
@@ -1475,7 +1445,7 @@
         "topic": "z2m/Curtain01/set/state",
         "topicType": "str",
         "x": 330,
-        "y": 360,
+        "y": 460,
         "wires": [
             [
                 "d94e56d5a98bc3e9"
@@ -1497,8 +1467,100 @@
         "expiry": "",
         "broker": "9b93b44814325e7b",
         "x": 590,
-        "y": 350,
+        "y": 450,
         "wires": []
+    },
+    {
+        "id": "8c115ab67baaa0ec",
+        "type": "ui_template",
+        "z": "00b963ce86642bd1",
+        "group": "d66224eb2e38880f",
+        "name": "Button",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "format": "<img src={{msg.payload}} style=\"width:40px;height:40px;\" alt=\"\" ng-click=\"send({topic: msg.topic, payload: 'TOGGLE'})\">\n",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 440,
+        "y": 160,
+        "wires": [
+            [
+                "5e5c07a21a28e81e",
+                "c4af44a4e81a0254"
+            ]
+        ]
+    },
+    {
+        "id": "5e5c07a21a28e81e",
+        "type": "function",
+        "z": "00b963ce86642bd1",
+        "name": "lamp",
+        "func": "lib = global.get('LIB') // подключаем функции\nmsg.topic = lib.Clear(msg.topic);\n\n\nif (msg.payload == \"TOGGLE\") { if(global.get(msg.topic+\"_state\",\"file\") == \"ON\") { msg.payload = \"OFF\"} else { msg.payload = \"ON\"}}\nif (msg.payload == \"STATUS\") { if(global.get(msg.topic+\"_state\",\"file\") == \"ON\") { msg.payload = \"ON\"} else { msg.payload = \"OFF\"}}\n\nglobal.set(msg.topic+\"_state\", msg.payload, \"file\");\nmsg.payload=\"/images/lamp/lamp2_\"+msg.payload+\".png\"\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 160,
+        "wires": [
+            [
+                "8c115ab67baaa0ec"
+            ]
+        ]
+    },
+    {
+        "id": "c9e926c8c2be4b64",
+        "type": "inject",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "Dimmer02_l2",
+        "payload": "STATUS",
+        "payloadType": "str",
+        "x": 120,
+        "y": 180,
+        "wires": [
+            [
+                "5e5c07a21a28e81e"
+            ]
+        ]
+    },
+    {
+        "id": "af457fa00664c6ac",
+        "type": "mqtt in",
+        "z": "00b963ce86642bd1",
+        "name": "",
+        "topic": "z2m/Dimmer02/state_l2",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "9b93b44814325e7b",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 120,
+        "y": 150,
+        "wires": [
+            [
+                "5e5c07a21a28e81e"
+            ]
+        ]
     },
     {
         "id": "1185aaa8b3e1b014",
