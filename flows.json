@@ -318,30 +318,15 @@
         "className": ""
     },
     {
-        "id": "450ac4c9b5c2acc6",
-        "type": "ui_tab",
-        "name": "Home",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "a2490d0e.a872b",
-        "type": "ui_tab",
-        "name": "Homey Dashboard",
-        "icon": "dashboard",
-        "order": 1,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "c63b7d19.a7f4f",
-        "type": "ui_tab",
-        "name": "Homey Dashboard 2",
-        "icon": "dashboard",
-        "order": 2,
-        "disabled": false,
-        "hidden": false
+        "id": "4291671c8c148a47",
+        "type": "ui_group",
+        "name": "proba",
+        "tab": "7471c7e5ac36c878",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "0ad78fbf8ae4c6ba",
@@ -372,33 +357,13 @@
         "repeat": "",
         "crontab": "",
         "once": true,
-        "onceDelay": "3",
+        "onceDelay": "2",
         "topic": "",
         "x": 90,
         "y": 40,
         "wires": [
             [
-                "246899d83694e422",
-                "3871eab8d0ffdbce"
-            ]
-        ]
-    },
-    {
-        "id": "246899d83694e422",
-        "type": "function",
-        "z": "2144910b2b1a973a",
-        "name": "init lib",
-        "func": "lib = {}\n// функция управления рольставнями\n    lib.Curtain = (F_name, pos) => { \n        nmsg={};\n        if (isNaN(pos)) {\n            if (global.get(F_name+\"_moving\") == \"STOP\") {\n                nmsg.payload = pos; \n                global.set (F_name+\"_state_old\", pos);\n            } \n            else \n            {\n                if (pos == \"OPEN\") { if (global.get(F_name+\"_moving\") == \"UP\") {nmsg.payload = \"STOP\";} else {nmsg.payload = pos;}}\n                if (pos == \"CLOSE\") { if (global.get(F_name+\"_moving\") == \"DOWN\") {nmsg.payload = \"STOP\";} else {nmsg.payload = pos;}}        \n            }\n            nmsg.topic = \"z2m/\"+F_name+\"/set/state\"            \n        } else {\n            nmsg.payload = Math.abs(pos);\n            nmsg.topic = \"z2m/\"+F_name+\"/set/position\";\n        }\n        node.send(nmsg);\n    }\n// функция управления рольставнями одной кнопкой\n    lib.CurtainB = (F_name) => { \n        nmsg={};\n        position = global.get(F_name+\"_position\");\n        node.warn (\"OK\");\n        if (global.get(F_name+\"_moving\") == \"STOP\") \n            if (position == 0) {\n                    nmsg.payload = \"OPEN\"; \n                    global.set (F_name+\"_state_old\", \"OPEN\");\n                } else if (position > 98) {\n                    nmsg.payload = \"CLOSE\";  \n                    global.set (F_name+\"_state_old\", \"CLOSE\");\n                } else {\n                    if (global.get (F_name+\"_state_old\") == \"OPEN\") {\n                        nmsg.payload = \"CLOSE\";  \n                        global.set (F_name+\"_state_old\", \"CLOSE\");\n                    } else {\n                        nmsg.payload = \"OPEN\";  \n                        global.set (F_name+\"_state_old\", \"OPEN\");\n                    }\n                }\n            else \n            {\n                nmsg.payload = \"STOP\";\n            }\n        nmsg.topic = \"z2m/\"+F_name+\"/set/state\"\n        node.send(nmsg);\n    }\n// функция управления диммером/реле режим \"переключения\" с ночным режимом\n    lib.Dimmer = (F_name, pos, state) => {\n        nmsg={}; nmsg2={};\n        if (!pos || pos == \"\") { pos = \"\";} else {\n            if(!isNaN(pos)) {pos = \"_l\"+pos;} else {pos = \"_\"+pos;}\n        }\n        if (!state) {\n            if (global.get(F_name+\"_state\"+pos)) {status = global.get(F_name+\"_state\"+pos);} else {status = global.get(F_name+\"_state\"+pos, \"file\");}  // статус вкл/выкл\n        } else {\n            if (state==\"ON\") {status = \"OFF\"} else {status = \"ON\"}\n        }\n        if (global.get(F_name+\"_brightness\"+pos))   {status_b = global.get(F_name+\"_brightness\"+pos);} else {status_b = global.get(F_name+\"_brightness\"+pos, \"file\");} // текущая яркость\n        status_a = global.get(\"setup_\"+F_name+\"_night_auto\"+pos, \"file\"); // включен ли ночной режим\n        status_n = global.get(\"setup_\"+F_name+\"_night_brightness\"+pos, \"file\"); // яркость в ночном режиме\n        status_d = global.get(\"setup_\"+F_name+\"_day_brightness\"+pos, \"file\");  // яркость в дневном режиме\n        night = global.get(\"setup_night_mode\"); // включен ли ночной режим\n        // сохранение значений яркости в дневном режиме\n        if (night!=\"ON\" || status_a!=\"ON\") {\n            global.set(\"setup_\"+F_name+\"_day_brightness\"+pos, status_b, \"file\");\n            status_d = global.get(\"setup_\"+F_name+\"_day_brightness\"+pos, \"file\");\n        }\n        // включение выключение в зависимости от режима\n        if (status==\"ON\") {\n            nmsg.payload =\"OFF\";\n            nmsg.topic = \"z2m/\"+F_name+\"/set/state\"+pos;    \n        } else {\n            if (night==\"ON\" && status_a==\"ON\") {\n                nmsg.payload =\"ON\";\n                nmsg.topic = \"z2m/\"+F_name+\"/set/state\"+pos;                \n                nmsg2.payload = status_n;\n                nmsg2.topic = \"z2m/\"+F_name+\"/set/brightness\"+pos;   \n                node.send(nmsg2);\n\t        } else {\n                nmsg.payload =\"ON\";\n                nmsg.topic = \"z2m/\"+F_name+\"/set/state\"+pos; \t            \n                nmsg2.payload = status_d;\n                nmsg2.topic = \"z2m/\"+F_name+\"/set/brightness\"+pos;  \n                node.send(nmsg2);\n            }\n        }\n        node.send(nmsg);\n    } \n// функция управления диммером режим \"диммирование\"     \n    lib.DimmerB = (F_name, pos, brightness) => {\n        nmsg={};\n        if (!pos || pos == \"\") { pos = \"\";} else {pos = \"_l\"+pos;}\n        if (!brightness) { brightness = 100;}       \n        nmsg.payload = brightness;\n        nmsg.topic = \"z2m/\"+F_name+\"/set/brightness\"+pos;\n        node.send(nmsg);\n    }\n// функция управления диммером/реле/led режим \"переключения\" без ночного режима\n    lib.Relay = (F_name, pos, state) => {\n        nmsg={};\n        if (!pos || pos == \"\") { pos = \"\";} else {\n            if(!isNaN(pos)) {pos = \"_l\"+pos;} else {pos = \"_\"+pos;}\n        }            \n            if (global.get(F_name+\"_state\"+pos)) \n                {status = global.get(F_name+\"_state\"+pos);} \n            else \n                {status = global.get(F_name+\"_state\"+pos, \"file\");}  // статус вкл/выкл\n            nmsg.topic = \"z2m/\"+F_name+\"/set/state\"+pos;\n        if (!state) {\n            if (status==\"ON\") {status = \"OFF\"} else {status = \"ON\"}\n            nmsg.payload = status;\n        } else {\n            nmsg.payload = state;\n        }\n        node.send(nmsg);\n    }\n// другие функции\n    lib.Temperature = (F_name, bt) => {\n        nmsg={};\n        nmsg.payload = bt;\n        nmsg.topic = \"z2m/\"+F_name+\"/setup_temp\";\n        node.send(nmsg);\n    }\n    lib.Clapan = (F_name, bt) => {\n        nmsg={};\n        nmsg.payload = bt ;\n        nmsg.topic = \"z2m/\"+F_name+\"/set/current_heating_setpoint\";\n        node.send(nmsg);\n    }   \n// функция очистки топика\n    lib.Clear = (str) => {\n        topic = str;\n        topic = topic.replace (\"z2m/\",\"\"); // удаляем корневой путь\n        topic = topic.replace (\"/action\",\"\");\n        topic = topic.replace (\"/set/state\",\"\"); // для реле/диммеров если полный путь в топике\n        topic = topic.replace (\"/set/brightness\",\"\"); // для диммеров яркость если полный путь в топике\n        topic = topic.replace (\"/contact\",\"\"); // для датчиков открытия двери/окна\n        topic = topic.replace (\"/occupancy\",\"\"); // для датчиков движения\n        return topic;\n    }\n    \nglobal.set('LIB',lib)",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 290,
-        "y": 40,
-        "wires": [
-            [
-                "480ead198572d804"
+                "246899d83694e422"
             ]
         ]
     },
@@ -407,7 +372,7 @@
         "type": "function",
         "z": "2144910b2b1a973a",
         "name": "init setting",
-        "func": "cb =69; // количество переменных\nlet bat_cl = [];\n\nbat_cl[1] = \"z2m/setup/night_mode\";\nbat_cl[2] = \"z2m/setup/night_mode_auto\";\nbat_cl[3] = \"z2m/setup/night_mode_on_h\";\nbat_cl[4] = \"z2m/setup/night_mode_on_m\";\nbat_cl[5] = \"z2m/setup/night_mode_off_h\";\nbat_cl[6] = \"z2m/setup/night_mode_off_m\";\n\nbat_cl[7] = \"z2m/setup/Sensor01/temp\";\nbat_cl[8] = \"z2m/setup/Sensor02/temp\";\nbat_cl[9] = \"z2m/setup/Sensor03/temp\";\nbat_cl[10] = \"z2m/setup/Sensor04/temp\";\nbat_cl[11] = \"z2m/setup/Sensor05/temp\";\n\nbat_cl[12] = \"z2m/Clapan01/current_heating_setpoint\";\nbat_cl[13] = \"z2m/Clapan02/current_heating_setpoint\";\n\nbat_cl[14] = \"z2m/setup/Contact01/auto\";\nbat_cl[15] = \"z2m/setup/Contact01/sec\";\n\nbat_cl[16] = \"z2m/setup/Motion01/auto\";\nbat_cl[17] = \"z2m/setup/Motion01/sec\";\nbat_cl[18] = \"z2m/setup/Motion02/auto\";\nbat_cl[19] = \"z2m/setup/Motion02/sec\";\nbat_cl[20] = \"z2m/setup/Motion03/auto\";\nbat_cl[21] = \"z2m/setup/Motion03/sec\";\n\nbat_cl[22] = \"z2m/setup/Sensor01/fan_auto\";\nbat_cl[23] = \"z2m/setup/Sensor01/fan_hum\";\nbat_cl[24] = \"z2m/setup/Sensor06/fan_auto\";\nbat_cl[25] = \"z2m/setup/Sensor06/fan_hum\";\n\nbat_cl[26] = \"z2m/setup/Dimmer01/night_brightness_l1\";\nbat_cl[27] = \"z2m/setup/Dimmer01/night_brightness_l2\";\nbat_cl[28] = \"z2m/setup/Dimmer02/night_brightness_l1\";\nbat_cl[29] = \"z2m/setup/Dimmer02/night_brightness_l2\";\nbat_cl[30] = \"z2m/setup/Dimmer08/night_brightness_l1\";\nbat_cl[31] = \"z2m/setup/Dimmer08/night_brightness_l2\";\nbat_cl[32] = \"z2m/setup/Dimmer09/night_brightness_l1\";\nbat_cl[33] = \"z2m/setup/Dimmer09/night_brightness_l2\";\nbat_cl[34] = \"z2m/setup/Dimmer10/night_brightness_l1\";\nbat_cl[35] = \"z2m/setup/Dimmer10/night_brightness_l2\";\nbat_cl[36] = \"z2m/setup/Dimmer11/night_brightness_l1\";\nbat_cl[37] = \"z2m/setup/Dimmer11/night_brightness_l2\";\nbat_cl[38] = \"z2m/setup/Dimmer01/brightness_l1\";\nbat_cl[39] = \"z2m/setup/Dimmer01/brightness_l2\";\nbat_cl[40] = \"z2m/setup/Dimmer02/brightness_l1\";\nbat_cl[41] = \"z2m/setup/Dimmer02/brightness_l2\";\nbat_cl[42] = \"z2m/setup/Dimmer03/brightness_l1\";\nbat_cl[43] = \"z2m/setup/Dimmer03/brightness_l2\";\nbat_cl[44] = \"z2m/setup/Dimmer04/brightness_l1\";\nbat_cl[45] = \"z2m/setup/Dimmer04/brightness_l2\";\nbat_cl[46] = \"z2m/setup/Dimmer05/brightness_l1\";\nbat_cl[47] = \"z2m/setup/Dimmer05/brightness_l2\";\nbat_cl[48] = \"z2m/setup/Dimmer06/brightness_l1\";\nbat_cl[49] = \"z2m/setup/Dimmer06/brightness_l2\";\nbat_cl[50] = \"z2m/setup/Dimmer07/brightness_l1\";\nbat_cl[51] = \"z2m/setup/Dimmer07/brightness_l2\";\nbat_cl[52] = \"z2m/setup/Dimmer08/brightness_l1\";\nbat_cl[53] = \"z2m/setup/Dimmer08/brightness_l2\";\nbat_cl[54] = \"z2m/setup/Dimmer09/brightness_l1\";\nbat_cl[55] = \"z2m/setup/Dimmer09/brightness_l2\";\nbat_cl[56] = \"z2m/setup/Dimmer10/brightness_l1\";\nbat_cl[57] = \"z2m/setup/Dimmer10/brightness_l2\";\nbat_cl[58] = \"z2m/setup/Dimmer11/brightness_l1\";\nbat_cl[59] = \"z2m/setup/Dimmer11/brightness_l2\";\nbat_cl[60] = \"z2m/setup/Dimmer03/night_brightness_l1\";\nbat_cl[61] = \"z2m/setup/Dimmer03/night_brightness_l2\";\nbat_cl[62] = \"z2m/setup/Dimmer04/night_brightness_l1\";\nbat_cl[63] = \"z2m/setup/Dimmer04/night_brightness_l2\";\nbat_cl[64] = \"z2m/setup/Dimmer05/night_brightness_l1\";\nbat_cl[65] = \"z2m/setup/Dimmer05/night_brightness_l2\";\nbat_cl[66] = \"z2m/setup/Dimmer06/night_brightness_l1\";\nbat_cl[67] = \"z2m/setup/Dimmer06/night_brightness_l2\";\nbat_cl[68] = \"z2m/setup/Dimmer07/night_brightness_l1\";\nbat_cl[69] = \"z2m/setup/Dimmer07/night_brightness_l2\";\n\n\n\n\nfor (let i = 1; i < cb+1; i++) {\n    np=bat_cl[i].replace(\"z2m/\",\"\");\n    np=np.replace(\"/\",\"_\");\n    np=np.replace(\"/\",\"_\");\n    np=np.replace(\"/\",\"_\");\n    node.send({topic:bat_cl[i], payload:global.get(np, \"file\")});\n}\nreturn;",
+        "func": "lib = global.get('LIB');\ncb =69; // количество переменных\nlet bat_cl = [];\n\nbat_cl[1] = \"z2m/setup/night_mode\";\nbat_cl[2] = \"z2m/setup/night_mode_auto\";\nbat_cl[3] = \"z2m/setup/night_mode_on_h\";\nbat_cl[4] = \"z2m/setup/night_mode_on_m\";\nbat_cl[5] = \"z2m/setup/night_mode_off_h\";\nbat_cl[6] = \"z2m/setup/night_mode_off_m\";\n\nbat_cl[7] = \"z2m/setup/Sensor01/temp\";\nbat_cl[8] = \"z2m/setup/Sensor02/temp\";\nbat_cl[9] = \"z2m/setup/Sensor03/temp\";\nbat_cl[10] = \"z2m/setup/Sensor04/temp\";\nbat_cl[11] = \"z2m/setup/Sensor05/temp\";\n\nbat_cl[12] = \"z2m/Clapan01/current_heating_setpoint\";\nbat_cl[13] = \"z2m/Clapan02/current_heating_setpoint\";\n\nbat_cl[14] = \"z2m/setup/Contact01/auto\";\nbat_cl[15] = \"z2m/setup/Contact01/sec\";\n\nbat_cl[16] = \"z2m/setup/Motion01/auto\";\nbat_cl[17] = \"z2m/setup/Motion01/sec\";\nbat_cl[18] = \"z2m/setup/Motion02/auto\";\nbat_cl[19] = \"z2m/setup/Motion02/sec\";\nbat_cl[20] = \"z2m/setup/Motion03/auto\";\nbat_cl[21] = \"z2m/setup/Motion03/sec\";\n\nbat_cl[22] = \"z2m/setup/Sensor01/fan_auto\";\nbat_cl[23] = \"z2m/setup/Sensor01/fan_hum\";\nbat_cl[24] = \"z2m/setup/Sensor06/fan_auto\";\nbat_cl[25] = \"z2m/setup/Sensor06/fan_hum\";\n\nbat_cl[26] = \"z2m/setup/Dimmer01/night_brightness_l1\";\nbat_cl[27] = \"z2m/setup/Dimmer01/night_brightness_l2\";\nbat_cl[28] = \"z2m/setup/Dimmer02/night_brightness_l1\";\nbat_cl[29] = \"z2m/setup/Dimmer02/night_brightness_l2\";\nbat_cl[30] = \"z2m/setup/Dimmer08/night_brightness_l1\";\nbat_cl[31] = \"z2m/setup/Dimmer08/night_brightness_l2\";\nbat_cl[32] = \"z2m/setup/Dimmer09/night_brightness_l1\";\nbat_cl[33] = \"z2m/setup/Dimmer09/night_brightness_l2\";\nbat_cl[34] = \"z2m/setup/Dimmer10/night_brightness_l1\";\nbat_cl[35] = \"z2m/setup/Dimmer10/night_brightness_l2\";\nbat_cl[36] = \"z2m/setup/Dimmer11/night_brightness_l1\";\nbat_cl[37] = \"z2m/setup/Dimmer11/night_brightness_l2\";\nbat_cl[38] = \"z2m/setup/Dimmer01/brightness_l1\";\nbat_cl[39] = \"z2m/setup/Dimmer01/brightness_l2\";\nbat_cl[40] = \"z2m/setup/Dimmer02/brightness_l1\";\nbat_cl[41] = \"z2m/setup/Dimmer02/brightness_l2\";\nbat_cl[42] = \"z2m/setup/Dimmer03/brightness_l1\";\nbat_cl[43] = \"z2m/setup/Dimmer03/brightness_l2\";\nbat_cl[44] = \"z2m/setup/Dimmer04/brightness_l1\";\nbat_cl[45] = \"z2m/setup/Dimmer04/brightness_l2\";\nbat_cl[46] = \"z2m/setup/Dimmer05/brightness_l1\";\nbat_cl[47] = \"z2m/setup/Dimmer05/brightness_l2\";\nbat_cl[48] = \"z2m/setup/Dimmer06/brightness_l1\";\nbat_cl[49] = \"z2m/setup/Dimmer06/brightness_l2\";\nbat_cl[50] = \"z2m/setup/Dimmer07/brightness_l1\";\nbat_cl[51] = \"z2m/setup/Dimmer07/brightness_l2\";\nbat_cl[52] = \"z2m/setup/Dimmer08/brightness_l1\";\nbat_cl[53] = \"z2m/setup/Dimmer08/brightness_l2\";\nbat_cl[54] = \"z2m/setup/Dimmer09/brightness_l1\";\nbat_cl[55] = \"z2m/setup/Dimmer09/brightness_l2\";\nbat_cl[56] = \"z2m/setup/Dimmer10/brightness_l1\";\nbat_cl[57] = \"z2m/setup/Dimmer10/brightness_l2\";\nbat_cl[58] = \"z2m/setup/Dimmer11/brightness_l1\";\nbat_cl[59] = \"z2m/setup/Dimmer11/brightness_l2\";\nbat_cl[60] = \"z2m/setup/Dimmer03/night_brightness_l1\";\nbat_cl[61] = \"z2m/setup/Dimmer03/night_brightness_l2\";\nbat_cl[62] = \"z2m/setup/Dimmer04/night_brightness_l1\";\nbat_cl[63] = \"z2m/setup/Dimmer04/night_brightness_l2\";\nbat_cl[64] = \"z2m/setup/Dimmer05/night_brightness_l1\";\nbat_cl[65] = \"z2m/setup/Dimmer05/night_brightness_l2\";\nbat_cl[66] = \"z2m/setup/Dimmer06/night_brightness_l1\";\nbat_cl[67] = \"z2m/setup/Dimmer06/night_brightness_l2\";\nbat_cl[68] = \"z2m/setup/Dimmer07/night_brightness_l1\";\nbat_cl[69] = \"z2m/setup/Dimmer07/night_brightness_l2\";\n\n\n\n\nfor (let i = 1; i < cb+1; i++) {\n    node.send({topic:bat_cl[i], payload:global.get(lib.ConvName(bat_cl[i]), \"file\")});\n}\nreturn;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -553,11 +518,49 @@
         ]
     },
     {
+        "id": "246899d83694e422",
+        "type": "function",
+        "z": "2144910b2b1a973a",
+        "name": "init lib",
+        "func": "lib = {}\n\n// функция управления рольставнями\n    lib.Curtain = (F_name, pos) => { \n        nmsg={};\n        if (isNaN(pos)) {\n            if (global.get(F_name+\"_moving\") == \"STOP\") {\n                nmsg.payload = pos; \n                global.set (F_name+\"_state_old\", pos);\n            } \n            else \n            {\n                if (pos == \"OPEN\") { if (global.get(F_name+\"_moving\") == \"UP\") {nmsg.payload = \"STOP\";} else {nmsg.payload = pos;}}\n                if (pos == \"CLOSE\") { if (global.get(F_name+\"_moving\") == \"DOWN\") {nmsg.payload = \"STOP\";} else {nmsg.payload = pos;}}        \n            }\n            nmsg.topic = \"z2m/\"+F_name+\"/set/state\"            \n        } else {\n            nmsg.payload = Math.abs(pos);\n            nmsg.topic = \"z2m/\"+F_name+\"/set/position\";\n        }\n        node.send(nmsg);\n    }\n// функция управления рольставнями одной кнопкой\n    lib.CurtainB = (F_name) => { \n        nmsg={};\n        position = global.get(F_name+\"_position\");\n        node.warn (\"OK\");\n        if (global.get(F_name+\"_moving\") == \"STOP\") \n            if (position == 0) {\n                    nmsg.payload = \"OPEN\"; \n                    global.set (F_name+\"_state_old\", \"OPEN\");\n                } else if (position > 98) {\n                    nmsg.payload = \"CLOSE\";  \n                    global.set (F_name+\"_state_old\", \"CLOSE\");\n                } else {\n                    if (global.get (F_name+\"_state_old\") == \"OPEN\") {\n                        nmsg.payload = \"CLOSE\";  \n                        global.set (F_name+\"_state_old\", \"CLOSE\");\n                    } else {\n                        nmsg.payload = \"OPEN\";  \n                        global.set (F_name+\"_state_old\", \"OPEN\");\n                    }\n                }\n            else \n            {\n                nmsg.payload = \"STOP\";\n            }\n        nmsg.topic = \"z2m/\"+F_name+\"/set/state\"\n        node.send(nmsg);\n    }\n// функция управления диммером/реле режим \"переключения\" с ночным режимом\n    lib.Dimmer = (F_name, pos, state) => {\n        nmsg={}; nmsg2={};\n        if (!pos || pos == \"\") { pos = \"\";} else {\n            if(!isNaN(pos)) {pos = \"_l\"+pos;} else {pos = \"_\"+pos;}\n        }\n        if (!state) {\n            if (global.get(F_name+\"_state\"+pos)) {status = global.get(F_name+\"_state\"+pos);} else {status = global.get(F_name+\"_state\"+pos, \"file\");}  // статус вкл/выкл\n        } else {\n            if (state==\"ON\") {status = \"OFF\"} else {status = \"ON\"}\n        }\n        if (global.get(F_name+\"_brightness\"+pos))   {status_b = global.get(F_name+\"_brightness\"+pos);} else {status_b = global.get(F_name+\"_brightness\"+pos, \"file\");} // текущая яркость\n        status_a = global.get(\"setup_\"+F_name+\"_night_auto\"+pos, \"file\"); // включен ли ночной режим\n        status_n = global.get(\"setup_\"+F_name+\"_night_brightness\"+pos, \"file\"); // яркость в ночном режиме\n        status_d = global.get(\"setup_\"+F_name+\"_day_brightness\"+pos, \"file\");  // яркость в дневном режиме\n        night = global.get(\"setup_night_mode\"); // включен ли ночной режим\n        // сохранение значений яркости в дневном режиме\n        if (night!=\"ON\" || status_a!=\"ON\") {\n            global.set(\"setup_\"+F_name+\"_day_brightness\"+pos, status_b, \"file\");\n            status_d = global.get(\"setup_\"+F_name+\"_day_brightness\"+pos, \"file\");\n        }\n        // включение выключение в зависимости от режима\n        if (status==\"ON\") {\n            nmsg.payload =\"OFF\";\n            nmsg.topic = \"z2m/\"+F_name+\"/set/state\"+pos;    \n        } else {\n            if (night==\"ON\" && status_a==\"ON\") {\n                nmsg.payload =\"ON\";\n                nmsg.topic = \"z2m/\"+F_name+\"/set/state\"+pos;                \n                nmsg2.payload = status_n;\n                nmsg2.topic = \"z2m/\"+F_name+\"/set/brightness\"+pos;   \n                node.send(nmsg2);\n\t        } else {\n                nmsg.payload =\"ON\";\n                nmsg.topic = \"z2m/\"+F_name+\"/set/state\"+pos; \t            \n                nmsg2.payload = status_d;\n                nmsg2.topic = \"z2m/\"+F_name+\"/set/brightness\"+pos;  \n                node.send(nmsg2);\n            }\n        }\n        node.send(nmsg);\n    } \n// функция управления диммером режим \"диммирование\"     \n    lib.DimmerB = (F_name, pos, brightness) => {\n        nmsg={};\n        if (!pos || pos == \"\") { pos = \"\";} else {pos = \"_l\"+pos;}\n        if (!brightness) { brightness = 100;}       \n        nmsg.payload = brightness;\n        nmsg.topic = \"z2m/\"+F_name+\"/set/brightness\"+pos;\n        node.send(nmsg);\n    }\n// функция управления диммером/реле/led режим \"переключения\" без ночного режима\n    lib.Relay = (F_name, pos, state) => {\n        nmsg={};\n        if (!pos || pos == \"\") { pos = \"\";} else {\n            if(!isNaN(pos)) {pos = \"_l\"+pos;} else {pos = \"_\"+pos;}\n        }            \n            if (global.get(F_name+\"_state\"+pos)) \n                {status = global.get(F_name+\"_state\"+pos);} \n            else \n                {status = global.get(F_name+\"_state\"+pos, \"file\");}  // статус вкл/выкл\n            nmsg.topic = \"z2m/\"+F_name+\"/set/state\"+pos;\n        if (!state) {\n            if (status==\"ON\") {status = \"OFF\"} else {status = \"ON\"}\n            nmsg.payload = status;\n        } else {\n            nmsg.payload = state;\n        }\n        node.send(nmsg);\n    }\n// другие функции\n    lib.Temperature = (F_name, bt) => {\n        nmsg={};\n        nmsg.payload = bt;\n        nmsg.topic = \"z2m/\"+F_name+\"/setup_temp\";\n        node.send(nmsg);\n    }\n    lib.Clapan = (F_name, bt) => {\n        nmsg={};\n        nmsg.payload = bt ;\n        nmsg.topic = \"z2m/\"+F_name+\"/set/current_heating_setpoint\";\n        node.send(nmsg);\n    }   \n// функция получения имени устройства из топика\n    lib.Clear = (str) => {\n        topic = str;\n        topic = topic.replace (\"z2m/\",\"\"); // удаляем корневой путь\n        topic = topic.substring(0,topic.search('/'));\n        return topic;\n    }\n// функция преобразования топика в переменную\n    lib.ConvName = (str) => {\n        topic = str;\n        topic = topic.replace (\"z2m/\",\"\"); // удаляем корневой путь\n        topic = topic.split(\"/\").join(\"_\"); // заменяем все косые на подчеркивание\n        return topic;\n    }\n\nglobal.set('LIB',lib)",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 40,
+        "wires": [
+            [
+                "480ead198572d804"
+            ]
+        ]
+    },
+    {
+        "id": "8fcaedfcaf2a419a",
+        "type": "inject",
+        "z": "2144910b2b1a973a",
+        "name": "start2",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "3",
+        "topic": "",
+        "x": 90,
+        "y": 80,
+        "wires": [
+            [
+                "3871eab8d0ffdbce"
+            ]
+        ]
+    },
+    {
         "id": "3912e8dc2a1e64b4",
         "type": "mqtt in",
         "z": "d2fe843f1408d972",
         "name": "",
-        "topic": "z2m/Button01/action",
+        "topic": "z2m/+/action",
         "qos": "2",
         "datatype": "auto",
         "broker": "9b93b44814325e7b",
@@ -565,53 +568,11 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 110,
-        "y": 40,
-        "wires": [
-            [
-                "8a23e375d999422b"
-            ]
-        ]
-    },
-    {
-        "id": "fe5a411f38f98397",
-        "type": "mqtt in",
-        "z": "d2fe843f1408d972",
-        "name": "",
-        "topic": "z2m/Button02/action",
-        "qos": "2",
-        "datatype": "auto",
-        "broker": "9b93b44814325e7b",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 110,
+        "x": 90,
         "y": 70,
         "wires": [
             [
-                "13ffca12669b65b0"
-            ]
-        ]
-    },
-    {
-        "id": "5dafa4d571e5fd9e",
-        "type": "mqtt in",
-        "z": "d2fe843f1408d972",
-        "name": "",
-        "topic": "z2m/Button03/action",
-        "qos": "2",
-        "datatype": "auto",
-        "broker": "9b93b44814325e7b",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 110,
-        "y": 100,
-        "wires": [
-            [
-                "13ffca12669b65b0"
+                "8a23e375d999422b"
             ]
         ]
     },
@@ -620,57 +581,15 @@
         "type": "function",
         "z": "d2fe843f1408d972",
         "name": "Button",
-        "func": "bt = msg.payload; topic = msg.topic; lib = global.get('LIB') // подключаем функции\ntopic = lib.Clear(topic); // используем функцию Clear для очистки топика\n\nif (topic == \"Button01\" && bt == \"single_left\")     {lib.Dimmer(\"Dimmer11\", 1)}\nif (topic == \"Button01\" && bt == \"single_right\")    {lib.Dimmer(\"Dimmer01\", 2)}\nif (topic == \"Button02\" && bt == \"single_left\")     {lib.Relay(\"Dimmer02\", 1)}\nif (topic == \"Button02\" && bt == \"single_right\")    {lib.Relay(\"Dimmer02\", 2)}\nif (topic == \"Button02\" && bt == \"double_left\")     {lib.Curtain(\"Curtain01\",\"OPEN\")}\nif (topic == \"Button02\" && bt == \"double_right\")    {lib.Curtain(\"Curtain01\",\"CLOSE\")}\nif (topic == \"Button03\" && bt == \"single_left\")     {lib.Relay(\"Dimmer01\", 2)}\nif (topic == \"Button03\" && bt == \"single_right\")    {lib.Relay(\"Dimmer01\", 1)}\n\nif (topic == \"Contact01\")    {lib.Relay(\"Dimmer01\", 1, bt)}\n\n\nreturn;\n\n\n\n\n",
+        "func": "bt = msg.payload; // получаем событие\nlib = global.get('LIB'); // подключаем функции\nname = lib.Clear(msg.topic); // получаем имя устройства\n\nif (name == \"Button01\" && bt == \"single_left\")     {lib.Dimmer(\"Dimmer11\", 1)}\nif (name == \"Button01\" && bt == \"single_right\")    {lib.Dimmer(\"Dimmer01\", 2)}\nif (name == \"Button02\" && bt == \"single_left\")     {lib.Relay(\"Dimmer02\", 1)}\nif (name == \"Button02\" && bt == \"single_right\")    {lib.Relay(\"Dimmer02\", 2)}\nif (name == \"Button02\" && bt == \"double_left\")     {lib.Curtain(\"Curtain01\",\"OPEN\")}\nif (name == \"Button02\" && bt == \"double_right\")    {lib.Curtain(\"Curtain01\",\"CLOSE\")}\nif (name == \"Button03\" && bt == \"single_left\")     {lib.Relay(\"Dimmer01\", 2)}\nif (name == \"Button03\" && bt == \"single_right\")    {lib.Relay(\"Dimmer01\", 1)}\n\nif (name == \"Contact01\")    {lib.Relay(\"Dimmer01\", 1, bt)}\n\n\nreturn;\n\n\n\n\n",
         "outputs": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 710,
-        "y": 120,
-        "wires": []
-    },
-    {
-        "id": "c048011bdfb702b0",
-        "type": "mqtt in",
-        "z": "d2fe843f1408d972",
-        "name": "",
-        "topic": "z2m/Button04/action",
-        "qos": "2",
-        "datatype": "auto",
-        "broker": "9b93b44814325e7b",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 110,
-        "y": 130,
-        "wires": [
-            [
-                "13ffca12669b65b0"
-            ]
-        ]
-    },
-    {
-        "id": "9bcfe5cd49b53207",
-        "type": "mqtt in",
-        "z": "d2fe843f1408d972",
-        "name": "",
-        "topic": "z2m/Button05/action",
-        "qos": "2",
-        "datatype": "auto",
-        "broker": "9b93b44814325e7b",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 110,
+        "x": 760,
         "y": 160,
-        "wires": [
-            [
-                "13ffca12669b65b0"
-            ]
-        ]
+        "wires": []
     },
     {
         "id": "3d2c467c202868a3",
@@ -683,8 +602,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 340,
-        "y": 240,
+        "x": 380,
+        "y": 150,
         "wires": [
             [
                 "93a98354cfe1f1fa",
@@ -703,8 +622,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 340,
-        "y": 270,
+        "x": 380,
+        "y": 180,
         "wires": [
             [
                 "93a98354cfe1f1fa"
@@ -728,8 +647,8 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 480,
-        "y": 270,
+        "x": 520,
+        "y": 180,
         "wires": [
             [
                 "13ffca12669b65b0"
@@ -758,8 +677,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 210,
-        "y": 260,
+        "x": 250,
+        "y": 150,
         "wires": [
             [
                 "3d2c467c202868a3"
@@ -773,16 +692,16 @@
         "id": "ee3009680206a50b",
         "type": "mqtt in",
         "z": "d2fe843f1408d972",
-        "name": "Contact01",
-        "topic": "z2m/Contact01/contact",
+        "name": "",
+        "topic": "z2m/+/contact",
         "qos": "2",
         "datatype": "auto",
         "broker": "9b93b44814325e7b",
         "nl": false,
         "rap": false,
         "inputs": 0,
-        "x": 80,
-        "y": 260,
+        "x": 90,
+        "y": 150,
         "wires": [
             [
                 "44dc9973926187a7"
@@ -793,16 +712,16 @@
         "id": "487e3af94eb645f1",
         "type": "mqtt in",
         "z": "d2fe843f1408d972",
-        "name": "Motion01",
-        "topic": "z2m/Motion01/occupancy",
+        "name": "",
+        "topic": "z2m/+/occupancy",
         "qos": "2",
         "datatype": "auto",
         "broker": "9b93b44814325e7b",
         "nl": false,
         "rap": false,
         "inputs": 0,
-        "x": 80,
-        "y": 320,
+        "x": 100,
+        "y": 250,
         "wires": [
             [
                 "e761f02a974fa214"
@@ -831,8 +750,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 210,
-        "y": 320,
+        "x": 250,
+        "y": 250,
         "wires": [
             [
                 "26419fc841c835c3"
@@ -853,8 +772,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 340,
-        "y": 300,
+        "x": 380,
+        "y": 250,
         "wires": [
             [
                 "cfe563c4c50236b7",
@@ -873,8 +792,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 340,
-        "y": 330,
+        "x": 380,
+        "y": 280,
         "wires": [
             [
                 "cfe563c4c50236b7"
@@ -898,8 +817,8 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 480,
-        "y": 330,
+        "x": 520,
+        "y": 280,
         "wires": [
             [
                 "13ffca12669b65b0"
@@ -923,13 +842,43 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 350,
-        "y": 40,
+        "x": 320,
+        "y": 70,
         "wires": [
             [
                 "13ffca12669b65b0"
             ]
         ]
+    },
+    {
+        "id": "016d698e780c3c2a",
+        "type": "comment",
+        "z": "d2fe843f1408d972",
+        "name": "получение событий с выключателей",
+        "info": "",
+        "x": 170,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "0ceaaac2d9f704af",
+        "type": "comment",
+        "z": "d2fe843f1408d972",
+        "name": "получение событий с датчиков открытия дверей/окон",
+        "info": "",
+        "x": 220,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "a1ac1e5ea9668771",
+        "type": "comment",
+        "z": "d2fe843f1408d972",
+        "name": "получение событий с датчиков движения",
+        "info": "",
+        "x": 180,
+        "y": 220,
+        "wires": []
     },
     {
         "id": "97c620393f222967",
@@ -970,7 +919,7 @@
         "type": "function",
         "z": "00b963ce86642bd1",
         "name": "function",
-        "func": "bt = msg.payload; topic = msg.topic; lib = global.get('LIB') // подключаем функции\ntopic = lib.Clear(topic); // используем функцию Clear для очистки топика\n\nif (topic == \"Dimmer01_1\")      {lib.Dimmer(\"Dimmer01\", 1, bt)}\nif (topic == \"Dimmer01_2\")      {lib.Dimmer(\"Dimmer01\", 2, bt)}\nif (topic == \"Dimmer02_1\")      {lib.Dimmer(\"Dimmer02\", 1, bt)}\nif (topic == \"Dimmer02_2\")      {lib.Dimmer(\"Dimmer02\", 2, bt)}\n\nreturn;",
+        "func": "bt = msg.payload; \nlib = global.get('LIB') // подключаем функции\ntopic = lib.Clear(msg.topic); // используем функцию Clear для очистки топика\n\nif (topic == \"Dimmer01_1\")      {lib.Dimmer(\"Dimmer01\", 1, bt)}\nif (topic == \"Dimmer01_2\")      {lib.Dimmer(\"Dimmer01\", 2, bt)}\nif (topic == \"Dimmer02_1\")      {lib.Dimmer(\"Dimmer02\", 1, bt)}\nif (topic == \"Dimmer02_2\")      {lib.Dimmer(\"Dimmer02\", 2, bt)}\n\nif (topic == \"Dimmer01_b1\")      {lib.Dimmer(\"Dimmer01\", 1, bt)}\nif (topic == \"Dimmer01_b2\")      {lib.Dimmer(\"Dimmer01\", 2, bt)}\nif (topic == \"Dimmer02_b1\")      {lib.Dimmer(\"Dimmer02\", 1, bt)}\nif (topic == \"Dimmer02_b2\")      {lib.Dimmer(\"Dimmer02\", 2, bt)}\n\n\nreturn;",
         "outputs": 0,
         "noerr": 0,
         "initialize": "",
@@ -1058,7 +1007,7 @@
         "id": "3a050733556cbece",
         "type": "ui_slider",
         "z": "00b963ce86642bd1",
-        "name": "douche",
+        "name": "Dimmer01_b1",
         "label": "",
         "tooltip": "",
         "group": "9f213c40125a5160",
@@ -1067,17 +1016,17 @@
         "height": 0,
         "passthru": false,
         "outs": "end",
-        "topic": "topic",
-        "topicType": "msg",
+        "topic": "Dimmer01_b1",
+        "topicType": "str",
         "min": 0,
         "max": "255",
         "step": 1,
         "className": "",
-        "x": 340,
-        "y": 280,
+        "x": 360,
+        "y": 230,
         "wires": [
             [
-                "36f1c3304a597d8f"
+                "c4af44a4e81a0254"
             ]
         ]
     },
@@ -1094,7 +1043,7 @@
         "rap": false,
         "inputs": 0,
         "x": 140,
-        "y": 280,
+        "y": 230,
         "wires": [
             [
                 "3a050733556cbece"
@@ -1102,28 +1051,10 @@
         ]
     },
     {
-        "id": "36f1c3304a597d8f",
-        "type": "mqtt out",
-        "z": "00b963ce86642bd1",
-        "name": "",
-        "topic": "z2m/Dimmer01/set/brightness_l1",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "9b93b44814325e7b",
-        "x": 620,
-        "y": 280,
-        "wires": []
-    },
-    {
         "id": "4acf82c2961f9d71",
         "type": "ui_slider",
         "z": "00b963ce86642bd1",
-        "name": "toilette",
+        "name": "Dimmer01_b2",
         "label": "",
         "tooltip": "",
         "group": "9f213c40125a5160",
@@ -1132,17 +1063,17 @@
         "height": 0,
         "passthru": false,
         "outs": "end",
-        "topic": "topic",
-        "topicType": "msg",
+        "topic": "Dimmer01_b2",
+        "topicType": "str",
         "min": 0,
         "max": "255",
         "step": 1,
         "className": "",
-        "x": 330,
-        "y": 310,
+        "x": 360,
+        "y": 260,
         "wires": [
             [
-                "145adf52a05bbe8e"
+                "c4af44a4e81a0254"
             ]
         ]
     },
@@ -1159,30 +1090,12 @@
         "rap": false,
         "inputs": 0,
         "x": 140,
-        "y": 310,
+        "y": 260,
         "wires": [
             [
                 "4acf82c2961f9d71"
             ]
         ]
-    },
-    {
-        "id": "145adf52a05bbe8e",
-        "type": "mqtt out",
-        "z": "00b963ce86642bd1",
-        "name": "",
-        "topic": "z2m/Dimmer01/set/brightness_l2",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "9b93b44814325e7b",
-        "x": 620,
-        "y": 310,
-        "wires": []
     },
     {
         "id": "f2a7f6b8e08484af",
@@ -1242,7 +1155,7 @@
         "id": "e262a52679458a6b",
         "type": "ui_slider",
         "z": "00b963ce86642bd1",
-        "name": "centre",
+        "name": "Dimmer02_b1",
         "label": "",
         "tooltip": "",
         "group": "d66224eb2e38880f",
@@ -1251,17 +1164,17 @@
         "height": 0,
         "passthru": false,
         "outs": "end",
-        "topic": "topic",
-        "topicType": "msg",
+        "topic": "Dimmer02_b1",
+        "topicType": "str",
         "min": 0,
         "max": "255",
         "step": 1,
         "className": "",
-        "x": 330,
-        "y": 340,
+        "x": 360,
+        "y": 290,
         "wires": [
             [
-                "33db660c0b5059a3"
+                "c4af44a4e81a0254"
             ]
         ]
     },
@@ -1278,7 +1191,7 @@
         "rap": false,
         "inputs": 0,
         "x": 140,
-        "y": 340,
+        "y": 290,
         "wires": [
             [
                 "e262a52679458a6b"
@@ -1286,28 +1199,10 @@
         ]
     },
     {
-        "id": "33db660c0b5059a3",
-        "type": "mqtt out",
-        "z": "00b963ce86642bd1",
-        "name": "",
-        "topic": "z2m/Dimmer02/set/brightness_l1",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "9b93b44814325e7b",
-        "x": 620,
-        "y": 340,
-        "wires": []
-    },
-    {
         "id": "f02dda6d5b13a7c0",
         "type": "ui_slider",
         "z": "00b963ce86642bd1",
-        "name": "cusine",
+        "name": "Dimmer02_b2",
         "label": "",
         "tooltip": "",
         "group": "d66224eb2e38880f",
@@ -1316,17 +1211,17 @@
         "height": 0,
         "passthru": false,
         "outs": "end",
-        "topic": "topic",
-        "topicType": "msg",
+        "topic": "Dimmer02_b2",
+        "topicType": "str",
         "min": 0,
         "max": "255",
         "step": 1,
         "className": "",
-        "x": 330,
-        "y": 370,
+        "x": 360,
+        "y": 320,
         "wires": [
             [
-                "8c1a13bed38c16d6"
+                "c4af44a4e81a0254"
             ]
         ]
     },
@@ -1343,30 +1238,12 @@
         "rap": false,
         "inputs": 0,
         "x": 140,
-        "y": 370,
+        "y": 320,
         "wires": [
             [
                 "f02dda6d5b13a7c0"
             ]
         ]
-    },
-    {
-        "id": "8c1a13bed38c16d6",
-        "type": "mqtt out",
-        "z": "00b963ce86642bd1",
-        "name": "",
-        "topic": "z2m/Dimmer02/set/brightness_l2",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "9b93b44814325e7b",
-        "x": 620,
-        "y": 370,
-        "wires": []
     },
     {
         "id": "9f77369ab36eca7b",
@@ -1389,7 +1266,7 @@
         "topic": "z2m/Curtain01/set/state",
         "topicType": "str",
         "x": 330,
-        "y": 430,
+        "y": 370,
         "wires": [
             [
                 "d94e56d5a98bc3e9"
@@ -1417,7 +1294,7 @@
         "topic": "z2m/Curtain01/set/state",
         "topicType": "str",
         "x": 340,
-        "y": 490,
+        "y": 430,
         "wires": [
             [
                 "d94e56d5a98bc3e9"
@@ -1445,7 +1322,7 @@
         "topic": "z2m/Curtain01/set/state",
         "topicType": "str",
         "x": 330,
-        "y": 460,
+        "y": 400,
         "wires": [
             [
                 "d94e56d5a98bc3e9"
@@ -1467,7 +1344,7 @@
         "expiry": "",
         "broker": "9b93b44814325e7b",
         "x": 590,
-        "y": 450,
+        "y": 390,
         "wires": []
     },
     {
@@ -1499,7 +1376,7 @@
         "type": "function",
         "z": "00b963ce86642bd1",
         "name": "lamp",
-        "func": "lib = global.get('LIB') // подключаем функции\nmsg.topic = lib.Clear(msg.topic);\n\n\nif (msg.payload == \"TOGGLE\") { if(global.get(msg.topic+\"_state\",\"file\") == \"ON\") { msg.payload = \"OFF\"} else { msg.payload = \"ON\"}}\nif (msg.payload == \"STATUS\") { if(global.get(msg.topic+\"_state\",\"file\") == \"ON\") { msg.payload = \"ON\"} else { msg.payload = \"OFF\"}}\n\nglobal.set(msg.topic+\"_state\", msg.payload, \"file\");\nmsg.payload=\"/images/lamp/lamp2_\"+msg.payload+\".png\"\n\n\n\nreturn msg;",
+        "func": "lib = global.get('LIB') // подключаем функции\nname = lib.Clear(msg.topic);\nstate = global.get(name+\"_state\",\"file\");\n\nif (msg.payload == \"TOGGLE\") { if (state == \"ON\") { msg.payload = \"OFF\"} else { msg.payload = \"ON\"}}\nif (msg.payload == \"STATUS\") { if (state == \"ON\") { msg.payload = \"ON\"} else { msg.payload = \"OFF\"}}\n\nglobal.set(name+\"_state\", msg.payload, \"file\");\nmsg.image=\"/img/lamp/lamp2_\"+msg.payload+\".png\"\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2736,6 +2613,140 @@
                 "93fc640899b0c9ab"
             ]
         ]
+    },
+    {
+        "id": "2b2beb69f10d4666",
+        "type": "ui_template",
+        "z": "52059dee97b6a94b",
+        "group": "4291671c8c148a47",
+        "name": "Setting",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "format": "<img src={{msg.image}} style=\"width:40px;height:40px;\" alt=\"\" ng-click=\"send({topic: msg.topic, payload: 'TOGGLE'})\">",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 580,
+        "y": 740,
+        "wires": [
+            [
+                "f33c1160084baac8",
+                "9f5fb1d02117e8eb"
+            ]
+        ]
+    },
+    {
+        "id": "8069af567281426b",
+        "type": "inject",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "z2m/Dimmer01/state",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 140,
+        "y": 740,
+        "wires": [
+            [
+                "9f5fb1d02117e8eb"
+            ]
+        ]
+    },
+    {
+        "id": "9f5fb1d02117e8eb",
+        "type": "function",
+        "z": "52059dee97b6a94b",
+        "name": "lamp",
+        "func": "lib = global.get('LIB') // подключаем функции\nname = lib.Clear(msg.topic);\nstate = global.get(name+\"_state\",\"file\");\n\nif (msg.payload == \"TOGGLE\") { if (state == \"ON\") { msg.payload = \"OFF\"} else { msg.payload = \"ON\"}}\nif (msg.payload == \"STATUS\") { if (state == \"ON\") { msg.payload = \"ON\"} else { msg.payload = \"OFF\"}}\n\nglobal.set(name+\"_state\", msg.payload, \"file\");\nmsg.image=\"/img/lamp/lamp2_\"+msg.payload+\".png\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 740,
+        "wires": [
+            [
+                "2b2beb69f10d4666",
+                "4663fad453b75610"
+            ]
+        ]
+    },
+    {
+        "id": "03dca7089b13446f",
+        "type": "inject",
+        "z": "52059dee97b6a94b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "z2m/Dimmer01/state",
+        "payload": "OFF",
+        "payloadType": "str",
+        "x": 140,
+        "y": 780,
+        "wires": [
+            [
+                "9f5fb1d02117e8eb"
+            ]
+        ]
+    },
+    {
+        "id": "4663fad453b75610",
+        "type": "debug",
+        "z": "52059dee97b6a94b",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "f33c1160084baac8",
+        "type": "debug",
+        "z": "52059dee97b6a94b",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 730,
+        "wires": []
     },
     {
         "id": "4eeae5c51a363233",
