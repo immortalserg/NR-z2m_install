@@ -411,8 +411,8 @@
         "correl": "",
         "expiry": "",
         "broker": "9b93b44814325e7b",
-        "x": 560,
-        "y": 75,
+        "x": 535,
+        "y": 155,
         "wires": []
     },
     {
@@ -450,7 +450,7 @@
         "type": "function",
         "z": "2144910b2b1a973a",
         "name": "termostat",
-        "func": "cb = 5; // количество термостатов\nlet bat_cl = []; let pl = []; let bat_clt = []; let nmsg = [];\n// реле управляемые клапанами отопления или теплым полом\n// номер массива = номер сенсора\n// (NO нормально открытый, NC - нормально закрытый/ теплый пол)\nbat_cl[1] = \"z2m/Relay02/set/state_l2\"; bat_clt[1] = \"NC\";\nbat_cl[2] = \"z2m/Dimmer10/set/state_l2\"; bat_clt[2] = \"NO\";\nbat_cl[3] = \"z2m/Relay01/set/state_l1\"; bat_clt[3] = \"NO\";\nbat_cl[4] = \"z2m/Relay01/set/state_l2\"; bat_clt[4] = \"NO\";\nbat_cl[5] = \"z2m/Relay03/set/state_l1\"; bat_clt[5] = \"NO\";\n\n\nfor (let i = 1; i < cb+1; i++) {\n    if (i<10){l=\"0\"+i;} else {l=\"\"+i;}\n    temp_sensor = global.get(\"Sensor\"+l+\"_temperature\", \"file\");\n    temp_set = global.get(\"setup_\"+\"Sensor\"+l+\"_temp\", \"file\");\n    if (temp_sensor > temp_set) {\n        if (bat_clt[i] == \"NO\") {\n            pl[i] = \"ON\";\n        }else{\n            pl[i] = \"OFF\";\n        }\n    } else {\n        if (bat_clt[i] == \"NO\") {\n            pl[i] = \"OFF\";\n        }else{\n            pl[i] = \"ON\";\n        } \n    }\n\n    node.send({payload: pl[i], topic: bat_cl[i]});\n}\n\nreturn;\n",
+        "func": "cb = 5; // количество термостатов\nlet bat_cl = []; let pl = []; let bat_clt = []; let nmsg = []; let  ns = [];\n// реле управляемые клапанами отопления или теплым полом\n// (NO нормально открытый, NC - нормально закрытый/ теплый пол)\n// установки етмпературы должны быть в переменной setup_ИмяДатчика_temp\nbat_cl[1] = \"z2m/Relay02/set/state_l2\";  bat_clt[1] = \"NC\"; ns[1] = \"Sensor01\";\nbat_cl[2] = \"z2m/Dimmer10/set/state_l2\"; bat_clt[2] = \"NO\"; ns[2] = \"Sensor02\";\nbat_cl[3] = \"z2m/Relay01/set/state_l1\";  bat_clt[3] = \"NO\"; ns[3] = \"Sensor04\";\nbat_cl[4] = \"z2m/Relay01/set/state_l2\";  bat_clt[4] = \"NO\"; ns[4] = \"Sensor05\";\nbat_cl[5] = \"z2m/Relay03/set/state_l1\";  bat_clt[5] = \"NO\"; ns[5] = \"Sensor06\";\n\n\nfor (let i = 1; i < cb+1; i++) {\n    if (i<10){l=\"0\"+i;} else {l=\"\"+i;}\n    temp_sensor = global.get(ns[i]+\"_temperature\", \"file\");\n    temp_set = global.get(\"setup_\"+ns[i]+\"_temp\", \"file\");\n    if (temp_sensor > temp_set) {\n        if (bat_clt[i] == \"NO\") {\n            pl[i] = \"ON\";\n        }else{\n            pl[i] = \"OFF\";\n        }\n    } else {\n        if (bat_clt[i] == \"NO\") {\n            pl[i] = \"OFF\";\n        }else{\n            pl[i] = \"ON\";\n        } \n    }\n\n    node.send({payload: pl[i], topic: bat_cl[i]});\n}\n\nreturn;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -857,7 +857,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1530,
+        "x": 850,
         "y": 65,
         "wires": [
             [
@@ -879,7 +879,7 @@
         "correl": "",
         "expiry": "",
         "broker": "9b93b44814325e7b",
-        "x": 1685,
+        "x": 1025,
         "y": 65,
         "wires": []
     },
