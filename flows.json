@@ -450,7 +450,7 @@
         "type": "function",
         "z": "2144910b2b1a973a",
         "name": "termostat",
-        "func": "cb = 5; // количество термостатов\nlet bat_cl = []; let pl = []; let bat_clt = []; let nmsg = []; let  ns = [];\n// реле управляемые клапанами отопления или теплым полом\n// (NO нормально открытый, NC - нормально закрытый/ теплый пол)\n// установки етмпературы должны быть в переменной setup_ИмяДатчика_temp\nbat_cl[1] = \"z2m/Relay02/set/state_l2\";  bat_clt[1] = \"NC\"; ns[1] = \"Sensor01\";\nbat_cl[2] = \"z2m/Dimmer10/set/state_l2\"; bat_clt[2] = \"NO\"; ns[2] = \"Sensor02\";\nbat_cl[3] = \"z2m/Relay01/set/state_l1\";  bat_clt[3] = \"NO\"; ns[3] = \"Sensor04\";\nbat_cl[4] = \"z2m/Relay01/set/state_l2\";  bat_clt[4] = \"NO\"; ns[4] = \"Sensor05\";\nbat_cl[5] = \"z2m/Relay03/set/state_l1\";  bat_clt[5] = \"NO\"; ns[5] = \"Sensor06\";\n\n\nfor (let i = 1; i < cb+1; i++) {\n    if (i<10){l=\"0\"+i;} else {l=\"\"+i;}\n    temp_sensor = global.get(ns[i]+\"_temperature\", \"file\");\n    temp_set = global.get(\"setup_\"+ns[i]+\"_temp\", \"file\");\n    if (temp_sensor > temp_set) {\n        if (bat_clt[i] == \"NO\") {\n            pl[i] = \"ON\";\n        }else{\n            pl[i] = \"OFF\";\n        }\n    } else {\n        if (bat_clt[i] == \"NO\") {\n            pl[i] = \"OFF\";\n        }else{\n            pl[i] = \"ON\";\n        } \n    }\n\n    node.send({payload: pl[i], topic: bat_cl[i]});\n}\n\nreturn;\n",
+        "func": "cb = 5; // количество термостатов\nlet bat_cl = []; let pl = []; let bat_clt = []; let nmsg = []; let  ns = [];\n// реле управляемые клапанами отопления или теплым полом\n// (NO нормально открытый, NC - нормально закрытый/ теплый пол)\n// установки етмпературы должны быть в переменной setup_ИмяДатчика_temp\nbat_cl[1] = \"z2m/Relay02/set/state_l2\";  bat_clt[1] = \"NC\"; ns[1] = \"Sensor01\";\nbat_cl[2] = \"z2m/Dimmer10/set/state_l2\"; bat_clt[2] = \"NO\"; ns[2] = \"Sensor02\";\nbat_cl[3] = \"z2m/Relay01/set/state_l1\";  bat_clt[3] = \"NO\"; ns[3] = \"Sensor04\";\nbat_cl[4] = \"z2m/Relay01/set/state_l2\";  bat_clt[4] = \"NO\"; ns[4] = \"Sensor05\";\nbat_cl[5] = \"z2m/Relay03/set/state_l1\";  bat_clt[5] = \"NO\"; ns[5] = \"Sensor06\";\n\n\nfor (let i = 1; i < cb+1; i++) {\n    if (i<10){l=\"0\"+i;} else {l=\"\"+i;}\n    if(!bat_clt[i]){bat_clt[i]=\"NO\"}\n    if(!ns[i]){ns[i]=\"Sensor\"+l}\n    temp_sensor = global.get(ns[i]+\"_temperature\", \"file\");\n    temp_set = global.get(\"setup_\"+ns[i]+\"_temp\", \"file\");\n    \n    if (temp_sensor > temp_set) {\n        if (bat_clt[i] == \"NO\") {\n            pl[i] = \"ON\";\n        }else{\n            pl[i] = \"OFF\";\n        }\n    } else {\n        if (bat_clt[i] == \"NO\") {\n            pl[i] = \"OFF\";\n        }else{\n            pl[i] = \"ON\";\n        } \n    }\n\n    node.send({payload: pl[i], topic: bat_cl[i]});\n}\n\nreturn;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -905,21 +905,6 @@
         "wires": []
     },
     {
-        "id": "2ddbada8cc8fdc44",
-        "type": "function",
-        "z": "2144910b2b1a973a",
-        "name": "Button",
-        "func": "bt = msg.payload; // получаем событие\nlib = global.get('LIB'); // подключаем функции\nname = lib.Clear(msg.topic); // получаем имя устройства\n\nlib.Dimmer(\"Dimmer11\", 1, 200)\n\n\nreturn;\n\n\n\n\n",
-        "outputs": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1200,
-        "y": 565,
-        "wires": []
-    },
-    {
         "id": "9e96378d17e35c73",
         "type": "debug",
         "z": "2144910b2b1a973a",
@@ -934,35 +919,6 @@
         "x": 555,
         "y": 70,
         "wires": []
-    },
-    {
-        "id": "68f1f10e1817dde2",
-        "type": "inject",
-        "z": "2144910b2b1a973a",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 1030,
-        "y": 560,
-        "wires": [
-            [
-                "2ddbada8cc8fdc44"
-            ]
-        ]
     },
     {
         "id": "97c620393f222967",
