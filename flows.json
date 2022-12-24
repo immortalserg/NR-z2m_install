@@ -37,14 +37,6 @@
         "env": []
     },
     {
-        "id": "8070b5f3b893fc46",
-        "type": "tab",
-        "label": "Поток 1",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "9b93b44814325e7b",
         "type": "mqtt-broker",
         "name": "localhost",
@@ -339,6 +331,20 @@
         "icon": "dashboard"
     },
     {
+        "id": "75723747f5460f63",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "6363b9360e2941f9",
+        "type": "alice-service",
+        "name": "prwebgroup@yandex.ru"
+    },
+    {
         "id": "0ad78fbf8ae4c6ba",
         "type": "mqtt in",
         "z": "2144910b2b1a973a",
@@ -425,8 +431,8 @@
         "correl": "",
         "expiry": "",
         "broker": "9b93b44814325e7b",
-        "x": 540,
-        "y": 170,
+        "x": 555,
+        "y": 110,
         "wires": []
     },
     {
@@ -557,7 +563,7 @@
         "type": "function",
         "z": "2144910b2b1a973a",
         "name": "Button",
-        "func": "var bt = msg.payload; // получаем событие\nvar lib = global.get('LIB'); // подключаем функции\nvar name = lib.Clear(msg.topic); // получаем имя устройства\n\nif (name == \"Button01\" && bt == \"single_left\")     {lib.Dimmer(\"Dimmer11\", 1)}\nif (name == \"Button01\" && bt == \"single_right\")    {lib.Dimmer(\"Dimmer01\", 2)}\nif (name == \"Button02\" && bt == \"single_left\")     {lib.Relay(\"Dimmer02\", 1)}\nif (name == \"Button02\" && bt == \"single_right\")    {lib.Relay(\"Dimmer02\", 2)}\nif (name == \"Button02\" && bt == \"double_left\")     {lib.Curtain(\"Curtain01\",\"OPEN\")}\nif (name == \"Button02\" && bt == \"double_right\")    {lib.Curtain(\"Curtain01\",\"CLOSE\")}\nif (name == \"Button03\" && bt == \"single_left\")     {lib.Relay(\"Dimmer01\", 2)}\nif (name == \"Button03\" && bt == \"single_right\")    {lib.Relay(\"Dimmer01\", 1)}\n\nif (name == \"Contact01\")    {lib.Relay(\"Dimmer01\", 1, bt)}\n\n\n\nreturn;\n\n\n\n\n",
+        "func": "var bt = msg.payload; // получаем событие\nvar lib = global.get('LIB'); // подключаем функции\nvar name = lib.Clear(msg.topic); // получаем имя устройства через функцию очистки топика\n\nif (name == \"Button01\" && bt == \"single_left\")     {lib.Dimmer(\"Dimmer11\", 1)}\nif (name == \"Button01\" && bt == \"single_right\")    {lib.Dimmer(\"Dimmer01\", 2)}\nif (name == \"Button02\" && bt == \"single_left\")     {lib.Relay(\"Dimmer02\", 1)}\nif (name == \"Button02\" && bt == \"single_right\")    {lib.Relay(\"Dimmer02\", 2)}\nif (name == \"Button02\" && bt == \"double_left\")     {lib.Curtain(\"Curtain01\",\"OPEN\")}\nif (name == \"Button02\" && bt == \"double_right\")    {lib.Curtain(\"Curtain01\",\"CLOSE\")}\nif (name == \"Button03\" && bt == \"single_left\")     {lib.Relay(\"Dimmer01\", 2)}\nif (name == \"Button03\" && bt == \"single_right\")    {lib.Relay(\"Dimmer01\", 1)}\n\nif (name == \"Contact01\")    {lib.Relay(\"Dimmer01\", 1, bt)}\n\n\n\nreturn;\n\n\n\n\n",
         "outputs": 0,
         "noerr": 0,
         "initialize": "",
@@ -939,7 +945,7 @@
         "once": true,
         "onceDelay": "0.1",
         "topic": "",
-        "x": 90,
+        "x": 95,
         "y": 70,
         "wires": [
             [
@@ -3001,216 +3007,6 @@
         "wires": [
             [
                 "5873c12f485df839"
-            ]
-        ]
-    },
-    {
-        "id": "43d3670291462b83",
-        "type": "function",
-        "z": "8070b5f3b893fc46",
-        "name": "fan_pogreb",
-        "func": "lib = global.get('LIB') // подключаем функции\nsen1 = \"Sensor01\" // датчик в погребе\nsen2 = \"Sensor02\" // датчик на улице\nrel1 = \"Relay01\" // реле управления вентилятором\nrel1l = 1 // канал реле управления вентилятором\nfan_auto =  global.get(\"setup_\"+sen1+\"_fan_auto\");\ntemp1 = global.get(\"setup_\"+sen1+\"_temp\");\ntemp2 = global.get(\"setup_\"+sen1+\"_temp\");\ntemps1 = global.get(sen1+\"_temperature\");\ntemps2 = global.get(sen2+\"_temperature\");\n\nif(fan_auto==\"ON\") {\n  if (temps1>temp1 && temps2<temp2) {\n    lib.Relay(rel1,rel1l,\"ON\")\n  }else{\n    lib.Relay(rel1,rel1l,\"OFF\")\n  }\n}\nreturn;\n",
-        "outputs": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 475,
-        "y": 255,
-        "wires": []
-    },
-    {
-        "id": "5251e7e227b4b08a",
-        "type": "mqtt in",
-        "z": "8070b5f3b893fc46",
-        "name": "",
-        "topic": "z2m/setup/Sensor01/temp",
-        "qos": "1",
-        "datatype": "auto",
-        "broker": "9b93b44814325e7b",
-        "nl": false,
-        "rap": false,
-        "inputs": 0,
-        "x": 300,
-        "y": 150,
-        "wires": [
-            [
-                "ee3af59ea80a8e56"
-            ]
-        ]
-    },
-    {
-        "id": "b21e1ff896fa589f",
-        "type": "mqtt in",
-        "z": "8070b5f3b893fc46",
-        "name": "",
-        "topic": "z2m/setup/Sensor02/temp",
-        "qos": "1",
-        "datatype": "auto",
-        "broker": "9b93b44814325e7b",
-        "nl": false,
-        "rap": false,
-        "inputs": 0,
-        "x": 300,
-        "y": 180,
-        "wires": [
-            [
-                "0aac5c796b0ae410"
-            ]
-        ]
-    },
-    {
-        "id": "ee3af59ea80a8e56",
-        "type": "ui_slider",
-        "z": "8070b5f3b893fc46",
-        "name": "",
-        "label": "Погреб🌡️°C",
-        "tooltip": "",
-        "group": "19178fb22b463673",
-        "order": 0,
-        "width": "6",
-        "height": "1",
-        "passthru": false,
-        "outs": "end",
-        "topic": "z2m/setup/Sensor01/temp",
-        "topicType": "str",
-        "min": "5",
-        "max": "35",
-        "step": 1,
-        "className": "",
-        "x": 590,
-        "y": 150,
-        "wires": [
-            [
-                "29215959f518b29c"
-            ]
-        ]
-    },
-    {
-        "id": "0aac5c796b0ae410",
-        "type": "ui_slider",
-        "z": "8070b5f3b893fc46",
-        "name": "",
-        "label": "Улица🌡️°C",
-        "tooltip": "",
-        "group": "19178fb22b463673",
-        "order": 0,
-        "width": "6",
-        "height": "1",
-        "passthru": false,
-        "outs": "end",
-        "topic": "z2m/setup/Sensor02/temp",
-        "topicType": "str",
-        "min": "5",
-        "max": "35",
-        "step": 1,
-        "className": "",
-        "x": 590,
-        "y": 180,
-        "wires": [
-            [
-                "29215959f518b29c"
-            ]
-        ]
-    },
-    {
-        "id": "29215959f518b29c",
-        "type": "mqtt out",
-        "z": "8070b5f3b893fc46",
-        "name": "",
-        "topic": "",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "9b93b44814325e7b",
-        "x": 810,
-        "y": 165,
-        "wires": []
-    },
-    {
-        "id": "895420c270a1b95f",
-        "type": "mqtt in",
-        "z": "8070b5f3b893fc46",
-        "name": "",
-        "topic": "z2m/setup/Sensor01/fan_auto",
-        "qos": "1",
-        "datatype": "auto",
-        "broker": "9b93b44814325e7b",
-        "nl": false,
-        "rap": false,
-        "inputs": 0,
-        "x": 310,
-        "y": 120,
-        "wires": [
-            [
-                "1bfa04ac59a41914"
-            ]
-        ]
-    },
-    {
-        "id": "1bfa04ac59a41914",
-        "type": "ui_switch",
-        "z": "8070b5f3b893fc46",
-        "name": "",
-        "label": "Погреб авто",
-        "tooltip": "",
-        "group": "1e93855ef249264e",
-        "order": 4,
-        "width": "6",
-        "height": "1",
-        "passthru": false,
-        "decouple": "true",
-        "topic": "z2m/setup/Sensor01/fan_auto",
-        "topicType": "str",
-        "style": "",
-        "onvalue": "ON",
-        "onvalueType": "str",
-        "onicon": "",
-        "oncolor": "",
-        "offvalue": "OFF",
-        "offvalueType": "str",
-        "officon": "",
-        "offcolor": "",
-        "animate": false,
-        "className": "",
-        "x": 590,
-        "y": 120,
-        "wires": [
-            [
-                "29215959f518b29c"
-            ]
-        ]
-    },
-    {
-        "id": "e35719c90c7ba5c2",
-        "type": "inject",
-        "z": "8070b5f3b893fc46",
-        "name": "OnNewMinute",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "60",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "1",
-        "payload": "OnNewMinute",
-        "payloadType": "str",
-        "x": 285,
-        "y": 255,
-        "wires": [
-            [
-                "43d3670291462b83"
             ]
         ]
     }
