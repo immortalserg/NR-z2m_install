@@ -1,30 +1,41 @@
 [
     {
-        "id": "88e03f95f9d74280",
-        "type": "inject",
+        "id": "ed77efc3135f6ec5",
+        "type": "ui_template",
         "z": "21b213583fe2216f",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "800",
-        "payloadType": "num",
-        "x": 85,
-        "y": 45,
+        "group": "9f213c40125a5160",
+        "name": "universal",
+        "order": 3,
+        "width": "4",
+        "height": "4",
+        "format": "<script>\n(function(scope) {\n  scope.$watch('msg', function(msg) {\n    if (msg) {\n      // Do something when msg arrives\n        const val = msg.payload\n        const v = msg.v;\n        document.getElementById('gauge_'+scope.$id).style.setProperty('--gauge-value', v);\n        document.getElementById('gauge_val_'+scope.$id).innerText = val.toFixed(msg.dec);\n    }\n   \n  });\n})(scope);\n</script>\n\n\n<div class=\"g-wrapper g-wrapper-label-0\">\n<div id=\"{{'gauge_'+$id}}\" class=\"g-container\" style=\"--needle-color: {{msg.needlecolor}}; --gauge-value:{{msg.gaugevalue}}; --container-size:{{msg.containersize}}; --gn-distance:{{msg.gndistance}}; --ga-tick-count:{{msg.gtick_count}}; --ga-subtick-count:{{msg.gsubtick_count}}; --g-unit:'{{msg.unit}}'\">\n    <div id=\"bgr\" class=\"g-body {{msg.gbody2}}\">\n        <div class=\"g-ring\">\n            <div class=\"g-rivets\">\n                <div class={{msg.grivet}}></div>\n                <div class={{msg.grivet}}></div>\n                <div class={{msg.grivet}}></div>\n                <div class={{msg.grivet}}></div>\n            </div>\n            <div class=\"g-plate\">\n                <div ng-repeat=\"gzone2 in msg.gzone2\" style=\"width: 100%; height: 100%; position: absolute; top: 50%; left: 50%; transform-origin: 0 0; background:{{gzone2.color}}; transform: rotate({{gzone2.zone}}deg) skew({{gzone2.zone2}}deg, 0deg); \"></div>\n                <div class=\"g-zone\" ng-repeat=\"gzone in msg.gzone\" style= \"border-top: {{msg.bt}}px solid; left: {{msg.ll}}%; border-radius: {{msg.br1}}% {{msg.br2}}% 0% 0%; border-right: {{msg.br}}px solid; border-left: {{msg.bl}}px solid; clip-path: polygon(0% 0%, 100% 0%, 0% 0%, 0% 100% ); border-color: {{gzone.color}}; {{gzone.zone}}; \"></div>\n                <div class=\"g-ticks\">\n                    <div class=\"g-tick\" ng-repeat=\"gtick in msg.gtick\" style=\"--ga-tick:{{gtick.ga}};\"> </div>\n                </div>\n                <div class=\"g-ticks\">\n                    <div class=\"g-subtick\" ng-repeat=\"gsubtick in msg.gsubtick\" style=\"--ga-tick:{{gsubtick.ga}};\"> </div>\n                </div>\n                <div class=\"g-nums\">\n                    <div class=\"g-num\" ng-repeat=\"gnum in msg.gnum\" style=\"--ga-tick:{{gnum.ga}};  --ga-tick-count:{{gnum.gs}};\" >{{gnum.value}}</div>\n                </div>\n                <div class=\"g-label\">{{msg.label}}</div>\n                <div class=\"g-needle\"></div>\n                <div class=\"g-needle-ring\"></div>\n            </div>\n            <div class=\"{{msg.gvalring}}\">\n                <div class=\"{{msg.gvalplate}}\"></div>\n                <div id=\"{{'gauge_val_'+$id}}\" class=\"g-val\"></div>\n            </div>\n        </div>\n    </div>\n</div>\n</div>\n\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 450,
+        "y": 125,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2e63cf1ab603052e",
+        "type": "function",
+        "z": "21b213583fe2216f",
+        "name": "Sens01",
+        "func": "let gzone = [];\nmsg.name = node.name; // Имя gauge\nvalue = msg.payload\nmsg.min = 0; // минимальное значение / min\nmsg.max = 2500; // максимальное значение / max\nmsg.gtick_count = 10; // количество больших засечек шкалы\nmsg.gsubtick_count = msg.gtick_count*10; // количество маленьких засечек шкалы\nmsg.gnum_count = 5; //количество подписей\nmsg.dec = 0; // количество знаков после запятой\nmsg.unit = \"ppm.\";\nmsg.label=\"CO₂\"\nmsg.gbody = \"left\" // направление право/лево\nmsg.containersize = 4;\nmsg.needlecolor = \"#001100\"; //цвет стрелки\n// окрашивание зон\ngzone[0] = {start:0,end:10,color:\"#ff5d4ebf\"};\ngzone[1] = {start:10,end:20,color:\"#ffb52d8c\"};\ngzone[2] = {start:20,end:25,color:\"#91ff4e85\"};\ngzone[3] = {start:25,end:100,color:\"#4ec3ff85\"};\n\n\n\n\n// ----------------------------------------------------------------\n\nlet gtick = []; let gsubtick = []; let gnum = [];\nGauge = (start,end) => {\n        let x1 = 100*Math.tan((90-90/msg.gsubtick_count*start)*Math.PI/180);\n        if ((90/msg.gsubtick_count*start) <= 45) {x1=100;}\n        let x2 = 100*Math.tan((90-90/msg.gsubtick_count*end)*Math.PI/180);\n        if ((90/msg.gsubtick_count*end) <= 45) {x2=100;}\n    if (msg.gbody == \"left\") {\n        x1 = 100-100*Math.tan((90-90/msg.gsubtick_count*start)*Math.PI/180);\n        if ((90/msg.gsubtick_count*start) <= 45) {x1=0;}\n        x2 = 100-100*Math.tan((90-90/msg.gsubtick_count*end)*Math.PI/180);\n        if ((90/msg.gsubtick_count*end) <= 45) {x2=0;}\n    }\n\n    let y1 = 100-100*Math.tan(90/msg.gsubtick_count*start*Math.PI/180);\n    if (y1 < 0) {y1=0;}\n    let y2 = 100-100*Math.tan((90/msg.gsubtick_count*end)*Math.PI/180);\n    if (y2 < 0) {y2=0;}\n    \n    if (msg.gbody == \"left\") {\n    topic = \"clip-path: polygon(\"+x1+\"% \"+y1+\"%, 100% 100%, \"+x2+\"% \"+y2+\"%, 0% 0%)\";\n    } else {\n    topic = \"clip-path: polygon(\"+x1+\"% \"+y1+\"%, 100% 0%, \"+x2+\"% \"+y2+\"%, 0% 100%)\";\n    }\n    return topic;\n}\nmsg.bord = Math.floor(7/4*msg.containersize);\nif (msg.gbody == \"left\") {\n    msg.bt = msg.bord;\n    msg.br = 0;\n    msg.bl = msg.bord;\n    msg.ll = 8;\n    msg.br1 = 100;\n    msg.br2 = 0;\n} else {\n    msg.bt = msg.bord;\n    msg.br = msg.bord;\n    msg.bl = 0;\n    msg.ll = 10;\n    msg.br1 = 0;\n    msg.br2 = 100;\n}\nif (msg.gbody == \"right\" || msg.gbody == \"left\") {\n    for (let i = 0; i < gzone.length; i++) {\n        gzone[i].zone = Gauge(gzone[i].start,gzone[i].end);\n    }\n    msg.gbody2 = \"quarter-top-\" + msg.gbody\n    msg.gval = \"\"\n    msg.gvalring = \"g-val-ring\";\n    msg.gvalplate = \"g-val-plate\";\n    msg.gaugevalue = 100;\n    msg.gndistance = 28;\n    msg.grivet = \"\";\n    msg.gzone = gzone;\n    \n}else{\n    di =  gzone.length;\n    dd =  gzone.length;\n    for (let i = 0; i < dd; i++) {\n        gzonep = 134.7+gzone[i].start*(270/msg.gsubtick_count);\n        gzone[i].zone = gzonep;\n        zonem = 90-(gzone[i].end-gzone[i].start)*(270/msg.gsubtick_count);\n        if (zonem < -45) {\n            gzone[i].zone2 = -45;\n            gzone[di] = {color:gzone[i].color, zone:gzonep+135,zone2:zonem+135};\n            di++;\n        } else {\n            gzone[i].zone2 = 90-(gzone[i].end-gzone[i].start)*(270/msg.gsubtick_count);\n        }\n    }\n    msg.gbody2 = \"\";\n    msg.gvalring = \"\";\n    msg.gvalplate = \"\";\n    msg.gval = \"top: 65%; right:50%-calc(calc(var(--container-size) * 7%) / calc(var(--container-size)/4)); border-radius:0%\";\n    msg.gaugevalue = 0;\n    msg.gndistance = 13;\n    msg.grivet = \"g-rivet\";\n    msg.gzone2 = gzone;\n\n}\n\nfor (let i = 1; i <= msg.gsubtick_count+1; i++) {\ngsubtick[i-1] = {ga:i};\n}\nmsg.gsubtick = gsubtick;\nfor (let i = 1; i <= msg.gtick_count+1; i++) {\ngtick[i-1] = {ga:i};\n}\nmsg.gtick = gtick;\nfor (let i = 1; i <= msg.gnum_count+1; i++) {\n    if (msg.gbody == \"right\") {ii=i;} else {ii=msg.gnum_count+2-i}\n    if (i==1) {\n        gnum[i-1] = {ga:ii,gs:msg.gnum_count,value:msg.max};\n    } else {\n        gnum[i-1] = {ga:ii,gs:msg.gnum_count,value:msg.max-(msg.max-msg.min)/msg.gnum_count*(i-1)};\n    }\n}\nmsg.gnum = gnum;\nmsg.payload = value * 1;\nif (msg.payload > msg.max+msg.max/msg.gsubtick_count*3){\n    msg.value = msg.max+msg.max/msg.gsubtick_count*3;\n} else if (msg.payload < msg.min-msg.max/msg.gsubtick_count*3) {\n    msg.value = msg.min-msg.max/msg.gsubtick_count*3;\n} else {\n    msg.value = msg.payload;\n}\n\nif (msg.gbody == \"right\") {\nmsg.v = 100 - (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\n} else if (msg.gbody == \"left\") {\nmsg.v = 100 + (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\n} else {\nmsg.v = ((msg.value - msg.min) / (msg.max - msg.min)) * 100;\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 125,
         "wires": [
             [
-                "2e63cf1ab603052e"
+                "ed77efc3135f6ec5"
             ]
         ]
     },
@@ -43,122 +54,10 @@
         "resendOnRefresh": true,
         "templateScope": "global",
         "className": "",
-        "x": 495,
-        "y": 50,
+        "x": 410,
+        "y": 85,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "ed77efc3135f6ec5",
-        "type": "ui_template",
-        "z": "21b213583fe2216f",
-        "group": "9f213c40125a5160",
-        "name": "universal",
-        "order": 3,
-        "width": "3",
-        "height": "3",
-        "format": "<style>\n.{{msg.name}} {\n    position: absolute;\n    width: 82%;\n    height: 82%;\n    top: 8%;\n    left: {{msg.ll}}%;\n    box-sizing: border-box;\n    border-radius: {{msg.br1}}% {{msg.br2}}% 0% 0%;\n    border-color: var(--zone-color-normal);\n    border-top: {{msg.bt}}px solid;\n    border-right: {{msg.br}}px solid;\n    border-left: {{msg.bl}}px solid;\n    clip-path: polygon(0% 0%, 100% 0%, 0% 0%, 0% 100% );\n}\n.{{msg.name}}.zone0 {\n     border-color: var(--zone-color-low);\n    {{msg.gauge0}};    \n}\n.{{msg.name}}.zone1 {\n     border-color: var(--zone-color-normal);\n    {{msg.gauge1}};    \n}\n.{{msg.name}}.zone2 {\n     border-color: var(--zone-color-warn);\n    {{msg.gauge2}};    \n}\n.{{msg.name}}.zone3 {\n     border-color: var(--zone-color-high);\n    {{msg.gauge3}};    \n}\n\n\n\n\n\n</style>\n\n<div class=\"g-wrapper g-wrapper-label-0\">\n\n<div id=\"{{'gauge_'+$id}}\" class=\"g-container\" style=\"--gauge-value:100; --container-size:{{msg.containersize}}; --gn-distance:28; --ga-tick-count:10; --ga-subtick-count:100; --g-unit:'{{msg.unit}}'\">\n\n\n    <div id=\"bgr\" class=\"g-body quarter-top-{{msg.gbody}}\">\n        <div class=\"g-ring\">\n            <div class=\"g-plate\">\n                <div class=\"{{msg.name}} zone0\"></div>\n                <div class=\"{{msg.name}} zone1\"></div>\n                <div class=\"{{msg.name}} zone2\"></div>\n                <div class=\"{{msg.name}} zone3\"></div>\n                \n                <div class=\"g-ticks\">\n                    <div class=\"g-tick\" ng-repeat=\"gtick in msg.gtick\" style=\"--ga-tick:{{gtick.ga}}; --ga-tick-count:{{gtick.gs}};\"> </div>\n                </div>\n                <div class=\"g-ticks\">\n                    <div class=\"g-subtick\" ng-repeat=\"gsubtick in msg.gsubtick\" style=\"--ga-tick:{{gsubtick.ga}}; --ga-subtick-count:{{gsubtick.gs}};\"> </div>\n                </div>\n                <div class=\"g-nums\">\n                    <div class=\"g-num\" ng-repeat=\"gnum in msg.gnum\" style=\"--ga-tick:{{gnum.ga}}; --ga-tick-count:{{gnum.gs}};\" >{{gnum.value}}</div>\n                </div>\n                <div class=\"g-label\">{{msg.label}}</div>\n                <div class=\"g-needle\"></div>\n                <div class=\"g-needle-ring\"></div>\n            </div>\n            <div class=\"g-val-ring\">\n                <div class=\"g-val-plate\"></div>\n                <div id=\"{{'gauge_val_'+$id}}\" class=\"g-val\"></div>\n            </div>\n        </div>\n    </div>\n</div>\n</div>\n<script>\n(function(scope) {\n  scope.$watch('msg', function(msg) {\n    if (msg) {\n      // Do something when msg arrives\n        const val = msg.payload\n        const val2 = msg.value\n        let min = msg.min;\n        let max = msg.max;\n        \n        const v = msg.v;\n        document.getElementById('gauge_'+scope.$id).style.setProperty('--gauge-value', v);\n        document.getElementById('gauge_val_'+scope.$id).innerText = val.toFixed(msg.dec);\n    }\n   \n  });\n})(scope);\n</script>\n",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 455,
-        "y": 100,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "adb33fdd4efa14c8",
-        "type": "ui_template",
-        "z": "21b213583fe2216f",
-        "group": "9f213c40125a5160",
-        "name": "universal",
-        "order": 3,
-        "width": "2",
-        "height": "2",
-        "format": "<style>\n.{{msg.name}} {\n    position: absolute;\n    width: 82%;\n    height: 82%;\n    top: 8%;\n    left: {{msg.ll}}%;\n    box-sizing: border-box;\n    border-radius: {{msg.br1}}% {{msg.br2}}% 0% 0%;\n    border-color: var(--zone-color-normal);\n    border-top: {{msg.bt}}px solid;\n    border-right: {{msg.br}}px solid;\n    border-left: {{msg.bl}}px solid;\n    clip-path: polygon(0% 0%, 100% 0%, 0% 0%, 0% 100% );\n}\n.{{msg.name}}.zone0 {\n     border-color: var(--zone-color-low);\n    {{msg.gauge0}};    \n}\n.{{msg.name}}.zone1 {\n     border-color: var(--zone-color-normal);\n    {{msg.gauge1}};    \n}\n.{{msg.name}}.zone2 {\n     border-color: var(--zone-color-warn);\n    {{msg.gauge2}};    \n}\n.{{msg.name}}.zone3 {\n     border-color: var(--zone-color-high);\n    {{msg.gauge3}};    \n}\n\n\n\n\n\n</style>\n\n<div class=\"g-wrapper g-wrapper-label-0\">\n\n<div id=\"{{'gauge_'+$id}}\" class=\"g-container\" style=\"--gauge-value:100; --container-size:{{msg.containersize}}; --gn-distance:28; --ga-tick-count:10; --ga-subtick-count:100; --g-unit:'{{msg.unit}}'\">\n\n\n    <div id=\"bgr\" class=\"g-body quarter-top-{{msg.gbody}}\">\n        <div class=\"g-ring\">\n            <div class=\"g-plate\">\n                <div class=\"{{msg.name}} zone0\"></div>\n                <div class=\"{{msg.name}} zone1\"></div>\n                <div class=\"{{msg.name}} zone2\"></div>\n                <div class=\"{{msg.name}} zone3\"></div>\n                \n                <div class=\"g-ticks\">\n                    <div class=\"g-tick\" ng-repeat=\"gtick in msg.gtick\" style=\"--ga-tick:{{gtick.ga}}; --ga-tick-count:{{gtick.gs}};\"> </div>\n                </div>\n                <div class=\"g-ticks\">\n                    <div class=\"g-subtick\" ng-repeat=\"gsubtick in msg.gsubtick\" style=\"--ga-tick:{{gsubtick.ga}}; --ga-subtick-count:{{gsubtick.gs}};\"> </div>\n                </div>\n                <div class=\"g-nums\">\n                    <div class=\"g-num\" ng-repeat=\"gnum in msg.gnum\" style=\"--ga-tick:{{gnum.ga}}; --ga-tick-count:{{gnum.gs}};\" >{{gnum.value}}</div>\n                </div>\n                <div class=\"g-label\">{{msg.label}}</div>\n                <div class=\"g-needle\"></div>\n                <div class=\"g-needle-ring\"></div>\n            </div>\n            <div class=\"g-val-ring\">\n                <div class=\"g-val-plate\"></div>\n                <div id=\"{{'gauge_val_'+$id}}\" class=\"g-val\"></div>\n            </div>\n        </div>\n    </div>\n</div>\n</div>\n<script>\n(function(scope) {\n  scope.$watch('msg', function(msg) {\n    if (msg) {\n      // Do something when msg arrives\n        const val = msg.payload\n        const val2 = msg.value\n        let min = msg.min;\n        let max = msg.max;\n        \n        const v = msg.v;\n        document.getElementById('gauge_'+scope.$id).style.setProperty('--gauge-value', v);\n        document.getElementById('gauge_val_'+scope.$id).innerText = val.toFixed(msg.dec);\n    }\n   \n  });\n})(scope);\n</script>\n",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 455,
-        "y": 150,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "392c9dc10c9c2690",
-        "type": "ui_template",
-        "z": "21b213583fe2216f",
-        "group": "9f213c40125a5160",
-        "name": "4x4 regular",
-        "order": 22,
-        "width": 4,
-        "height": 4,
-        "format": "<div class=\"g-wrapper g-wrapper-label-0\">\n\n<div id=\"{{'gauge_'+$id}}\" class=\"g-container\" style=\"--gauge-value:0; --container-size:4; --gn-distance:13; --ga-tick-count:10; --ga-subtick-count:100; --g-unit:'°C'\">\n    <div id=\"bgr\" class=\"g-body\">\n        <div class=\"g-ring\">\n            <div class=\"g-rivets\">\n                <div class=g-rivet></div>\n                <div class=g-rivet></div>\n                <div class=g-rivet></div>\n                <div class=g-rivet></div>\n            </div>\n            <div class=\"g-plate\">\n                <div class=\"g-ticks\">\n                    <div class=\"g-tick\" ng-repeat=\"gtick in msg.gtick\" style=\"--ga-tick:{{gtick.ga}}; --ga-tick-count:{{gtick.gs}};\"> </div>\n                </div>\n                <div class=\"g-ticks\">\n                    <div class=\"g-subtick\" ng-repeat=\"gsubtick in msg.gsubtick\" style=\"--ga-tick:{{gsubtick.ga}}; --ga-subtick-count:{{gsubtick.gs}};\"> </div>\n                </div>\n                <div class=\"g-nums\">\n                    <div class=\"g-num\" ng-repeat=\"gnum in msg.gnum\" style=\"--ga-tick:{{gnum.ga}}; --ga-tick-count:{{gnum.gs}};\" >{{gnum.value}}</div>\n                </div>\n                <div class=\"g-label\">{{msg.label}}</div>\n                <div class=\"g-needle\"></div>\n                <div class=\"g-needle-ring\"></div>\n                <div id=\"{{'gauge_val_'+$id}}\" class=\"g-val\"></div>\n            </div>\n        </div>\n    </div>\n</div>\n</div>\n<script>\n(function(scope) {\n    let min = 0;\n    let max = 100;\n  scope.$watch('msg', function(msg) {\n    if (msg) {\n      // Do something when msg arrives\n        const val = msg.payload\n        const v = msg.vv;\n        document.getElementById('gauge_'+scope.$id).style.setProperty('--gauge-value', v);\n        document.getElementById('gauge_val_'+scope.$id).innerText = val.toFixed(1);\n    }\n  });\n})(scope);\n</script>\n",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 460,
-        "y": 200,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ff27c86c8a5ddff8",
-        "type": "ui_template",
-        "z": "21b213583fe2216f",
-        "group": "9f213c40125a5160",
-        "name": "gauge clock",
-        "order": 21,
-        "width": "2",
-        "height": "2",
-        "format": "<div class=\"g-wrapper g-wrapper-label-0\">\n<div id=\"{{'gauge_'+$id}}\" class=\"g-container\" style=\"--gauge-value:0; --container-size:2; --gn-distance:13.5; --ga-tick-count:12; --ga-subtick-count:60; --g-unit:''; --time-hour:0; --time-minute:0; --time-second:0; \">\n    <div id=\"bgr\" class=\"g-body\">\n        <div class=\"g-ring\">\n            <div class=\"g-rivets\">\n                <div class=g-rivet></div>\n                <div class=g-rivet></div>\n                <div class=g-rivet></div>\n                <div class=g-rivet></div>\n            </div>\n            <div class=\"g-plate\">\n                <div class=\"g-ticks\">\n                    <div class=\"g-tick clock\" style=\"--ga-tick:1;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:2;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:3;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:4;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:5;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:6;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:7;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:8;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:9;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:10;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:11;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:12;\"></div>\n                </div>\n                <div class=\"g-ticks\">\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:2;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:3;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:4;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:5;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:7;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:8;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:9;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:10;\"></div>\n                   \n                    <div class=\"g-subtick clock\" style=\"--ga-tick:12;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:13;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:14;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:15;\"></div>\n                    \n                    <div class=\"g-subtick clock\" style=\"--ga-tick:17;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:18;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:19;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:20;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:22;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:23;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:24;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:25;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:27;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:28;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:29;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:30;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:32;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:33;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:34;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:35;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:37;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:38;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:39;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:40;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:42;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:43;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:44;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:45;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:47;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:48;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:49;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:50;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:52;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:53;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:54;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:55;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:57;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:58;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:59;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:60;\"></div>\n                </div>\n               <div class=\"g-nums\">\n                    <div class=\"g-num clock\" style=\"--ga-tick:1;\" >12</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:2;\">1</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:3;\">2</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:4;\">3</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:5;\">4</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:6;\">5</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:7;\">6</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:8;\">7</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:9;\">8</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:10;\">9</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:11;\">10</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:12;\">11</div>\n                    \n                </div>\n                <div class=\"g-label\">{{msg.payload | date:'dd.MM.yyyy'}}</div>\n                <div class=\"g-needle hour\"></div>\n                <div class=\"g-needle second\"></div>\n                <div class=\"g-needle minute\"></div>\n                <div class=\"g-needle-ring\"></div>\n                <div id=\"{{'gauge_val_'+$id}}\" class=\"g-val\"></div>\n            </div>\n        </div>\n    </div>\n</div>\n</div>\n\n<script>\n(function(scope) {\n  scope.$watch('msg', function(msg) {\n    if (msg) {\n\n        const now = new Date()        \n        const sec = now.getSeconds();\n        const secDeg = ''+(((sec / 60) * 360) + 90)+'deg';        \n        const mins = now.getMinutes();\n        const minsDeg = ''+(((mins / 60) * 360) + ((sec/60)*6) + 90)+'deg';        \n        const hour = now.getHours();\n        const hourDeg = ''+(((hour / 12) * 360) + ((mins/60)*30) + 90)+'deg';\n        \n        document.getElementById('gauge_'+scope.$id).style.setProperty('--time-hour', hourDeg);\n        document.getElementById('gauge_'+scope.$id).style.setProperty('--time-minute', minsDeg);\n        document.getElementById('gauge_'+scope.$id).style.setProperty('--time-second', secDeg);\n    }\n   \n  });\n})(scope);\n</script>\n",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 470,
-        "y": 290,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "370627f593f600a9",
-        "type": "inject",
-        "z": "21b213583fe2216f",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "1",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payloadType": "date",
-        "x": 270,
-        "y": 290,
-        "wires": [
-            [
-                "ff27c86c8a5ddff8"
-            ]
         ]
     },
     {
@@ -166,37 +65,17 @@
         "type": "function",
         "z": "21b213583fe2216f",
         "name": "Sens02",
-        "func": "msg.name = node.name; // Имя gauge\nvalue = msg.payload\nmsg.min = -10; // минимальное значение\nmsg.max = 40; // максимальное значение\ngtick_count = 5; // количество больших засечек шкалы\ngsubtick_count = gtick_count*10; // количество маленьких засечек шкалы\ngnum_count = 5; //количество подписей\nmsg.dec = 0; // количество знаков после запятой\nmsg.unit = \"°C\";\nmsg.label=\"Температура\"\nmsg.gbody = \"left\" // направление право/лево\nmsg.containersize = 2;\n\ngstart0 = 0; gend0 = 5;\ngstart1 = gend0; gend1 = 30;\ngstart2 = gend1; gend2 = 40;\ngstart3 = gend2; gend3 = gsubtick_count;\n\n\n\n// ----------------------------------------------------------------\nlet gtick = []; let gsubtick = []; let gnum = [];\nGauge = (start,end) => {\n        let x1 = 100*Math.tan((90-90/gsubtick_count*start)*Math.PI/180);\n        if ((90/gsubtick_count*start) <= 45) {x1=100;}\n        let x2 = 100*Math.tan((90-90/gsubtick_count*end)*Math.PI/180);\n        if ((90/gsubtick_count*end) <= 45) {x2=100;}\n    if (msg.gbody == \"left\") {\n        x1 = 100-100*Math.tan((90-90/gsubtick_count*start)*Math.PI/180);\n        if ((90/gsubtick_count*start) <= 45) {x1=0;}\n        x2 = 100-100*Math.tan((90-90/gsubtick_count*end)*Math.PI/180);\n        if ((90/gsubtick_count*end) <= 45) {x2=0;}\n    }\n\n    let y1 = 100-100*Math.tan(90/gsubtick_count*start*Math.PI/180);\n    if (y1 < 0) {y1=0;}\n    let y2 = 100-100*Math.tan((90/gsubtick_count*end)*Math.PI/180);\n    if (y2 < 0) {y2=0;}\n    \n    if (msg.gbody == \"left\") {\n    topic = \"clip-path: polygon(\"+x1+\"% \"+y1+\"%, 100% 100%, \"+x2+\"% \"+y2+\"%, 0% 0%)\";\n    } else {\n    topic = \"clip-path: polygon(\"+x1+\"% \"+y1+\"%, 100% 0%, \"+x2+\"% \"+y2+\"%, 0% 100%)\";\n    }\n\n    \n    \n    \n    \n    return topic;\n}\nmsg.bord = Math.floor(7/4*msg.containersize);\nif (msg.gbody == \"left\") {\n    msg.bt = msg.bord;\n    msg.br = 0;\n    msg.bl = msg.bord;\n    msg.ll = 8;\n    msg.br1 = 100;\n    msg.br2 = 0;\n} else {\n    msg.bt = msg.bord;\n    msg.br = msg.bord;\n    msg.bl = 0;\n    msg.ll = 10;\n    msg.br1 = 0;\n    msg.br2 = 100;\n}\n\nmsg.gauge0 = Gauge(gstart0,gend0);\nmsg.gauge1 = Gauge(gstart1,gend1);\nmsg.gauge2 = Gauge(gstart2,gend2);\nmsg.gauge3 = Gauge(gstart3,gend3);\n\n\n\n\nfor (let i = 1; i <= gsubtick_count+1; i++) {\ngsubtick[i-1] = {ga:i,gs:gsubtick_count};\n}\nmsg.gsubtick = gsubtick;\nfor (let i = 1; i <= gtick_count+1; i++) {\ngtick[i-1] = {ga:i,gs:gtick_count};\n}\nmsg.gtick = gtick;\nfor (let i = 1; i <= gnum_count+1; i++) {\n    if (msg.gbody == \"left\") {ii=gnum_count+2-i;} else {ii=i}\n    if (i==1) {\n        gnum[i-1] = {ga:ii,gs:gnum_count,value:msg.max};\n    } else {\n        gnum[i-1] = {ga:ii,gs:gnum_count,value:msg.max-(msg.max-msg.min)/gnum_count*(i-1)};\n    }\n}\nmsg.gnum = gnum;\nmsg.payload = value * 1;\nif (msg.payload > msg.max+msg.max/gsubtick_count*3){\n    msg.value = msg.max+msg.max/gsubtick_count*3;\n} else if (msg.payload < msg.min-msg.max/gsubtick_count*3) {\n    msg.value = msg.min-msg.max/gsubtick_count*3;\n} else {\n    msg.value = msg.payload;\n}\nif (msg.gbody == \"left\") {\nmsg.v = 100 + (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\nmsg.vv = ((msg.value - msg.min) / (msg.max - msg.min)) * 100;\n} else {\nmsg.v = 100 - (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\nmsg.vv = 100 - (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\n}\n\n\nreturn msg;\n",
+        "func": "let gzone = [];\nmsg.name = node.name; // Имя gauge\nvalue = msg.payload\nmsg.min = -10; // минимальное значение\nmsg.max = 40; // максимальное значение\nmsg.gtick_count = 5; // количество больших засечек шкалы\nmsg.gsubtick_count = msg.gtick_count*10; // количество маленьких засечек шкалы\nmsg.gnum_count = 5; //количество подписей\nmsg.dec = 0; // количество знаков после запятой\nmsg.unit = \"°C\";\nmsg.label=\"Температура\"\nmsg.gbody = \"left\" // направление право/лево\nmsg.containersize = 4;\nmsg.needlecolor = \"#001100\"; //цвет стрелки\n// окрашивание зон\ngzone[0] = {start:0,end:5,color:\"#ff5d4ebf\"};\ngzone[1] = {start:5,end:30,color:\"#ffb52d8c\"};\ngzone[2] = {start:30,end:40,color:\"#91ff4e85\"};\ngzone[3] = {start:40,end:50,color:\"#4ec3ff85\"};\n\n// ----------------------------------------------------------------\n\nlet gtick = []; let gsubtick = []; let gnum = [];\nGauge = (start,end) => {\n        let x1 = 100*Math.tan((90-90/msg.gsubtick_count*start)*Math.PI/180);\n        if ((90/msg.gsubtick_count*start) <= 45) {x1=100;}\n        let x2 = 100*Math.tan((90-90/msg.gsubtick_count*end)*Math.PI/180);\n        if ((90/msg.gsubtick_count*end) <= 45) {x2=100;}\n    if (msg.gbody == \"left\") {\n        x1 = 100-100*Math.tan((90-90/msg.gsubtick_count*start)*Math.PI/180);\n        if ((90/msg.gsubtick_count*start) <= 45) {x1=0;}\n        x2 = 100-100*Math.tan((90-90/msg.gsubtick_count*end)*Math.PI/180);\n        if ((90/msg.gsubtick_count*end) <= 45) {x2=0;}\n    }\n\n    let y1 = 100-100*Math.tan(90/msg.gsubtick_count*start*Math.PI/180);\n    if (y1 < 0) {y1=0;}\n    let y2 = 100-100*Math.tan((90/msg.gsubtick_count*end)*Math.PI/180);\n    if (y2 < 0) {y2=0;}\n    \n    if (msg.gbody == \"left\") {\n    topic = \"clip-path: polygon(\"+x1+\"% \"+y1+\"%, 100% 100%, \"+x2+\"% \"+y2+\"%, 0% 0%)\";\n    } else {\n    topic = \"clip-path: polygon(\"+x1+\"% \"+y1+\"%, 100% 0%, \"+x2+\"% \"+y2+\"%, 0% 100%)\";\n    }\n    return topic;\n}\nmsg.bord = Math.floor(7/4*msg.containersize);\nif (msg.gbody == \"left\") {\n    msg.bt = msg.bord;\n    msg.br = 0;\n    msg.bl = msg.bord;\n    msg.ll = 8;\n    msg.br1 = 100;\n    msg.br2 = 0;\n} else {\n    msg.bt = msg.bord;\n    msg.br = msg.bord;\n    msg.bl = 0;\n    msg.ll = 10;\n    msg.br1 = 0;\n    msg.br2 = 100;\n}\nif (msg.gbody == \"right\" || msg.gbody == \"left\") {\n    for (let i = 0; i < gzone.length; i++) {\n        gzone[i].zone = Gauge(gzone[i].start,gzone[i].end);\n    }\n    msg.gbody2 = \"quarter-top-\" + msg.gbody\n    msg.gval = \"\"\n    msg.gvalring = \"g-val-ring\";\n    msg.gvalplate = \"g-val-plate\";\n    msg.gaugevalue = 100;\n    msg.gndistance = 28;\n    msg.grivet = \"\";\n    msg.gzone = gzone;\n    \n}else{\n    di =  gzone.length;\n    dd =  gzone.length;\n    for (let i = 0; i < dd; i++) {\n        gzonep = 134.7+gzone[i].start*(270/msg.gsubtick_count);\n        gzone[i].zone = gzonep;\n        zonem = 90-(gzone[i].end-gzone[i].start)*(270/msg.gsubtick_count);\n        if (zonem < -45) {\n            gzone[i].zone2 = -45;\n            gzone[di] = {color:gzone[i].color, zone:gzonep+135,zone2:zonem+135};\n            di++;\n        } else {\n            gzone[i].zone2 = 90-(gzone[i].end-gzone[i].start)*(270/msg.gsubtick_count);\n        }\n    }\n    msg.gbody2 = \"\";\n    msg.gvalring = \"\";\n    msg.gvalplate = \"\";\n    msg.gval = \"top: 65%; right:50%-calc(calc(var(--container-size) * 7%) / calc(var(--container-size)/4)); border-radius:0%\";\n    msg.gaugevalue = 0;\n    msg.gndistance = 13;\n    msg.grivet = \"g-rivet\";\n    msg.gzone2 = gzone;\n\n}\n\nfor (let i = 1; i <= msg.gsubtick_count+1; i++) {\ngsubtick[i-1] = {ga:i};\n}\nmsg.gsubtick = gsubtick;\nfor (let i = 1; i <= msg.gtick_count+1; i++) {\ngtick[i-1] = {ga:i};\n}\nmsg.gtick = gtick;\nfor (let i = 1; i <= msg.gnum_count+1; i++) {\n    if (msg.gbody == \"right\") {ii=i;} else {ii=msg.gnum_count+2-i}\n    if (i==1) {\n        gnum[i-1] = {ga:ii,gs:msg.gnum_count,value:msg.max};\n    } else {\n        gnum[i-1] = {ga:ii,gs:msg.gnum_count,value:msg.max-(msg.max-msg.min)/msg.gnum_count*(i-1)};\n    }\n}\nmsg.gnum = gnum;\nmsg.payload = value * 1;\nif (msg.payload > msg.max+msg.max/msg.gsubtick_count*3){\n    msg.value = msg.max+msg.max/msg.gsubtick_count*3;\n} else if (msg.payload < msg.min-msg.max/msg.gsubtick_count*3) {\n    msg.value = msg.min-msg.max/msg.gsubtick_count*3;\n} else {\n    msg.value = msg.payload;\n}\n\nif (msg.gbody == \"right\") {\nmsg.v = 100 - (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\n} else if (msg.gbody == \"left\") {\nmsg.v = 100 + (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\n} else {\nmsg.v = ((msg.value - msg.min) / (msg.max - msg.min)) * 100;\n}\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 280,
-        "y": 150,
+        "x": 290,
+        "y": 165,
         "wires": [
             [
-                "adb33fdd4efa14c8",
-                "392c9dc10c9c2690"
-            ]
-        ]
-    },
-    {
-        "id": "2e63cf1ab603052e",
-        "type": "function",
-        "z": "21b213583fe2216f",
-        "name": "Sens01",
-        "func": "\nmsg.name = node.name; // Имя gauge\nvalue = msg.payload\nmsg.min = 0; // минимальное значение / min\nmsg.max = 2500; // максимальное значение / max\ngtick_count = 10; // количество больших засечек шкалы\ngsubtick_count = gtick_count*10; // количество маленьких засечек шкалы\ngnum_count = 5; //количество подписей\nmsg.dec = 0; // количество знаков после запятой\nmsg.unit = \"ppm.\";\nmsg.label=\"CO₂\"\nmsg.gbody = \"right\" // направление право/лево\nmsg.containersize = 3;\n\n\ngstart0 = 0; gend0 = 15;\ngstart1 = gend0; gend1 = 36;\ngstart2 = gend1; gend2 = 60;\ngstart3 = gend2; gend3 = gsubtick_count;\n\n\n\n// ----------------------------------------------------------------\nlet gtick = []; let gsubtick = []; let gnum = [];\nGauge = (start,end) => {\n        let x1 = 100*Math.tan((90-90/gsubtick_count*start)*Math.PI/180);\n        if ((90/gsubtick_count*start) <= 45) {x1=100;}\n        let x2 = 100*Math.tan((90-90/gsubtick_count*end)*Math.PI/180);\n        if ((90/gsubtick_count*end) <= 45) {x2=100;}\n    if (msg.gbody == \"left\") {\n        x1 = 100-100*Math.tan((90-90/gsubtick_count*start)*Math.PI/180);\n        if ((90/gsubtick_count*start) <= 45) {x1=0;}\n        x2 = 100-100*Math.tan((90-90/gsubtick_count*end)*Math.PI/180);\n        if ((90/gsubtick_count*end) <= 45) {x2=0;}\n    }\n\n    let y1 = 100-100*Math.tan(90/gsubtick_count*start*Math.PI/180);\n    if (y1 < 0) {y1=0;}\n    let y2 = 100-100*Math.tan((90/gsubtick_count*end)*Math.PI/180);\n    if (y2 < 0) {y2=0;}\n    \n    if (msg.gbody == \"left\") {\n    topic = \"clip-path: polygon(\"+x1+\"% \"+y1+\"%, 100% 100%, \"+x2+\"% \"+y2+\"%, 0% 0%)\";\n    } else {\n    topic = \"clip-path: polygon(\"+x1+\"% \"+y1+\"%, 100% 0%, \"+x2+\"% \"+y2+\"%, 0% 100%)\";\n    }\n\n    \n    \n    \n    \n    return topic;\n}\nmsg.bord = Math.floor(7/4*msg.containersize);\nif (msg.gbody == \"left\") {\n    msg.bt = msg.bord;\n    msg.br = 0;\n    msg.bl = msg.bord;\n    msg.ll = 8;\n    msg.br1 = 100;\n    msg.br2 = 0;\n} else {\n    msg.bt = msg.bord;\n    msg.br = msg.bord;\n    msg.bl = 0;\n    msg.ll = 10;\n    msg.br1 = 0;\n    msg.br2 = 100;\n}\n\nmsg.gauge0 = Gauge(gstart0,gend0);\nmsg.gauge1 = Gauge(gstart1,gend1);\nmsg.gauge2 = Gauge(gstart2,gend2);\nmsg.gauge3 = Gauge(gstart3,gend3);\n\n\n\n\nfor (let i = 1; i <= gsubtick_count+1; i++) {\ngsubtick[i-1] = {ga:i,gs:gsubtick_count};\n}\nmsg.gsubtick = gsubtick;\nfor (let i = 1; i <= gtick_count+1; i++) {\ngtick[i-1] = {ga:i,gs:gtick_count};\n}\nmsg.gtick = gtick;\nfor (let i = 1; i <= gnum_count+1; i++) {\n    if (msg.gbody == \"left\") {ii=gnum_count+2-i;} else {ii=i}\n    if (i==1) {\n        gnum[i-1] = {ga:ii,gs:gnum_count,value:msg.max};\n    } else {\n        gnum[i-1] = {ga:ii,gs:gnum_count,value:msg.max-(msg.max-msg.min)/gnum_count*(i-1)};\n    }\n}\nmsg.gnum = gnum;\nmsg.payload = value * 1;\nif (msg.payload > msg.max+msg.max/gsubtick_count*3){\n    msg.value = msg.max+msg.max/gsubtick_count*3;\n} else if (msg.payload < msg.min-msg.max/gsubtick_count*3) {\n    msg.value = msg.min-msg.max/gsubtick_count*3;\n} else {\n    msg.value = msg.payload;\n}\nif (msg.gbody == \"left\") {\nmsg.v = 100 + (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\nmsg.vv = ((msg.value - msg.min) / (msg.max - msg.min)) * 100;\n} else {\nmsg.v = 100 - (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\nmsg.vv = 100 - (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\n}\n\n\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 280,
-        "y": 100,
-        "wires": [
-            [
-                "ed77efc3135f6ec5"
+                "8a4a173277ec9150"
             ]
         ]
     },
@@ -221,11 +100,13 @@
         "topic": "",
         "payload": "12",
         "payloadType": "num",
-        "x": 90,
-        "y": 150,
+        "x": 80,
+        "y": 205,
         "wires": [
             [
-                "58bada2924a21caf"
+                "58bada2924a21caf",
+                "9f27d05bd8f42991",
+                "4959f0cd3b65d1e3"
             ]
         ]
     },
@@ -250,11 +131,13 @@
         "topic": "",
         "payload": "22",
         "payloadType": "num",
-        "x": 90,
-        "y": 180,
+        "x": 80,
+        "y": 235,
         "wires": [
             [
-                "58bada2924a21caf"
+                "58bada2924a21caf",
+                "4959f0cd3b65d1e3",
+                "9f27d05bd8f42991"
             ]
         ]
     },
@@ -279,13 +162,263 @@
         "topic": "",
         "payload": "-8",
         "payloadType": "num",
-        "x": 90,
-        "y": 210,
+        "x": 80,
+        "y": 170,
         "wires": [
             [
-                "58bada2924a21caf"
+                "58bada2924a21caf",
+                "4959f0cd3b65d1e3",
+                "9f27d05bd8f42991"
             ]
         ]
+    },
+    {
+        "id": "370627f593f600a9",
+        "type": "inject",
+        "z": "21b213583fe2216f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 145,
+        "y": 290,
+        "wires": [
+            [
+                "40e3e3e1b8cd7df8"
+            ]
+        ]
+    },
+    {
+        "id": "88e03f95f9d74280",
+        "type": "inject",
+        "z": "21b213583fe2216f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "800",
+        "payloadType": "num",
+        "x": 80,
+        "y": 100,
+        "wires": [
+            [
+                "2e63cf1ab603052e"
+            ]
+        ]
+    },
+    {
+        "id": "caf53adb08480cfd",
+        "type": "inject",
+        "z": "21b213583fe2216f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 80,
+        "y": 65,
+        "wires": [
+            [
+                "2e63cf1ab603052e"
+            ]
+        ]
+    },
+    {
+        "id": "b92bfccaf099fbd5",
+        "type": "inject",
+        "z": "21b213583fe2216f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1600",
+        "payloadType": "num",
+        "x": 80,
+        "y": 135,
+        "wires": [
+            [
+                "2e63cf1ab603052e"
+            ]
+        ]
+    },
+    {
+        "id": "8a4a173277ec9150",
+        "type": "ui_template",
+        "z": "21b213583fe2216f",
+        "group": "9f213c40125a5160",
+        "name": "universal",
+        "order": 3,
+        "width": "4",
+        "height": "4",
+        "format": "<div class=\"g-wrapper g-wrapper-label-0\">\n<div id=\"{{'gauge_'+$id}}\" class=\"g-container\" style=\"--needle-color: {{msg.needlecolor}}; --gauge-value:{{msg.gaugevalue}}; --container-size:{{msg.containersize}}; --gn-distance:{{msg.gndistance}}; --ga-tick-count:{{msg.gtick_count}}; --ga-subtick-count:{{msg.gsubtick_count}}; --g-unit:'{{msg.unit}}'\">\n    <div id=\"bgr\" class=\"g-body {{msg.gbody2}}\">\n        <div class=\"g-ring\">\n            <div class=\"g-rivets\">\n                <div class={{msg.grivet}}></div>\n                <div class={{msg.grivet}}></div>\n                <div class={{msg.grivet}}></div>\n                <div class={{msg.grivet}}></div>\n            </div>\n            <div class=\"g-plate\">\n                \n                \n                <div ng-repeat=\"gzone2 in msg.gzone2\" style=\"width: 100%; height: 100%; position: absolute; top: 50%; left: 50%; transform-origin: 0 0; background:{{gzone2.color}}; transform: rotate({{gzone2.zone}}deg) skew({{gzone2.zone2}}deg, 0deg); \"></div>\n\n                \n                \n                <div class=\"g-zone\" ng-repeat=\"gzone in msg.gzone\" style= \"border-top: {{msg.bt}}px solid; left: {{msg.ll}}%; border-radius: {{msg.br1}}% {{msg.br2}}% 0% 0%; border-right: {{msg.br}}px solid; border-left: {{msg.bl}}px solid; clip-path: polygon(0% 0%, 100% 0%, 0% 0%, 0% 100% ); border-color: {{gzone.color}}; {{gzone.zone}}; \"></div>\n                <div class=\"g-ticks\">\n                    <div class=\"g-tick\" ng-repeat=\"gtick in msg.gtick\" style=\"--ga-tick:{{gtick.ga}};\"> </div>\n                </div>\n                <div class=\"g-ticks\">\n                    <div class=\"g-subtick\" ng-repeat=\"gsubtick in msg.gsubtick\" style=\"--ga-tick:{{gsubtick.ga}};\"> </div>\n                </div>\n                <div class=\"g-nums\">\n                    <div class=\"g-num\" ng-repeat=\"gnum in msg.gnum\" style=\"--ga-tick:{{gnum.ga}};  --ga-tick-count:{{gnum.gs}};\" >{{gnum.value}}</div>\n                </div>\n                <div class=\"g-label\">{{msg.label}}</div>\n                <div class=\"g-needle\"></div>\n                <div class=\"g-needle-ring\"></div>\n            </div>\n            <div class=\"{{msg.gvalring}}\">\n                <div class=\"{{msg.gvalplate}}\"></div>\n                <div id=\"{{'gauge_val_'+$id}}\" class=\"g-val\"></div>\n            </div>\n        </div>\n    </div>\n</div>\n</div>\n<script>\n(function(scope) {\n  scope.$watch('msg', function(msg) {\n    if (msg) {\n      // Do something when msg arrives\n        const val = msg.payload\n        const v = msg.v;\n        document.getElementById('gauge_'+scope.$id).style.setProperty('--gauge-value', v);\n        document.getElementById('gauge_val_'+scope.$id).innerText = val.toFixed(msg.dec);\n    }\n   \n  });\n})(scope);\n</script>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 450,
+        "y": 165,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f825601947c649a2",
+        "type": "ui_template",
+        "z": "21b213583fe2216f",
+        "group": "9f213c40125a5160",
+        "name": "universal",
+        "order": 3,
+        "width": "4",
+        "height": "4",
+        "format": "<div class=\"g-wrapper g-wrapper-label-0\">\n<div id=\"{{'gauge_'+$id}}\" class=\"g-container\" style=\"--needle-color: {{msg.needlecolor}}; --gauge-value:{{msg.gaugevalue}}; --container-size:{{msg.containersize}}; --gn-distance:{{msg.gndistance}}; --ga-tick-count:{{msg.gtick_count}}; --ga-subtick-count:{{msg.gsubtick_count}}; --g-unit:'{{msg.unit}}'\">\n    <div id=\"bgr\" class=\"g-body {{msg.gbody2}}\">\n        <div class=\"g-ring\">\n            <div class=\"g-rivets\">\n                <div class={{msg.grivet}}></div>\n                <div class={{msg.grivet}}></div>\n                <div class={{msg.grivet}}></div>\n                <div class={{msg.grivet}}></div>\n            </div>\n            <div class=\"g-plate\">\n                \n                \n                <div ng-repeat=\"gzone2 in msg.gzone2\" style=\"width: 100%; height: 100%; position: absolute; top: 50%; left: 50%; transform-origin: 0 0; background:{{gzone2.color}}; transform: rotate({{gzone2.zone}}deg) skew({{gzone2.zone2}}deg, 0deg); \"></div>\n\n                \n                \n                <div class=\"g-zone\" ng-repeat=\"gzone in msg.gzone\" style= \"border-top: {{msg.bt}}px solid; left: {{msg.ll}}%; border-radius: {{msg.br1}}% {{msg.br2}}% 0% 0%; border-right: {{msg.br}}px solid; border-left: {{msg.bl}}px solid; clip-path: polygon(0% 0%, 100% 0%, 0% 0%, 0% 100% ); border-color: {{gzone.color}}; {{gzone.zone}}; \"></div>\n                <div class=\"g-ticks\">\n                    <div class=\"g-tick\" ng-repeat=\"gtick in msg.gtick\" style=\"--ga-tick:{{gtick.ga}};\"> </div>\n                </div>\n                <div class=\"g-ticks\">\n                    <div class=\"g-subtick\" ng-repeat=\"gsubtick in msg.gsubtick\" style=\"--ga-tick:{{gsubtick.ga}};\"> </div>\n                </div>\n                <div class=\"g-nums\">\n                    <div class=\"g-num\" ng-repeat=\"gnum in msg.gnum\" style=\"--ga-tick:{{gnum.ga}};  --ga-tick-count:{{gnum.gs}};\" >{{gnum.value}}</div>\n                </div>\n                <div class=\"g-label\">{{msg.label}}</div>\n                <div class=\"g-needle\"></div>\n                <div class=\"g-needle-ring\"></div>\n            </div>\n            <div class=\"{{msg.gvalring}}\">\n                <div class=\"{{msg.gvalplate}}\"></div>\n                <div id=\"{{'gauge_val_'+$id}}\" class=\"g-val\"></div>\n            </div>\n        </div>\n    </div>\n</div>\n</div>\n<script>\n(function(scope) {\n  scope.$watch('msg', function(msg) {\n    if (msg) {\n      // Do something when msg arrives\n        const val = msg.payload\n        const v = msg.v;\n        document.getElementById('gauge_'+scope.$id).style.setProperty('--gauge-value', v);\n        document.getElementById('gauge_val_'+scope.$id).innerText = val.toFixed(msg.dec);\n    }\n   \n  });\n})(scope);\n</script>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 450,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5ab523f122567ac7",
+        "type": "ui_template",
+        "z": "21b213583fe2216f",
+        "group": "9f213c40125a5160",
+        "name": "universal",
+        "order": 3,
+        "width": "4",
+        "height": "4",
+        "format": "<div class=\"g-wrapper g-wrapper-label-0\">\n<div id=\"{{'gauge_'+$id}}\" class=\"g-container\" style=\"--needle-color: {{msg.needlecolor}}; --gauge-value:{{msg.gaugevalue}}; --container-size:{{msg.containersize}}; --gn-distance:{{msg.gndistance}}; --ga-tick-count:{{msg.gtick_count}}; --ga-subtick-count:{{msg.gsubtick_count}}; --g-unit:'{{msg.unit}}'\">\n    <div id=\"bgr\" class=\"g-body {{msg.gbody2}}\">\n        <div class=\"g-ring\">\n            <div class=\"g-rivets\">\n                <div class={{msg.grivet}}></div>\n                <div class={{msg.grivet}}></div>\n                <div class={{msg.grivet}}></div>\n                <div class={{msg.grivet}}></div>\n            </div>\n            <div class=\"g-plate\">\n                \n                \n                <div ng-repeat=\"gzone2 in msg.gzone2\" style=\"width: 100%; height: 100%; position: absolute; top: 50%; left: 50%; transform-origin: 0 0; background:{{gzone2.color}}; transform: rotate({{gzone2.zone}}deg) skew({{gzone2.zone2}}deg, 0deg); \"></div>\n\n                \n                \n                <div class=\"g-zone\" ng-repeat=\"gzone in msg.gzone\" style= \"border-top: {{msg.bt}}px solid; left: {{msg.ll}}%; border-radius: {{msg.br1}}% {{msg.br2}}% 0% 0%; border-right: {{msg.br}}px solid; border-left: {{msg.bl}}px solid; clip-path: polygon(0% 0%, 100% 0%, 0% 0%, 0% 100% ); border-color: {{gzone.color}}; {{gzone.zone}}; \"></div>\n                <div class=\"g-ticks\">\n                    <div class=\"g-tick\" ng-repeat=\"gtick in msg.gtick\" style=\"--ga-tick:{{gtick.ga}};\"> </div>\n                </div>\n                <div class=\"g-ticks\">\n                    <div class=\"g-subtick\" ng-repeat=\"gsubtick in msg.gsubtick\" style=\"--ga-tick:{{gsubtick.ga}};\"> </div>\n                </div>\n                <div class=\"g-nums\">\n                    <div class=\"g-num\" ng-repeat=\"gnum in msg.gnum\" style=\"--ga-tick:{{gnum.ga}};  --ga-tick-count:{{gnum.gs}};\" >{{gnum.value}}</div>\n                </div>\n                <div class=\"g-label\">{{msg.label}}</div>\n                <div class=\"g-needle\"></div>\n                <div class=\"g-needle-ring\"></div>\n            </div>\n            <div class=\"{{msg.gvalring}}\">\n                <div class=\"{{msg.gvalplate}}\"></div>\n                <div id=\"{{'gauge_val_'+$id}}\" class=\"g-val\"></div>\n            </div>\n        </div>\n    </div>\n</div>\n</div>\n<script>\n(function(scope) {\n  scope.$watch('msg', function(msg) {\n    if (msg) {\n      // Do something when msg arrives\n        const val = msg.payload\n        const v = msg.v;\n        document.getElementById('gauge_'+scope.$id).style.setProperty('--gauge-value', v);\n        document.getElementById('gauge_val_'+scope.$id).innerText = val.toFixed(msg.dec);\n    }\n   \n  });\n})(scope);\n</script>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 450,
+        "y": 235,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9f27d05bd8f42991",
+        "type": "function",
+        "z": "21b213583fe2216f",
+        "name": "Sens02",
+        "func": "let gzone = [];\nmsg.name = node.name; // Имя gauge\nvalue = msg.payload\nmsg.min = -10; // минимальное значение\nmsg.max = 40; // максимальное значение\nmsg.gtick_count = 5; // количество больших засечек шкалы\nmsg.gsubtick_count = msg.gtick_count*10; // количество маленьких засечек шкалы\nmsg.gnum_count = 5; //количество подписей\nmsg.dec = 0; // количество знаков после запятой\nmsg.unit = \"°C\";\nmsg.label=\"Температура\"\nmsg.gbody = \"right\" // направление право/лево\nmsg.containersize = 4;\nmsg.needlecolor = \"#001100\"; //цвет стрелки\n// окрашивание зон\ngzone[0] = {start:0,end:5,color:\"#ff5d4ebf\"};\ngzone[1] = {start:5,end:30,color:\"#ffb52d8c\"};\ngzone[2] = {start:30,end:40,color:\"#91ff4e85\"};\ngzone[3] = {start:40,end:50,color:\"#4ec3ff85\"};\n\n// ----------------------------------------------------------------\n\nlet gtick = []; let gsubtick = []; let gnum = [];\nGauge = (start,end) => {\n        let x1 = 100*Math.tan((90-90/msg.gsubtick_count*start)*Math.PI/180);\n        if ((90/msg.gsubtick_count*start) <= 45) {x1=100;}\n        let x2 = 100*Math.tan((90-90/msg.gsubtick_count*end)*Math.PI/180);\n        if ((90/msg.gsubtick_count*end) <= 45) {x2=100;}\n    if (msg.gbody == \"left\") {\n        x1 = 100-100*Math.tan((90-90/msg.gsubtick_count*start)*Math.PI/180);\n        if ((90/msg.gsubtick_count*start) <= 45) {x1=0;}\n        x2 = 100-100*Math.tan((90-90/msg.gsubtick_count*end)*Math.PI/180);\n        if ((90/msg.gsubtick_count*end) <= 45) {x2=0;}\n    }\n\n    let y1 = 100-100*Math.tan(90/msg.gsubtick_count*start*Math.PI/180);\n    if (y1 < 0) {y1=0;}\n    let y2 = 100-100*Math.tan((90/msg.gsubtick_count*end)*Math.PI/180);\n    if (y2 < 0) {y2=0;}\n    \n    if (msg.gbody == \"left\") {\n    topic = \"clip-path: polygon(\"+x1+\"% \"+y1+\"%, 100% 100%, \"+x2+\"% \"+y2+\"%, 0% 0%)\";\n    } else {\n    topic = \"clip-path: polygon(\"+x1+\"% \"+y1+\"%, 100% 0%, \"+x2+\"% \"+y2+\"%, 0% 100%)\";\n    }\n    return topic;\n}\nmsg.bord = Math.floor(7/4*msg.containersize);\nif (msg.gbody == \"left\") {\n    msg.bt = msg.bord;\n    msg.br = 0;\n    msg.bl = msg.bord;\n    msg.ll = 8;\n    msg.br1 = 100;\n    msg.br2 = 0;\n} else {\n    msg.bt = msg.bord;\n    msg.br = msg.bord;\n    msg.bl = 0;\n    msg.ll = 10;\n    msg.br1 = 0;\n    msg.br2 = 100;\n}\nif (msg.gbody == \"right\" || msg.gbody == \"left\") {\n    for (let i = 0; i < gzone.length; i++) {\n        gzone[i].zone = Gauge(gzone[i].start,gzone[i].end);\n    }\n    msg.gbody2 = \"quarter-top-\" + msg.gbody\n    msg.gval = \"\"\n    msg.gvalring = \"g-val-ring\";\n    msg.gvalplate = \"g-val-plate\";\n    msg.gaugevalue = 100;\n    msg.gndistance = 28;\n    msg.grivet = \"\";\n    msg.gzone = gzone;\n    \n}else{\n    di =  gzone.length;\n    dd =  gzone.length;\n    for (let i = 0; i < dd; i++) {\n        gzonep = 134.7+gzone[i].start*(270/msg.gsubtick_count);\n        gzone[i].zone = gzonep;\n        zonem = 90-(gzone[i].end-gzone[i].start)*(270/msg.gsubtick_count);\n        if (zonem < -45) {\n            gzone[i].zone2 = -45;\n            gzone[di] = {color:gzone[i].color, zone:gzonep+135,zone2:zonem+135};\n            di++;\n        } else {\n            gzone[i].zone2 = 90-(gzone[i].end-gzone[i].start)*(270/msg.gsubtick_count);\n        }\n    }\n    msg.gbody2 = \"\";\n    msg.gvalring = \"\";\n    msg.gvalplate = \"\";\n    msg.gval = \"top: 65%; right:50%-calc(calc(var(--container-size) * 7%) / calc(var(--container-size)/4)); border-radius:0%\";\n    msg.gaugevalue = 0;\n    msg.gndistance = 13;\n    msg.grivet = \"g-rivet\";\n    msg.gzone2 = gzone;\n\n}\n\nfor (let i = 1; i <= msg.gsubtick_count+1; i++) {\ngsubtick[i-1] = {ga:i};\n}\nmsg.gsubtick = gsubtick;\nfor (let i = 1; i <= msg.gtick_count+1; i++) {\ngtick[i-1] = {ga:i};\n}\nmsg.gtick = gtick;\nfor (let i = 1; i <= msg.gnum_count+1; i++) {\n    if (msg.gbody == \"right\") {ii=i;} else {ii=msg.gnum_count+2-i}\n    if (i==1) {\n        gnum[i-1] = {ga:ii,gs:msg.gnum_count,value:msg.max};\n    } else {\n        gnum[i-1] = {ga:ii,gs:msg.gnum_count,value:msg.max-(msg.max-msg.min)/msg.gnum_count*(i-1)};\n    }\n}\nmsg.gnum = gnum;\nmsg.payload = value * 1;\nif (msg.payload > msg.max+msg.max/msg.gsubtick_count*3){\n    msg.value = msg.max+msg.max/msg.gsubtick_count*3;\n} else if (msg.payload < msg.min-msg.max/msg.gsubtick_count*3) {\n    msg.value = msg.min-msg.max/msg.gsubtick_count*3;\n} else {\n    msg.value = msg.payload;\n}\n\nif (msg.gbody == \"right\") {\nmsg.v = 100 - (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\n} else if (msg.gbody == \"left\") {\nmsg.v = 100 + (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\n} else {\nmsg.v = ((msg.value - msg.min) / (msg.max - msg.min)) * 100;\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 205,
+        "wires": [
+            [
+                "f825601947c649a2"
+            ]
+        ]
+    },
+    {
+        "id": "4959f0cd3b65d1e3",
+        "type": "function",
+        "z": "21b213583fe2216f",
+        "name": "Sens02",
+        "func": "let gzone = [];\nmsg.name = node.name; // Имя gauge\nvalue = msg.payload\nmsg.min = -10; // минимальное значение\nmsg.max = 40; // максимальное значение\nmsg.gtick_count = 5; // количество больших засечек шкалы\nmsg.gsubtick_count = msg.gtick_count*10; // количество маленьких засечек шкалы\nmsg.gnum_count = 5; //количество подписей\nmsg.dec = 0; // количество знаков после запятой\nmsg.unit = \"°C\";\nmsg.label=\"Температура\"\nmsg.gbody = \"\" // направление право/лево\nmsg.containersize = 4;\nmsg.needlecolor = \"#001100\"; //цвет стрелки\n// окрашивание зон\ngzone[0] = {start:0,end:5,color:\"#ff5d4ebf\"};\ngzone[1] = {start:5,end:30,color:\"#ffb52d8c\"};\ngzone[2] = {start:30,end:40,color:\"#91ff4e85\"};\ngzone[3] = {start:40,end:50,color:\"#4ec3ff85\"};\n\n// ----------------------------------------------------------------\n\nlet gtick = []; let gsubtick = []; let gnum = [];\nGauge = (start,end) => {\n        let x1 = 100*Math.tan((90-90/msg.gsubtick_count*start)*Math.PI/180);\n        if ((90/msg.gsubtick_count*start) <= 45) {x1=100;}\n        let x2 = 100*Math.tan((90-90/msg.gsubtick_count*end)*Math.PI/180);\n        if ((90/msg.gsubtick_count*end) <= 45) {x2=100;}\n    if (msg.gbody == \"left\") {\n        x1 = 100-100*Math.tan((90-90/msg.gsubtick_count*start)*Math.PI/180);\n        if ((90/msg.gsubtick_count*start) <= 45) {x1=0;}\n        x2 = 100-100*Math.tan((90-90/msg.gsubtick_count*end)*Math.PI/180);\n        if ((90/msg.gsubtick_count*end) <= 45) {x2=0;}\n    }\n\n    let y1 = 100-100*Math.tan(90/msg.gsubtick_count*start*Math.PI/180);\n    if (y1 < 0) {y1=0;}\n    let y2 = 100-100*Math.tan((90/msg.gsubtick_count*end)*Math.PI/180);\n    if (y2 < 0) {y2=0;}\n    \n    if (msg.gbody == \"left\") {\n    topic = \"clip-path: polygon(\"+x1+\"% \"+y1+\"%, 100% 100%, \"+x2+\"% \"+y2+\"%, 0% 0%)\";\n    } else {\n    topic = \"clip-path: polygon(\"+x1+\"% \"+y1+\"%, 100% 0%, \"+x2+\"% \"+y2+\"%, 0% 100%)\";\n    }\n    return topic;\n}\nmsg.bord = Math.floor(7/4*msg.containersize);\nif (msg.gbody == \"left\") {\n    msg.bt = msg.bord;\n    msg.br = 0;\n    msg.bl = msg.bord;\n    msg.ll = 8;\n    msg.br1 = 100;\n    msg.br2 = 0;\n} else {\n    msg.bt = msg.bord;\n    msg.br = msg.bord;\n    msg.bl = 0;\n    msg.ll = 10;\n    msg.br1 = 0;\n    msg.br2 = 100;\n}\nif (msg.gbody == \"right\" || msg.gbody == \"left\") {\n    for (let i = 0; i < gzone.length; i++) {\n        gzone[i].zone = Gauge(gzone[i].start,gzone[i].end);\n    }\n    msg.gbody2 = \"quarter-top-\" + msg.gbody\n    msg.gval = \"\"\n    msg.gvalring = \"g-val-ring\";\n    msg.gvalplate = \"g-val-plate\";\n    msg.gaugevalue = 100;\n    msg.gndistance = 28;\n    msg.grivet = \"\";\n    msg.gzone = gzone;\n    \n}else{\n    di =  gzone.length;\n    dd =  gzone.length;\n    for (let i = 0; i < dd; i++) {\n        gzonep = 134.7+gzone[i].start*(270/msg.gsubtick_count);\n        gzone[i].zone = gzonep;\n        zonem = 90-(gzone[i].end-gzone[i].start)*(270/msg.gsubtick_count);\n        if (zonem < -45) {\n            gzone[i].zone2 = -45;\n            gzone[di] = {color:gzone[i].color, zone:gzonep+135,zone2:zonem+135};\n            di++;\n        } else {\n            gzone[i].zone2 = 90-(gzone[i].end-gzone[i].start)*(270/msg.gsubtick_count);\n        }\n    }\n    msg.gbody2 = \"\";\n    msg.gvalring = \"\";\n    msg.gvalplate = \"\";\n    msg.gval = \"top: 65%; right:50%-calc(calc(var(--container-size) * 7%) / calc(var(--container-size)/4)); border-radius:0%\";\n    msg.gaugevalue = 0;\n    msg.gndistance = 13;\n    msg.grivet = \"g-rivet\";\n    msg.gzone2 = gzone;\n\n}\n\nfor (let i = 1; i <= msg.gsubtick_count+1; i++) {\ngsubtick[i-1] = {ga:i};\n}\nmsg.gsubtick = gsubtick;\nfor (let i = 1; i <= msg.gtick_count+1; i++) {\ngtick[i-1] = {ga:i};\n}\nmsg.gtick = gtick;\nfor (let i = 1; i <= msg.gnum_count+1; i++) {\n    if (msg.gbody == \"right\") {ii=i;} else {ii=msg.gnum_count+2-i}\n    if (i==1) {\n        gnum[i-1] = {ga:ii,gs:msg.gnum_count,value:msg.max};\n    } else {\n        gnum[i-1] = {ga:ii,gs:msg.gnum_count,value:msg.max-(msg.max-msg.min)/msg.gnum_count*(i-1)};\n    }\n}\nmsg.gnum = gnum;\nmsg.payload = value * 1;\nif (msg.payload > msg.max+msg.max/msg.gsubtick_count*3){\n    msg.value = msg.max+msg.max/msg.gsubtick_count*3;\n} else if (msg.payload < msg.min-msg.max/msg.gsubtick_count*3) {\n    msg.value = msg.min-msg.max/msg.gsubtick_count*3;\n} else {\n    msg.value = msg.payload;\n}\n\nif (msg.gbody == \"right\") {\nmsg.v = 100 - (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\n} else if (msg.gbody == \"left\") {\nmsg.v = 100 + (((msg.value - msg.min) / (msg.max - msg.min)) * 100);\n} else {\nmsg.v = ((msg.value - msg.min) / (msg.max - msg.min)) * 100;\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 245,
+        "wires": [
+            [
+                "5ab523f122567ac7"
+            ]
+        ]
+    },
+    {
+        "id": "40e3e3e1b8cd7df8",
+        "type": "ui_template",
+        "z": "21b213583fe2216f",
+        "group": "9f213c40125a5160",
+        "name": "gauge clock",
+        "order": 21,
+        "width": "2",
+        "height": "2",
+        "format": "<div class=\"g-wrapper g-wrapper-label-0\">\n<div id=\"{{'gauge_'+$id}}\" class=\"g-container\" style=\"--gauge-value:0; --container-size:2; --gn-distance:13.5; --ga-tick-count:12; --ga-subtick-count:60; --g-unit:''; --time-hour:0; --time-minute:0; --time-second:0; \">\n    <div id=\"bgr\" class=\"g-body\">\n        <div class=\"g-ring\">\n            <div class=\"g-rivets\">\n                <div class=g-rivet></div>\n                <div class=g-rivet></div>\n                <div class=g-rivet></div>\n                <div class=g-rivet></div>\n            </div>\n            <div class=\"g-plate\">\n                <div class=\"g-ticks\">\n                    <div class=\"g-tick clock\" style=\"--ga-tick:1;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:2;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:3;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:4;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:5;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:6;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:7;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:8;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:9;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:10;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:11;\"></div>\n                    <div class=\"g-tick clock\" style=\"--ga-tick:12;\"></div>\n                </div>\n                <div class=\"g-ticks\">\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:2;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:3;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:4;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:5;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:7;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:8;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:9;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:10;\"></div>\n                   \n                    <div class=\"g-subtick clock\" style=\"--ga-tick:12;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:13;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:14;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:15;\"></div>\n                    \n                    <div class=\"g-subtick clock\" style=\"--ga-tick:17;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:18;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:19;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:20;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:22;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:23;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:24;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:25;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:27;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:28;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:29;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:30;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:32;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:33;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:34;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:35;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:37;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:38;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:39;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:40;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:42;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:43;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:44;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:45;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:47;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:48;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:49;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:50;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:52;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:53;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:54;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:55;\"></div>\n\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:57;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:58;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:59;\"></div>\n                    <div class=\"g-subtick clock\" style=\"--ga-tick:60;\"></div>\n                </div>\n               <div class=\"g-nums\">\n                    <div class=\"g-num clock\" style=\"--ga-tick:1;\" >12</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:2;\">1</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:3;\">2</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:4;\">3</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:5;\">4</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:6;\">5</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:7;\">6</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:8;\">7</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:9;\">8</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:10;\">9</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:11;\">10</div>\n                    <div class=\"g-num clock\" style=\"--ga-tick:12;\">11</div>\n                    \n                </div>\n                <div class=\"g-label\">{{msg.payload | date:'dd.MM.yyyy'}}</div>\n                <div class=\"g-needle hour\"></div>\n                <div class=\"g-needle second\"></div>\n                <div class=\"g-needle minute\"></div>\n                <div class=\"g-needle-ring\"></div>\n                <div id=\"{{'gauge_val_'+$id}}\" class=\"g-val\"></div>\n            </div>\n        </div>\n    </div>\n</div>\n</div>\n\n<script>\n(function(scope) {\n  scope.$watch('msg', function(msg) {\n    if (msg) {\n\n        const now = new Date()        \n        const sec = now.getSeconds();\n        const secDeg = ''+(((sec / 60) * 360) + 90)+'deg';        \n        const mins = now.getMinutes();\n        const minsDeg = ''+(((mins / 60) * 360) + ((sec/60)*6) + 90)+'deg';        \n        const hour = now.getHours();\n        const hourDeg = ''+(((hour / 12) * 360) + ((mins/60)*30) + 90)+'deg';\n        \n        document.getElementById('gauge_'+scope.$id).style.setProperty('--time-hour', hourDeg);\n        document.getElementById('gauge_'+scope.$id).style.setProperty('--time-minute', minsDeg);\n        document.getElementById('gauge_'+scope.$id).style.setProperty('--time-second', secDeg);\n    }\n   \n  });\n})(scope);\n</script>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 460,
+        "y": 290,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9f213c40125a5160",
+        "type": "ui_group",
+        "name": "Toilette",
+        "tab": "7471c7e5ac36c878",
+        "order": 2,
+        "disp": false,
+        "width": "8",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "f5e2c3bf3d5a99b2",
@@ -299,30 +432,19 @@
         "className": ""
     },
     {
-        "id": "9f213c40125a5160",
-        "type": "ui_group",
-        "name": "Toilette",
-        "tab": "7471c7e5ac36c878",
-        "order": 2,
-        "disp": false,
-        "width": "6",
-        "collapse": false,
-        "className": ""
+        "id": "7471c7e5ac36c878",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
     },
     {
         "id": "f56a25b32de4d274",
         "type": "ui_tab",
         "name": "old",
         "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "7471c7e5ac36c878",
-        "type": "ui_tab",
-        "name": "Home",
-        "icon": "dashboard",
-        "order": 1,
         "disabled": false,
         "hidden": false
     }
